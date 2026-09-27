@@ -66,7 +66,13 @@ El principal objetivo del curso es familiar a los estudiantes con los modelos di
 
 **EVALUACIÓN**
 
-El curso será evaluado por medio de tres parciales. El primer parcial es de 25% y abarca las unidades 1 y 2\. El segundo parcial es de 25% y abarca las unidades 3 y 4\. El parcial final es de 25% y abarca las unidades 5 y 6\. El 25% restante consiste en el seguimiento (quiz, trabajos, informes, lecturas).
+El curso será evaluado por medio de tres parciales. 
+
+El primer parcial es de 25% y abarca las unidades 1, 2 y 3.
+El segundo parcial es de 25% y abarca las unidades 4, 5 y 6. 
+El parcial final es de 25% y abarca las unidad 7, pero lo más probable es que se realice en forma de taller. 
+
+El 25% restante consiste en el seguimiento (quiz, trabajos, informes, lecturas).
 
 **BIBLIOGRAFÍA PRINCIPAL**
 
