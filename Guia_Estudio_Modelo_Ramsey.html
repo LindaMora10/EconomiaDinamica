@@ -1,0 +1,876 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guía del Modelo de Ramsey</title>
+<meta name="description" content="Guía de estudio completa del modelo de Ramsey-Cass-Koopmans para el primer parcial de Dinámica Económica (UNAL Medellín).">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<style>
+:root{
+  --bg:#fbfaf7; --surface:#ffffff; --surface-2:#f3f1ec; --text:#1d1d1b; --muted:#5d5b55;
+  --border:#e2dfd7; --accent:#1f5fa8; --accent-soft:#e6eef8;
+  --c1:#1f5fa8; --c2:#c2410c; --c3:#15803d; --c4:#7c3aed; --grid:#e8e5dd;
+  --ok-bg:#e9f6ee; --ok-border:#15803d; --warn-bg:#fff4e5; --warn-border:#c2410c;
+  --note-bg:#eef3fb; --note-border:#1f5fa8; --class-bg:#f5effd; --class-border:#7c3aed;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#16171a; --surface:#1e2024; --surface-2:#25282d; --text:#e8e6e1; --muted:#a3a09a;
+    --border:#34373d; --accent:#7fb1ee; --accent-soft:#1f2d40;
+    --c1:#7fb1ee; --c2:#f59e62; --c3:#5fd08a; --c4:#b99bf6; --grid:#2c2f35;
+    --ok-bg:#16291e; --ok-border:#5fd08a; --warn-bg:#2e2116; --warn-border:#f59e62;
+    --note-bg:#1a2433; --note-border:#7fb1ee; --class-bg:#241d33; --class-border:#b99bf6;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#16171a; --surface:#1e2024; --surface-2:#25282d; --text:#e8e6e1; --muted:#a3a09a;
+  --border:#34373d; --accent:#7fb1ee; --accent-soft:#1f2d40;
+  --c1:#7fb1ee; --c2:#f59e62; --c3:#5fd08a; --c4:#b99bf6; --grid:#2c2f35;
+  --ok-bg:#16291e; --ok-border:#5fd08a; --warn-bg:#2e2116; --warn-border:#f59e62;
+  --note-bg:#1a2433; --note-border:#7fb1ee; --class-bg:#241d33; --class-border:#b99bf6;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
+a{color:var(--accent)}
+header.top{border-bottom:1px solid var(--border);background:var(--surface)}
+header.top .inner{max-width:1180px;margin:0 auto;padding:28px 16px 22px}
+header.top h1{margin:0 0 6px;font-size:clamp(1.6rem,4vw,2.3rem);line-height:1.2;letter-spacing:-.01em}
+header.top p{margin:4px 0;color:var(--muted)}
+.theme-btn{float:right;border:1px solid var(--border);background:var(--surface-2);color:var(--text);border-radius:8px;padding:6px 10px;cursor:pointer;font:inherit;font-size:.85rem}
+.layout{max-width:1180px;margin:0 auto;padding:0 16px;display:grid;grid-template-columns:250px minmax(0,1fr);gap:40px}
+nav.toc{position:sticky;top:0;align-self:start;max-height:100vh;overflow:auto;padding:24px 0;font-size:.9rem}
+nav.toc h2{font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:0 0 8px}
+nav.toc ol{list-style:none;margin:0;padding:0}
+nav.toc li{margin:0}
+nav.toc a{display:block;padding:4px 8px;border-radius:6px;color:var(--text);text-decoration:none}
+nav.toc a:hover{background:var(--surface-2)}
+nav.toc ol ol a{padding-left:20px;color:var(--muted);font-size:.85rem}
+main{padding:24px 0 80px;min-width:0}
+section{margin-bottom:48px}
+h2.sec{font-size:1.55rem;margin:8px 0 14px;padding-top:12px;border-top:2px solid var(--text);line-height:1.25}
+h2.sec .num{color:var(--accent);margin-right:8px}
+h3{font-size:1.18rem;margin:28px 0 8px}
+h4{font-size:1rem;margin:20px 0 6px}
+p{margin:10px 0}
+ul,ol{padding-left:22px}
+li{margin:4px 0}
+.box{border-left:4px solid;border-radius:0 10px 10px 0;padding:12px 16px;margin:16px 0}
+.box > :first-child{margin-top:0}.box > :last-child{margin-bottom:0}
+.box .tag{display:block;font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;font-weight:700;margin-bottom:4px}
+.key{background:var(--ok-bg);border-color:var(--ok-border)} .key .tag{color:var(--ok-border)}
+.warn{background:var(--warn-bg);border-color:var(--warn-border)} .warn .tag{color:var(--warn-border)}
+.note{background:var(--note-bg);border-color:var(--note-border)} .note .tag{color:var(--note-border)}
+.class{background:var(--class-bg);border-color:var(--class-border)} .class .tag{color:var(--class-border)}
+.formula{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin:14px 0;overflow-x:auto}
+.formula.main{border:2px solid var(--accent)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:.95rem}
+.tablewrap{overflow-x:auto}
+th,td{border-bottom:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:var(--surface-2);font-weight:600}
+.src{font-size:.8rem;color:var(--muted)}
+figure{margin:18px 0;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px}
+figure svg{width:100%;height:auto;display:block}
+.katex-display{overflow-x:auto;overflow-y:hidden;padding:2px 0}
+figcaption{font-size:.88rem;color:var(--muted);margin-top:6px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+details{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin:10px 0}
+details summary{cursor:pointer;font-weight:600}
+details[open] summary{margin-bottom:8px}
+.pill{display:inline-block;font-size:.72rem;padding:2px 8px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-weight:600;vertical-align:middle}
+.sim{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px}
+.sim .controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px 18px}
+.sim label{display:block;font-size:.88rem}
+.sim label span.v{float:right;font-variant-numeric:tabular-nums;font-weight:600}
+.sim input[type=range]{width:100%;accent-color:var(--accent)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-top:12px}
+.stat{background:var(--surface-2);border-radius:8px;padding:8px 10px}
+.stat .l{font-size:.75rem;color:var(--muted)}
+.stat .n{font-size:1.1rem;font-weight:700;font-variant-numeric:tabular-nums}
+.flag{margin-top:10px;font-size:.9rem;padding:8px 10px;border-radius:8px}
+svg text{fill:var(--text);font:12px system-ui,sans-serif}
+svg .axis{stroke:var(--text);stroke-width:1.3}
+svg .gridl{stroke:var(--grid);stroke-width:1}
+svg .guide{stroke:var(--muted);stroke-dasharray:4 4;stroke-width:1}
+kbd{font-size:.85em}
+footer{border-top:1px solid var(--border);color:var(--muted);font-size:.85rem;padding:20px 16px;max-width:1180px;margin:0 auto}
+@media (max-width:900px){
+  .layout{grid-template-columns:1fr;gap:0}
+  nav.toc{position:static;max-height:none;border-bottom:1px solid var(--border)}
+  nav.toc ol ol{display:none}
+}
+@media print{nav.toc,.theme-btn,.sim{display:none}.layout{display:block}body{background:#fff;color:#000}}
+</style>
+</head>
+<body>
+<header class="top"><div class="inner">
+  <button class="theme-btn" id="themeBtn" type="button">Tema claro/oscuro</button>
+  <h1>Guía de estudio: el modelo de Ramsey-Cass-Koopmans</h1>
+  <p>Dinámica Económica (3009699) · UNAL Medellín · Prof. Camilo Galvis · Primer parcial (Unidad 3)</p>
+  <p class="src">Fuentes: Sala-i-Martin, <em>Apuntes de crecimiento económico</em>, 2ª ed., cap. 3 (y el inicio del cap. 4) · Romer, <em>Macroeconomía avanzada</em>, cap. 2, Parte A · Taller 1 (págs. 12–18). Complementa la <a href="Guia_Estudio_Modelo_Solow.html">guía del modelo de Solow</a>.</p>
+</div></header>
+
+<div class="layout">
+<nav class="toc" aria-label="Contenido">
+  <h2>Contenido</h2>
+  <ol>
+    <li><a href="#mapa">0. Mapa y notación</a></li>
+    <li><a href="#porque">1. ¿Por qué Ramsey?</a></li>
+    <li><a href="#hamilton">2. Herramienta: el Hamiltoniano</a></li>
+    <li><a href="#familias">3. Las familias</a>
+      <ol><li><a href="#utilidad">Función de utilidad</a></li><li><a href="#crra">CRRA / CIES</a></li><li><a href="#restriccion">Restricción presupuestaria</a></li><li><a href="#euler">Ecuación de Euler</a></li><li><a href="#tvc">Transversalidad</a></li></ol></li>
+    <li><a href="#empresas">4. Las empresas</a></li>
+    <li><a href="#equilibrio">5. Equilibrio</a></li>
+    <li><a href="#planificador">6. Robinson Crusoe y planificador</a></li>
+    <li><a href="#fases">7. Diagrama de fases</a></li>
+    <li><a href="#explosivas">8. Trayectorias explosivas</a></li>
+    <li><a href="#ee">9. Estado estacionario y regla de oro modificada</a></li>
+    <li><a href="#forma">10. Forma de la trayectoria y transición</a></li>
+    <li><a href="#finito">11. Horizonte finito y autopista</a></li>
+    <li><a href="#ahorro">12. La tasa de ahorro en la transición</a></li>
+    <li><a href="#tecnologia">13. Progreso técnico</a></li>
+    <li><a href="#rho">14. Caída de la tasa de descuento</a></li>
+    <li><a href="#gasto">15. Gasto público</a></li>
+    <li><a href="#velocidad">16. Velocidad de convergencia</a></li>
+    <li><a href="#comparacion">17. Solow vs. Ramsey</a></li>
+    <li><a href="#simulador">18. Simulador</a></li>
+    <li><a href="#ejercicios">19. Ejercicios resueltos</a></li>
+    <li><a href="#preguntas">20. Preguntas tipo parcial</a></li>
+    <li><a href="#formulario">21. Formulario</a></li>
+    <li><a href="#errores">22. Errores frecuentes</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<!-- ============================================================ 0 -->
+<section id="mapa">
+<h2 class="sec"><span class="num">0</span>Mapa y notación</h2>
+<p>El programa del curso divide la <strong>Unidad 3</strong> en: supuestos del modelo, las familias, las empresas, y equilibrio y resultados. Esta guía sigue ese orden y agrega los resultados que suelen preguntarse: diagrama de fases, trayectoria de silla, regla de oro modificada, experimentos y velocidad de convergencia. El modelo lleva el nombre de Ramsey (1928), que planteó el problema de ahorro óptimo, y de Cass (1965) y Koopmans (1965), que lo integraron al modelo neoclásico.</p>
+<div class="box note"><span class="tag">Notación: cada fuente usa la suya</span>
+<div class="tablewrap"><table>
+<tr><th></th><th>Sala-i-Martin y Taller</th><th>Romer</th></tr>
+<tr><td>Variables</td><td>Per cápita: \(c=C/L\), \(k=K/L\), \(b=B/L\) (activos). El Taller escribe el consumo a mano como \(\mathcal{C}_t\).</td><td>Por trabajador efectivo: \(c=C/(AL)\), \(k=K/(AL)\); \(C\) es el consumo por trabajador</td></tr>
+<tr><td>Depreciación</td><td>\(\delta&gt;0\)</td><td>\(\delta=0\) (supuesto simplificador)</td></tr>
+<tr><td>Progreso técnico</td><td>No hay en el cap. 3; en el cap. 4, tasa \(x\)</td><td>Tasa \(g\)</td></tr>
+<tr><td>Precio sombra</td><td>\(v_t\) (Sala), \(\lambda_t\) (Taller)</td><td>Multiplicador de Lagrange \(\lambda\)</td></tr>
+<tr><td>Ecuación de Euler</td><td>\(\dfrac{\dot c}{c}=\dfrac{1}{\theta}\big(f'(k)-\delta-\rho\big)\)</td><td>\(\dfrac{\dot c}{c}=\dfrac{f'(k)-\rho-\theta g}{\theta}\)</td></tr>
+<tr><td>Acumulación de \(k\)</td><td>\(\dot k=f(k)-c-(\delta+n)k\)</td><td>\(\dot k=f(k)-c-(n+g)k\)</td></tr>
+</table></div>
+<p>En esta guía uso la notación de Sala-i-Martin y del Taller (per cápita, con \(\delta\)). Cuando hay progreso técnico, basta sumar \(g\) donde corresponde (<a href="#tecnologia">§13</a>): la versión general es \(\dot c/c=(f'(k)-\delta-\rho-\theta g)/\theta\) y \(\dot k=f(k)-c-(\delta+n+g)k\).</p></div>
+</section>
+
+<!-- ============================================================ 1 -->
+<section id="porque">
+<h2 class="sec"><span class="num">1</span>¿Por qué pasar de Solow a Ramsey?</h2>
+<ul>
+<li><strong>En Solow la tasa de ahorro \(s\) es exógena y constante</strong>: las familias ahorran una fracción fija “sin cuestionarnos la racionalidad de este comportamiento” (Sala-i-Martin). Ramsey la hace <strong>endógena</strong>: sale de familias que maximizan su utilidad a lo largo del tiempo.</li>
+<li><strong>Mercados.</strong> En Solow las familias son a la vez productoras y consumidoras (Robinson Crusoe). En Ramsey hay familias y empresas separadas que se encuentran en mercados de trabajo, de capital (activos) y de bienes, con precios \(w\), \(r\) y 1.</li>
+<li><strong>Bienestar.</strong> Un modelo que especifica relaciones agregadas sin preferencias no dice si un resultado es mejor que otro. Con familias que optimizan sí se puede evaluar (Romer, cap. 1).</li>
+<li><strong>Resultados que cambian:</strong> la economía <strong>nunca</strong> está en la zona dinámicamente ineficiente, la tasa de ahorro varía durante la transición y la convergencia es más rápida. <strong>Resultados que no cambian:</strong> sin progreso técnico no hay crecimiento per cápita de largo plazo, porque el progreso técnico sigue siendo exógeno.</li>
+</ul>
+<div class="box key"><span class="tag">La idea central (pregunta 6 del Taller)</span>
+<p>“¿Cuál es la idea principal del modelo de Ramsey-Cass-Koopmans?” Respuesta: <strong>(d) la acumulación de capital proviene de la optimización intertemporal del consumo de los hogares.</strong> Las demás opciones describen otros modelos: (a) una tasa de ahorro exógena y constante es Solow; (b) un progreso técnico exógeno que eleva la productividad es común a ambos pero no es la idea distintiva; (c) la experiencia y el conocimiento de los trabajadores apuntan a externalidades o aprendizaje por la práctica (Romer 1986).</p></div>
+</section>
+
+<!-- ============================================================ 2 -->
+<section id="hamilton">
+<h2 class="sec"><span class="num">2</span>Herramienta: el Hamiltoniano (control óptimo en tiempo continuo)</h2>
+<p>Ramsey es un problema de <strong>optimización dinámica</strong>: hay que elegir toda una trayectoria \(\{c_t\}_{t=0}^{\infty}\), no un número. Receta estándar (Sala-i-Martin, apéndice matemático):</p>
+<div class="formula">\[\max_{\{c_t\}}\int_0^{\infty}e^{-\beta t}u(c_t)\,dt\quad\text{s.a.}\quad \dot x_t=g(x_t,c_t,t),\quad x_0\ \text{dado}\]</div>
+<ol>
+<li><strong>Identificar las variables.</strong> La <em>variable de control</em> es la que se elige libremente y no aparece con punto (\(c\)). La <em>variable de estado</em> es la que evoluciona según la restricción y sí aparece con punto (\(b\) o \(k\)). Cada restricción dinámica lleva un <em>multiplicador dinámico</em> o <em>precio sombra</em> (\(v_t\) o \(\lambda_t\)).</li>
+<li><strong>Construir el Hamiltoniano (en valor presente):</strong> \(\ H=e^{-\beta t}u(c)+\lambda\,g(x,c,t)\): el integrando más el multiplicador por el lado derecho de la ley de movimiento.</li>
+<li><strong>Condiciones de primer orden:</strong>
+  <ul>
+  <li>\(\partial H/\partial c=0\) (control)</li>
+  <li>\(\partial H/\partial x=-\dot\lambda\) (estado; <strong>ojo con el signo menos</strong>)</li>
+  <li>\(\partial H/\partial\lambda=\dot x\) (devuelve la restricción)</li>
+  </ul></li>
+<li><strong>Condición de transversalidad:</strong> \(\lim_{t\to\infty}\lambda_t x_t=0\).</li>
+<li><strong>El truco para llegar a Euler:</strong> se toma logaritmo en la CPO del control, se deriva respecto a \(t\) (para obtener \(\dot\lambda/\lambda\)) y se iguala con la CPO del estado.</li>
+</ol>
+<div class="box warn"><span class="tag">Detalle de notación en el Taller</span>
+<p>El Taller escribe \(H_t=e^{-(\rho-n)t}\sqrt{c_t}+\lambda_t\big[w_t+(r_t-n)b_t-c_t-\dot b_t\big]\), es decir, incluye \(-\dot b_t\) dentro del corchete (como si fuera un Lagrangiano). La forma estándar del Hamiltoniano <strong>no</strong> lleva \(\dot b\): \(H=e^{-(\rho-n)t}u(c)+\lambda\big[w+(r-n)b-c\big]\), y la condición \(\partial H/\partial\lambda=\dot b\) devuelve la restricción. Las CPO respecto a \(c\) y a \(b\) salen iguales en ambos casos, así que el resultado del Taller es correcto, pero en el parcial conviene escribir la forma estándar.</p></div>
+<div class="box note"><span class="tag">Interpretación del multiplicador</span>
+<p>\(v_t\) (o \(\lambda_t\)) es el valor, en utilidad descontada a hoy, de <strong>una unidad adicional de activos</strong> en \(t\): el precio implícito de \(b\). La CPO \(H_c=0\) dice que <strong>el valor marginal de consumir una unidad hoy debe ser igual al valor marginal de ahorrarla</strong> (Sala-i-Martin).</p></div>
+</section>
+
+<!-- ============================================================ 3 -->
+<section id="familias">
+<h2 class="sec"><span class="num">3</span>Las familias</h2>
+<h3 id="utilidad">3.1 La función de utilidad</h3>
+<div class="formula main">\[U(0)=\int_0^{\infty}e^{-\rho t}\,u(c_t)\,L_t\,dt=\int_0^{\infty}e^{-(\rho-n)t}\,\frac{c_t^{1-\theta}-1}{1-\theta}\,dt\qquad(L_t=L_0e^{nt},\ L_0=1)\qquad\text{(Sala 3.1)}\]</div>
+<ul>
+<li><strong>Utilidad total</strong> = suma (integral) de las <em>funciones de felicidad</em> instantáneas \(u(c_t)\), descontadas a la tasa \(\rho\), desde 0 hasta infinito.</li>
+<li><strong>Horizonte infinito.</strong> Las personas mueren, pero Barro (1974) mostró que el modelo se reinterpreta con <strong>altruismo y herencias intergeneracionales</strong>: los agentes son <strong>dinastías o familias</strong> y \(L_t\) es el número de miembros. Como \(u(c)\) es la felicidad de cada miembro, la de la familia es \(u(c)\cdot L_t\).</li>
+<li><strong>Tasa de descuento \(\rho\):</strong> aunque son altruistas, los individuos prefieren su propio consumo al de sus hijos; representa el “egoísmo paterno” dentro de un mundo de altruismo intergeneracional. Ramsey (1928) la llamó “éticamente indefendible”, pero él pensaba en el problema del <em>Estado</em>, que no debería discriminar entre generaciones.</li>
+<li><strong>Concavidad de \(u\):</strong> refleja el deseo de <strong>suavizar el consumo</strong> (mejor consumir “más o menos lo mismo” cada día que hacer una gran fiesta el último día del mes).</li>
+</ul>
+<details><summary>Derivación discreta de la utilidad dinástica (Sala-i-Martin, ecs. 3.2–3.5)</summary>
+<p>Un padre vive un período y tiene \(1+n\) hijos. Su utilidad depende de su consumo y de la utilidad de sus hijos, descontada a \(\rho\): \(U_1=u(c_1)+\dfrac{1+n}{1+\rho}U_2\). Como \(U_2=u(c_2)+\dfrac{1+n}{1+\rho}U_3\), sustituyendo hacia adelante:</p>
+\[U_1=\sum_{t=1}^{\infty}\left(\frac{1+n}{1+\rho}\right)^{t-1}u(c_t).\]
+<p>Aunque el padre vive un solo período, es <em>como si</em> tuviera un horizonte infinito. En tiempo continuo esto corresponde a \(\int e^{-(\rho-n)t}u(c)\,dt\). Si \(n=0\), valora más su generación que la siguiente porque \(1&lt;1+\rho\).</p></details>
+<figure><div id="fig-util"></div><figcaption>Gráfico 1 (Sala 3.1): con \(u\) cóncava, la utilidad de consumir el promedio, \(u\big(\tfrac{c_1+c_2}{2}\big)\), es mayor que el promedio de las utilidades, \(\tfrac12[u(c_1)+u(c_2)]\). Por eso conviene suavizar. No sería así con \(u\) lineal o convexa.</figcaption></figure>
+
+<h3 id="crra">3.2 La utilidad CRRA / CIES</h3>
+<div class="formula">\[u(c)=\frac{c^{1-\theta}-1}{1-\theta},\qquad \theta&gt;0,\qquad u'(c)=c^{-\theta},\qquad -\frac{c\,u''(c)}{u'(c)}=\theta\]</div>
+<ul>
+<li>Sala-i-Martin y el Taller la llaman <strong>función de elasticidad intertemporal (de sustitución) constante</strong> (CIES). Romer la llama <strong>utilidad con aversión relativa al riesgo constante</strong> (ARRC, en inglés CRRA): el coeficiente \(-cu''/u'=\theta\) no depende de \(c\).</li>
+<li><strong>\(\theta\) mide la concavidad y el deseo de suavizar el consumo.</strong> La elasticidad de sustitución intertemporal es \(\sigma=1/\theta\): cuanto menor es \(\theta\), más dispuesta está la familia a aceptar fluctuaciones de \(c\) a cambio de pequeñas diferencias entre \(r\) y \(\rho\).</li>
+<li>\(\theta\to0\): utilidad lineal, sin deseo de suavizar. \(\theta\to1\): \(u(c)=\ln c\) (por L'Hôpital; por eso se resta el “\(-1\)”, que evita que el límite sea infinito). \(\theta=1/2\): \(u\propto\sqrt c\), que es el caso del Taller.</li>
+<li><strong>Utilidad acotada:</strong> para que la integral sea finita hace falta que el integrando tienda a cero. En el estado estacionario \(c\) es constante, así que se requiere <strong>\(\rho&gt;n\)</strong> (Sala 3.9). Con progreso técnico: \(\rho&gt;n+(1-\theta)g\) (Romer 2.2, Sala 4.14).</li>
+</ul>
+
+<h3 id="restriccion">3.3 La restricción presupuestaria</h3>
+<p>Las familias poseen activos \(B_t\), que pueden ser positivos (prestan) o negativos (deben), y que rinden la tasa \(r_t\). También son dueñas de su trabajo, que alquilan al salario \(w_t\). Todos los miembros trabajan (\(L\) es a la vez población y trabajo). El ingreso se destina a consumir o a acumular activos:</p>
+<div class="formula">\[\dot B_t=w_tL_t+r_tB_t-C_t\]</div>
+<p><strong>En términos per cápita</strong> (derivación del Taller): con \(b=B/L\), \(\dot b=\dfrac{\dot B L-B\dot L}{L^2}=\dfrac{\dot B}{L}-nb\Rightarrow\dfrac{\dot B}{L}=\dot b+nb\). Dividiendo la restricción entre \(L\):</p>
+<div class="formula main">\[\dot b_t+nb_t=w_t+r_tb_t-c_t\quad\Longrightarrow\quad\boxed{\dot b_t=w_t+(r_t-n)\,b_t-c_t}\qquad\text{(Sala 3.6)}\]</div>
+<p>Es el mismo truco que \(\dot K/L\neq\dot k\) de Solow: el término \(-nb\) aparece porque los activos se reparten entre más miembros.</p>
+<div class="box note"><span class="tag">Romer: restricción en valor presente y la condición de no-Ponzi</span>
+<p>Con \(R(t)=\int_0^t r(\tau)d\tau\), el valor presente del consumo a lo largo de la vida no puede superar la riqueza inicial más el valor presente de los salarios (Romer 2.6). Esto equivale a</p>
+\[\lim_{s\to\infty}e^{-R(s)}\frac{K(s)}{H}\ge0\qquad\text{(condición de no juego de Ponzi, Romer 2.10)}.\]
+<p>Un <strong>juego de Ponzi</strong> consiste en endeudarse y pagar siempre la deuda emitiendo deuda nueva, de modo que el valor presente del consumo supera al de los recursos. La condición lo prohíbe: en el límite, el valor presente de los activos no puede ser negativo.</p></div>
+<h4>El problema del consumidor</h4>
+<div class="formula">\[\max_{\{c_t\}}\ U=\int_0^{\infty}e^{-(\rho-n)t}\,\frac{c_t^{1-\theta}-1}{1-\theta}\,dt\qquad\text{s.a.}\qquad \dot b_t=w_t+(r_t-n)b_t-c_t,\quad b_0\ \text{dado}\]</div>
+<p>La familia toma \(w_t\) y \(r_t\) como dados.</p>
+
+<h3 id="euler">3.4 Solución: la ecuación de Euler</h3>
+<div class="formula">\[H=e^{-(\rho-n)t}\,\frac{c^{1-\theta}-1}{1-\theta}+v\,\big[w+(r-n)b-c\big]\qquad\text{(Sala 3.10)}\]</div>
+<ol>
+<li>\(H_c=0:\ \ e^{-(\rho-n)t}c^{-\theta}=v\)  (Sala 3.11)</li>
+<li>\(H_b=-\dot v:\ \ (r-n)v=-\dot v\ \Rightarrow\ \dfrac{\dot v}{v}=-(r-n)\)  (Sala 3.12)</li>
+<li>Logaritmo de (1): \(-(\rho-n)t-\theta\ln c=\ln v\). Derivando respecto a \(t\): \(-(\rho-n)-\theta\dfrac{\dot c}{c}=\dfrac{\dot v}{v}\).</li>
+<li>Igualando con (2): \(-(\rho-n)-\theta\dfrac{\dot c}{c}=-(r-n)\).</li>
+</ol>
+<div class="formula main">\[\boxed{\ \gamma_c\equiv\frac{\dot c}{c}=\frac{1}{\theta}\,(r-\rho)\ }\qquad\text{(ecuación de Euler, Sala 3.14)}\]</div>
+<p>La \(n\) se cancela. Con \(\theta=1/2\) (Taller), \(\dot c/c=2(r-\rho)\); con utilidad logarítmica, \(\dot c/c=r-\rho\).</p>
+<div class="box key"><span class="tag">Interpretación (Sala 3.14')</span>
+\[\underbrace{\rho+\theta\,\frac{\dot c}{c}}_{\text{rendimiento de consumir hoy}}=\underbrace{r}_{\text{rendimiento de ahorrar}}\]
+<ul>
+<li>El lado izquierdo es el beneficio de consumir ahora. \(\rho\) es la impaciencia. \(\theta\,\dot c/c\) es el deseo de suavizar: si el consumo va a crecer (\(\dot c/c&gt;0\)), la familia quiere adelantar consumo, porque las sendas empinadas son costosas.</li>
+<li>El lado derecho es el rendimiento neto del ahorro: el tipo de interés.</li>
+<li>En el óptimo la familia está <strong>indiferente, en el margen, entre consumir y ahorrar</strong>. Si \(r&gt;\rho\), el consumo crece; si \(r&lt;\rho\), cae. Cuanto mayor es \(\theta\), mayor tiene que ser \(r\) para aceptar un determinado \(\dot c/c\), así que el consumo responde menos al tipo de interés.</li>
+</ul></div>
+<details><summary>Derivación intuitiva de Euler sin Hamiltoniano (Romer, ecs. 2.22–2.23)</summary>
+<p>Se reduce el consumo en \(\Delta c\) en \(t\), se invierte durante \(\Delta t\) y se consume el rendimiento en \(t+\Delta t\). Pérdida: \(u'(c_t)\Delta c\,e^{-\rho t}\). Ganancia: \(u'(c_{t+\Delta t})\,e^{r\Delta t}\Delta c\,e^{-\rho(t+\Delta t)}\). En el óptimo son iguales. Con \(u'=c^{-\theta}\) y \(c_{t+\Delta t}\approx c_te^{(\dot c/c)\Delta t}\): \(-\theta\tfrac{\dot c}{c}\Delta t+(r-\rho)\Delta t=0\Rightarrow\dot c/c=(r-\rho)/\theta\). En tiempo discreto, la versión equivalente es \(u'(c_t)=\tfrac{1+r}{1+\rho}u'(c_{t+1})\).</p>
+<p>La Euler describe <strong>cómo cambia</strong> \(c\) dado \(c(0)\). El <strong>nivel</strong> \(c(0)\) lo fija la restricción presupuestaria: si es muy bajo, sobran recursos; si es muy alto, la senda no es factible.</p></details>
+
+<h3 id="tvc">3.5 La condición de transversalidad</h3>
+<div class="formula">\[\lim_{t\to\infty}b_t\,v_t=0\qquad\text{(Sala 3.13)}\]</div>
+<p>Es más fácil entenderla con horizonte finito: \(b_Tv_T=0\). Los optimizadores <strong>no quieren dejar nada de valor después de su muerte</strong>. Si dejaran algo, podrían haberlo consumido antes y aumentar su utilidad, y entonces el plan no era óptimo. Se cumple porque \(b_T=0\) (no queda nada) o porque el precio \(v_T=0\) (lo que queda no vale nada). En Ramsey los individuos “fenecen” en el infinito, así que el valor de los activos en el infinito debe ser cero. Junto con la condición de no-Ponzi (que impide morir endeudado), la transversalidad impide “morir con activos sin usar”.</p>
+</section>
+
+<!-- ============================================================ 4 -->
+<section id="empresas">
+<h2 class="sec"><span class="num">4</span>Las empresas</h2>
+<p>Las empresas alquilan trabajo al salario \(w\) y capital a la tasa de alquiler \(R\), y venden su producto a precio 1. Son <strong>competitivas</strong> (toman los precios como dados) y usan una tecnología <strong>neoclásica</strong>: rendimientos constantes a escala, productividades marginales positivas y decrecientes, e Inada (la misma de Solow).</p>
+<div class="box note"><span class="tag">¿Por qué \(R=r+\delta\)?</span>
+<p>No hay riesgo ni incertidumbre, así que el rendimiento de los activos financieros tiene que coincidir con el rendimiento neto de tener capital (no arbitraje): \(r=R-\delta\). Quien tiene una máquina cobra \(R\) pero pierde \(\delta\) por depreciación.</p></div>
+<div class="formula">\[\max_{K,L}\ \pi=F(K,L)-(r+\delta)K-wL\qquad\text{(Sala 3.15)}\]</div>
+<p>Per cápita (Taller): \(\pi_t=f(k_t)-(r_t+\delta)k_t-w_t\). Condiciones de primer orden, usando \(Y=L\,f(K/L)\):</p>
+<ul>
+<li>\(\dfrac{\partial\pi}{\partial K}=Lf'(k)\dfrac1L-(r+\delta)=0\ \Rightarrow\ \boxed{r=f'(k)-\delta}\): <strong>el pago del capital es su producto marginal menos la depreciación</strong> (Sala 3.16).</li>
+<li>\(\dfrac{\partial\pi}{\partial L}=f(k)+Lf'(k)\Big(\!-\dfrac{K}{L^2}\Big)-w=0\ \Rightarrow\ \boxed{w=f(k)-kf'(k)}\): <strong>el salario es lo que produce el trabajador menos la parte atribuida al capital</strong> (Sala 3.17). Aquí se usa \(\partial k/\partial L=-K/L^2\).</li>
+</ul>
+<p>Con rendimientos constantes a escala, los beneficios son <strong>cero</strong> (teorema de Euler: \(f=f'k+(f-f'k)\)), igual que en Solow.</p>
+<div class="box warn"><span class="tag">Detalle del Taller</span><p>En el Taller aparece \(\Pi_t=Y_t-(r_t+\delta)k_t-w_tL_t\). En la función de beneficio agregada debe ir \(K_t\) (mayúscula): \(\Pi=Lf(k)-(r+\delta)K-wL\). Las CPO del Taller sí están bien.</p></div>
+<p>En Romer (\(\delta=0\), con \(A\)): \(r=f'(k)\), \(W=A[f(k)-kf'(k)]\) y el salario por trabajador efectivo es \(w=f(k)-kf'(k)\).</p>
+</section>
+
+<!-- ============================================================ 5 -->
+<section id="equilibrio">
+<h2 class="sec"><span class="num">5</span>El equilibrio</h2>
+<p>Familias y empresas se encuentran en los mercados: el salario que pagan las empresas es el que reciben las familias, el interés que pagan es el que cobran, y el precio del bien es el mismo. Falta el <strong>equilibrio del mercado financiero</strong>. En una economía cerrada y sin gobierno, todo lo que unos prestan otros lo piden prestado, así que la deuda neta agregada es cero y <strong>el único activo en oferta neta positiva es el capital</strong>:</p>
+<div class="formula">\[b=k\]</div>
+<p>Se sustituyen \(r=f'(k)-\delta\), \(w=f(k)-kf'(k)\) y \(b=k\) en la restricción de las familias: \(\dot k=f(k)-kf'(k)+(f'(k)-\delta-n)k-c\). Resultado:</p>
+<div class="formula main">\[\boxed{\dot k=f(k)-c-(\delta+n)k}\quad\text{(3.18)}\qquad\boxed{\frac{\dot c}{c}=\frac1\theta\big(f'(k)-\delta-\rho\big)}\quad\text{(3.19)}\qquad \lim_{t\to\infty}k_tv_t=0\quad\text{(3.20)}\]
+\[\text{Cobb-Douglas:}\quad \dot k=Ak^{\alpha}-c-(\delta+n)k,\qquad \frac{\dot c}{c}=\frac1\theta\big(\alpha Ak^{-(1-\alpha)}-\delta-\rho\big)\]</div>
+<ul>
+<li>Es un <strong>sistema de dos ecuaciones diferenciales</strong> en \(k\) y \(c\), más la condición de transversalidad y \(k_0\) dado.</li>
+<li>La ecuación (3.18) es <strong>idéntica</strong> a la de Solow (ec. 1.13): introducir mercados no cambia la restricción de recursos. La diferencia está en el consumo. En Solow se suponía \(c=(1-s)f(k)\), lo que daba \(\dot k=sf(k)-(\delta+n)k\). En Ramsey el consumo lo determina la <strong>ecuación de Euler</strong>.</li>
+<li>En la ecuación de Euler, \(f'(k)-\delta\) es la rentabilidad de ahorrar y \(\rho\) la impaciencia. <strong>Mientras el capital sea escaso (\(f'(k)-\delta&gt;\rho\)), el consumo crece.</strong></li>
+</ul>
+<div class="box class"><span class="tag">Taller: el resumen del equilibrio</span>
+<p>Con \(u=\sqrt c\) y \(f(k)=A\ln k\): (1) \(\dot c/c=2(r-\rho)\); (2) \(r=A/k-\delta\); (3) \(w=f(k)-f'(k)k\). En el estado estacionario, \(\dot c=0\Rightarrow r=\rho\Rightarrow A/k-\delta=\rho\Rightarrow k^*=\dfrac{A}{\delta+\rho}\). Ver el <a href="#ej-taller">Ejercicio 1</a>, que lo completa con \(c^*\) y la regla de oro.</p></div>
+</section>
+
+<!-- ============================================================ 6 -->
+<section id="planificador">
+<h2 class="sec"><span class="num">6</span>Tres economías, la misma solución: mercado, Robinson Crusoe y planificador</h2>
+<h3>Robinson Crusoe (familias productoras, Sala §3.2.1)</h3>
+<p>La restricción física es \(\dot K=F(K,L)-C-\delta K\); per cápita, \(\dot k=f(k)-c-(\delta+n)k\). La familia maximiza (3.1) sujeta a esa restricción:</p>
+<div class="formula">\[H=e^{-(\rho-n)t}\frac{c^{1-\theta}-1}{1-\theta}+v\big[f(k)-c-(\delta+n)k\big]\]
+\[H_c=0:\ e^{-(\rho-n)t}c^{-\theta}=v;\qquad H_k=-\dot v:\ -\frac{\dot v}{v}=f'(k)-\delta-n;\qquad \lim kv=0\ \Rightarrow\ \frac{\dot c}{c}=\frac1\theta\big(f'(k)-\delta-\rho\big)\]</div>
+<p>Son <strong>exactamente las mismas</strong> tres ecuaciones que en el mercado.</p>
+<h3>El planificador benevolente (Sala §3.2.2)</h3>
+<p>El planificador (1) tiene el mismo objetivo que los individuos, (2) solo enfrenta la restricción física de recursos (si no, la solución trivial sería consumir infinito) y (3) internaliza todas las externalidades y usa toda la información. En el modelo neoclásico no hay externalidades y los individuos tienen toda la información, así que su problema es el de Robinson Crusoe.</p>
+<div class="box key"><span class="tag">Conclusión: el equilibrio competitivo es óptimo</span>
+<p><strong>Mercado = Robinson Crusoe = planificador.</strong> Si no hay externalidades ni distorsiones, el mercado encuentra la solución óptima sin necesidad de gobierno. Es una aplicación del <strong>primer teorema del bienestar</strong> (Romer §2.4): con mercados competitivos, sin externalidades y con un número finito de agentes, el equilibrio es eficiente en el sentido de Pareto. Romer añade que, cuando se ahorra un poco más, cambian \(r\) y \(w\), pero esas <em>externalidades pecuniarias</em> (que actúan a través de los precios) se compensan entre sí. Cuando haya externalidades (Unidad 4: Romer 1986, gasto público de Barro), la solución de mercado y la del planificador dejan de coincidir.</p></div>
+</section>
+
+<!-- ============================================================ 7 -->
+<section id="fases">
+<h2 class="sec"><span class="num">7</span>El diagrama de fases (Sala §3.3; Romer §2.3)</h2>
+<p>Con \(k\) en el eje horizontal y \(c\) en el vertical, se procede en cinco pasos:</p>
+<h4>Paso 1 — La curva \(\dot k=0\)</h4>
+<p>\(\dot k=0\iff c=f(k)-(\delta+n)k\) (con Cobb-Douglas, \(c=Ak^\alpha-(\delta+n)k\)). La curva pasa por el origen, crece, alcanza su <strong>máximo donde \(f'(k)=\delta+n\)</strong> (en \(k_{oro}\), la regla de oro de Solow) y luego baja hasta cortar el eje en \(\bar k\) (el \(k^{**}\) de Sala-i-Martin).</p>
+<h4>Paso 2 — Dinámica de \(k\)</h4>
+<p>Por encima de la curva (más consumo que el que mantiene \(k\) constante), \(\dot k&lt;0\) y las flechas apuntan a la <strong>izquierda</strong>. Por debajo, \(\dot k&gt;0\) y apuntan a la <strong>derecha</strong>.</p>
+<div class="grid2">
+<figure><div id="fig-kdot"></div><figcaption>Gráfico 2 (Romer 2.2): la curva \(\dot k=0\) y la dinámica de \(k\).</figcaption></figure>
+<figure><div id="fig-cdot"></div><figcaption>Gráfico 3 (Romer 2.1): la curva \(\dot c=0\) es vertical en \(k^*\), donde \(f'(k^*)=\delta+\rho\).</figcaption></figure>
+</div>
+<h4>Paso 3 — La curva \(\dot c=0\)</h4>
+<p>\(\dot c=0\) se cumple si \(c=0\) (el eje horizontal) o si \(f'(k)=\delta+\rho\). Lo segundo da una <strong>línea vertical</strong> en \(k^*\). Con Cobb-Douglas, \(k^*=\big(\tfrac{\alpha A}{\delta+\rho}\big)^{1/(1-\alpha)}\). Como \(\rho&gt;n\) y \(f'\) es decreciente, <strong>\(k^*&lt;k_{oro}\)</strong>: la vertical queda a la izquierda del máximo de \(\dot k=0\).</p>
+<h4>Paso 4 — Dinámica de \(c\)</h4>
+<p>A la derecha de \(k^*\), \(f'(k)&lt;\delta+\rho\), así que \(\dot c&lt;0\) y las flechas apuntan hacia <strong>abajo</strong>. A la izquierda, \(\dot c&gt;0\) y apuntan hacia <strong>arriba</strong>.</p>
+<h4>Paso 5 — Estados estacionarios y estabilidad</h4>
+<figure><div id="fig-fase"></div><figcaption>Gráfico 4 (Sala 3.2; Romer 2.3–2.5): diagrama de fases completo. Las flechas indican la dirección de movimiento en cada región. La línea gruesa es la <strong>trayectoria estable</strong> (sendero de silla). Desde \(k_0\), las trayectorias punteadas empiezan con un consumo 5% mayor o menor que el de la silla: una se come el capital y la otra termina en \(\bar k\).</figcaption></figure>
+<div class="tablewrap"><table>
+<tr><th>Estado estacionario</th><th>Dónde</th><th>Estabilidad</th></tr>
+<tr><td>Origen</td><td>\(k=0,\ c=0\)</td><td>Inestable; si \(k_0&gt;0\), nunca se llega a él</td></tr>
+<tr><td>\(\bar k\) (\(k^{**}\) en Sala)</td><td>Donde \(\dot k=0\) corta el eje: \(c=0\), \(f(\bar k)=(\delta+n)\bar k\); está a la derecha de \(k_{oro}\)</td><td>Todas las flechas apuntan hacia él, pero viola la transversalidad (<a href="#explosivas">§8</a>)</td></tr>
+<tr><td><strong>\(E=(k^*,c^*)\)</strong></td><td>\(f'(k^*)=\delta+\rho\), \(c^*=f(k^*)-(\delta+n)k^*\)</td><td><strong>Punto de silla</strong>: solo se llega desde dos de las cuatro regiones, por una única trayectoria</td></tr>
+</table></div>
+<div class="box key"><span class="tag">La trayectoria de silla</span>
+<p>Para cada \(k_0&gt;0\) existe <strong>un único</strong> \(c_0\) desde el cual la economía converge a \(E\). La función que da ese \(c_0\) es el <strong>sendero de silla</strong> (<em>saddle path</em>). Analogía de Sala-i-Martin: en una silla de montar hay un único camino por el que una canica rueda hasta el centro; si se pone en cualquier otro punto, “caerá miserablemente al suelo”.</p>
+<p><strong>\(k\) es una variable predeterminada (de estado):</strong> viene de la historia y no puede saltar. <strong>\(c\) es una variable de salto (de control):</strong> las familias la eligen mirando al futuro y se ubica justo sobre la silla.</p></div>
+</section>
+
+<!-- ============================================================ 8 -->
+<section id="explosivas">
+<h2 class="sec"><span class="num">8</span>Exclusión de las trayectorias explosivas (Sala §3.4; Romer §2.3)</h2>
+<p>Todas las trayectorias del diagrama cumplen (3.18) y (3.19). Hay que mostrar que <strong>solo la de silla</strong> cumple además la transversalidad y la factibilidad. Sea \(k_0&lt;k^*\) y \(c_0^{silla}\) el consumo sobre la silla:</p>
+<ol>
+<li><strong>\(c_0&gt;c_0^{silla}\) (consumo demasiado alto):</strong> la trayectoria cruza la curva \(\dot k=0\); después \(c\) sigue subiendo y \(k\) cae, hasta que en un tiempo <strong>finito</strong> \(T\) se tiene \(k_T=0\). Sin capital no hay producción, así que \(c\) tiene que saltar a 0. Ese salto es una tasa de crecimiento de \(c\) igual a \(-\infty\), mientras que la Euler exige \(+\infty\) cuando \(k\to0\) (porque \(f'(0)=\infty\)). <strong>Se viola la ecuación de Euler.</strong></li>
+<li><strong>\(c_0&lt;c_0^{silla}\) (consumo demasiado bajo):</strong> la trayectoria cruza la curva \(\dot c=0\) y converge a \(\bar k&gt;k_{oro}\) con \(c=0\). Allí \(r^{**}=f'(\bar k)-\delta&lt;f'(k_{oro})-\delta=n\). Integrando \(\dot v/v=-(r-n)\) se obtiene \(v_t=v_0e^{-(r^{**}-n)t}\), y como \(r^{**}&lt;n\) el exponente es positivo: \(\lim k_tv_t=\bar k\,v_0\,e^{(n-r^{**})t}\to\infty\neq0\). <strong>Se viola la transversalidad.</strong> Las familias consumen demasiado poco e invierten demasiado. Romer lo dice así: el valor presente de los ingresos sería infinitamente mayor que el del consumo, así que las familias podrían consumir más.</li>
+</ol>
+<div class="box key"><span class="tag">Conclusión</span><p>La única trayectoria que cumple todas las condiciones de optimalidad, incluida la transversalidad, es la <strong>trayectoria estable</strong>. Por eso <strong>el modelo de Ramsey nunca termina en la zona dinámicamente ineficiente</strong>, a diferencia de Solow con \(s\) alta.</p></div>
+</section>
+
+<!-- ============================================================ 9 -->
+<section id="ee">
+<h2 class="sec"><span class="num">9</span>El estado estacionario y la regla de oro modificada</h2>
+<div class="formula main">\[f'(k^*)=\delta+\rho\quad\Big(\text{con progreso técnico: }\delta+\rho+\theta g\Big),\qquad c^*=f(k^*)-(\delta+n)k^*\]
+\[\text{Cobb-Douglas:}\quad k^*=\left(\frac{\alpha A}{\delta+\rho}\right)^{\frac1{1-\alpha}},\qquad s^*=\frac{(\delta+n)k^*}{y^*}=\frac{\alpha(\delta+n)}{\delta+\rho},\qquad r^*=\rho\]</div>
+<ul>
+<li><strong>\(k^*\) no depende de \(\theta\)</strong> (sin progreso técnico): \(\theta\) afecta a la transición, no al destino.</li>
+<li>En el estado estacionario el tipo de interés es igual a la tasa de descuento: \(r^*=\rho\) (con progreso técnico, \(r^*=\rho+\theta g\)).</li>
+<li>La tasa de ahorro de estado estacionario \(s^*\) es endógena: depende de \(\alpha, \delta, n, \rho\). En Solow, \(s\) es un parámetro.</li>
+</ul>
+<div class="box key"><span class="tag">Regla de oro modificada</span>
+<p>Solow: \(f'(k_{oro})=\delta+n\) maximiza el consumo de estado estacionario. Ramsey: \(f'(k^*)=\delta+\rho\). Como \(\rho&gt;n\) (necesario para que la utilidad esté acotada) y \(f''&lt;0\):</p>
+\[k^*&lt;k_{oro}.\]
+<p>La economía <strong>no</strong> converge al estado estacionario de máximo consumo. <strong>¿Por qué?</strong> (Romer §2.5, con \(g=0\)). Desde \(k^*\), ahorrar más permitiría un consumo permanentemente mayor en el futuro, pero exige sacrificar consumo hoy, y las familias valoran más el presente. A partir de \(k^*\), el sacrificio de corto plazo pesa más que la ganancia permanente descontada, así que no vale la pena. Por eso \(k^*\) se llama <strong>regla de oro modificada</strong>: es el \(k\) óptimo al que la economía puede converger, dada la impaciencia. Con progreso técnico, \(f'(k^*)=\delta+\rho+\theta g\) frente a \(f'(k_{oro})=\delta+n+g\), y la condición \(\rho&gt;n+(1-\theta)g\) garantiza de nuevo \(k^*&lt;k_{oro}\).</p></div>
+<p><strong>Senda de crecimiento sostenido</strong> (Romer §2.5): una vez en \(E\), la economía se comporta como Solow en estado estacionario. \(k\), \(y\), \(c\) (por trabajador efectivo) son constantes, así que <strong>la tasa de ahorro \((y-c)/y\) también lo es</strong>. \(K\), \(Y\) y \(C\) crecen a \(n+g\); las variables por trabajador, a \(g\). <strong>El progreso técnico sigue siendo la única fuente de crecimiento de largo plazo</strong>, y las diferencias de capital siguen sin explicar las diferencias de renta (mismo argumento que en Solow).</p>
+</section>
+
+<!-- ============================================================ 10 -->
+<section id="forma">
+<h2 class="sec"><span class="num">10</span>La forma de la trayectoria estable y la dinámica de transición</h2>
+<p>La forma exacta de la silla no tiene fórmula general, pero depende de forma intuitiva de \(\theta\) (Sala-i-Martin, gráfico 3.3):</p>
+<ul>
+<li><strong>\(\theta\) alta</strong> (mucho deseo de suavizar): la silla está <strong>cerca de la curva \(\dot k=0\)</strong>. Los agentes consumen lo máximo posible para tener un consumo plano, y la inversión neta es casi cero.</li>
+<li><strong>\(\theta\) baja</strong> (poco deseo de suavizar): la silla es <strong>más empinada</strong> y queda por debajo de la de \(\theta\) alta cuando \(k&lt;k^*\). Al principio se consume poco y se acumula mucho capital, y el consumo sube con fuerza a medida que \(k\) se acerca a \(k^*\).</li>
+</ul>
+<figure><div id="fig-theta"></div><figcaption>Gráfico 5 (Sala 3.3): trayectorias estables con \(\theta\) alta y baja (mismos \(\alpha,\rho,\delta,n\), así que el mismo \(k^*\)).</figcaption></figure>
+<p><strong>Transición desde \(k_0&lt;k^*\):</strong> \(k\), \(c\) e \(y\) crecen a tasas decrecientes, que se anulan en el estado estacionario. A medida que se acumula capital, su producto marginal cae, y con él el tipo de interés \(r=f'(k)-\delta\) y el crecimiento del consumo \((r-\rho)/\theta\). También se puede converger desde arriba (\(k_0&gt;k^*\)), con tasas de crecimiento negativas.</p>
+</section>
+
+<!-- ============================================================ 11 -->
+<section id="finito">
+<h2 class="sec"><span class="num">11</span>Horizonte finito y el teorema de la autopista (Sala §3.5–3.6)</h2>
+<p>Si el horizonte termina en \(T&lt;\infty\), las ecuaciones (3.18) y (3.19) no cambian (el diagrama de fases es el mismo), pero la transversalidad pasa a ser \(k_Tv_T=0\). Como \(v_T=e^{-(\rho-n)T}c_T^{-\theta}&gt;0\), se necesita <strong>\(k_T=0\)</strong>: no se deja capital al morir.</p>
+<ul>
+<li>El \(c_0\) óptimo es <strong>mayor</strong> que el de la silla de horizonte infinito: hay que llegar al eje vertical (\(k=0\)) <em>exactamente</em> en \(T\).</li>
+<li>La trayectoria de \(k\) tiene forma de <strong>U invertida</strong>: primero se acumula, luego se desacumula, mientras \(c\) sigue creciendo. Es parecido al modelo del ciclo vital, en el que se ahorra de joven y se desahorra en la vejez.</li>
+<li>La simple modificación de la transversalidad cambia el \(c_0\) elegido. <strong>La condición de transversalidad es la que determina el consumo inicial.</strong></li>
+</ul>
+<div class="box note"><span class="tag">Teorema de la autopista (Dorfman, Samuelson y Solow, 1958)</span>
+<p>Si \(T\) está lejos, la forma óptima de ir de \(k_0\) a \(k_T=0\) es <strong>acercarse rápido al estado estacionario de horizonte infinito, quedarse allí casi todo el tiempo</strong> (cerca de \(k^*\) el sistema se mueve muy despacio, porque \(\dot k\approx0\) y \(\dot c\approx0\)) <strong>y salir al final</strong> hacia \(k_T=0\). Como un viaje largo por carretera: se toma la autopista aunque no pase exactamente por el origen ni por el destino.</p></div>
+<figure><div id="fig-autopista"></div><figcaption>Gráfico 6 (Sala 3.5): trayectoria de \(k(t)\) con horizonte finito largo. Sube hacia \(k^*\), se queda cerca de él y cae a 0 en \(T\).</figcaption></figure>
+</section>
+
+<!-- ============================================================ 12 -->
+<section id="ahorro">
+<h2 class="sec"><span class="num">12</span>La tasa de ahorro durante la transición (Sala §3.7)</h2>
+<p>El modelo da ecuaciones para \(c\) y \(k\), no para \(s\). Como \(s=1-c/y\), Sala-i-Martin construye un diagrama de fases en \((k, c/y)\) con Cobb-Douglas. La pendiente de la trayectoria estable en ese plano decide el comportamiento de \(s\):</p>
+<div class="tablewrap"><table>
+<tr><th>Caso</th><th>Condición</th><th>\(c/y\) en la transición (\(k\uparrow\))</th><th>Tasa de ahorro \(s\)</th></tr>
+<tr><td>A</td><td>\(\dfrac{\rho+\delta}{\theta}&gt;\alpha(n+\delta)\)  (equivale a \(1/\theta&gt;s^*\))</td><td>sube</td><td><strong>baja</strong> monótonamente</td></tr>
+<tr><td>B</td><td>\(\dfrac{\rho+\delta}{\theta}&lt;\alpha(n+\delta)\)</td><td>baja</td><td><strong>sube</strong> monótonamente</td></tr>
+<tr><td>C</td><td>\(\dfrac{\rho+\delta}{\theta}=\alpha(n+\delta)\)</td><td>constante \(=(\theta-1)/\theta\)</td><td><strong>constante</strong>: \(s=1/\theta\)</td></tr>
+</table></div>
+<ul>
+<li>El ahorro es siempre <strong>monótono</strong> en la transición: nunca sube y luego baja.</li>
+<li><strong>Solow es un caso particular de Ramsey:</strong> para una combinación específica de parámetros, lo óptimo es ahorrar una fracción constante. Esa combinación casi nunca se da exactamente, pero si los parámetros están cerca, \(s\) será aproximadamente constante.</li>
+<li><strong>Diferencia importante:</strong> incluso en el caso C, \(s\) no puede tomar cualquier valor: lo fijan los parámetros de preferencias y tecnología. Por eso Ramsey <strong>no</strong> puede ser dinámicamente ineficiente. En Solow, \(s\) es exógena y puede ser tan alta como se quiera.</li>
+<li>Motivación empírica: los países de crecimiento alto tienden a ahorrar más y la tasa de ahorro cambia con el nivel de ingreso.</li>
+</ul>
+</section>
+
+<!-- ============================================================ 13 -->
+<section id="tecnologia">
+<h2 class="sec"><span class="num">13</span>Ramsey con progreso técnico (Romer §2.1–2.5; Sala cap. 4)</h2>
+<p>Con \(Y=F(K,A L)\) y \(A=A_0e^{gt}\), se trabaja con variables por trabajador efectivo (\(\hat c=C/(AL)\), \(\hat k=K/(AL)\)). Como \(C/L=A\hat c\), la utilidad se reescribe como</p>
+<div class="formula">\[U=B\int_0^\infty e^{-\beta t}\frac{\hat c^{1-\theta}}{1-\theta}dt,\qquad \beta\equiv\rho-n-(1-\theta)g&gt;0\qquad\text{(Romer 2.12)}\]
+\[\frac{\dot{\hat c}}{\hat c}=\frac{f'(\hat k)-\delta-\rho-\theta g}{\theta},\qquad \dot{\hat k}=f(\hat k)-\hat c-(\delta+n+g)\hat k\qquad\text{(Romer 2.24–2.25 con }\delta;\ \text{Sala 4.13–4.15)}\]</div>
+<ul>
+<li>Hay dos diferencias con el caso sin progreso técnico: la tasa de descuento efectiva es \((\rho-n)-(1-\theta)g\), y la depreciación efectiva es \(\delta+n+g\).</li>
+<li>Consumo por trabajador: \(\dfrac{\dot C}{C}=g+\dfrac{\dot{\hat c}}{\hat c}=\dfrac{r-\rho}{\theta}\) (Romer 2.21). La ecuación de Euler vale para \(C\).</li>
+<li>En estado estacionario, \(\hat c\) y \(\hat k\) son constantes, y todas las variables per cápita crecen a \(g\).</li>
+<li><strong>Tipos de progreso técnico (Sala, cap. 4):</strong> neutral de Hicks \(Y=B(t)F(K,L)\); de Harrod (potenciador del trabajo) \(Y=F(K,A(t)L)\); potenciador del capital \(Y=F(D(t)K,L)\). Solo el de Harrod es compatible con un estado estacionario de crecimiento constante (Phelps; Sala lo demuestra con una CES). Con Cobb-Douglas los tres son equivalentes. El progreso técnico <em>incorporado</em> a las máquinas nuevas afecta a los niveles, pero no a la tasa de crecimiento de estado estacionario.</li>
+</ul>
+</section>
+
+<!-- ============================================================ 14 -->
+<section id="rho">
+<h2 class="sec"><span class="num">14</span>Experimento: caída inesperada de la tasa de descuento (Romer §2.6)</h2>
+<p>La economía está en su senda de crecimiento sostenido y \(\rho\) baja de forma <strong>imprevista y permanente</strong> (las familias se vuelven más pacientes). Es lo más parecido en Ramsey a un aumento de \(s\) en Solow.</p>
+<ol>
+<li>\(\rho\) solo aparece en la ecuación de \(c\), no en la de \(k\) (que refleja la tecnología). Solo se mueve la curva \(\dot c=0\): <strong>se desplaza a la derecha</strong>, porque \(f'(k^*)=\delta+\rho\) exige un \(k^*\) mayor.</li>
+<li>En el momento del cambio, <strong>\(k\) no puede saltar</strong> (es el \(k^*\) viejo). <strong>\(c\) sí salta: cae de inmediato</strong> hasta la nueva trayectoria de silla (punto A).</li>
+<li>Desde A, \(c\) y \(k\) suben gradualmente hasta el nuevo estado estacionario \(E'\), con valores mayores que los originales.</li>
+</ol>
+<figure><div id="fig-rho"></div><figcaption>Gráfico 7 (Romer 2.6): caída de \(\rho\). La curva \(\dot c=0\) pasa de la línea punteada a la continua; \(c\) salta de \(E\) a \(A\) y luego la economía sigue la nueva silla hasta \(E'\).</figcaption></figure>
+<p>Es similar a un aumento de \(s\) en Solow cuando \(k\) está por debajo de la regla de oro: \(k\) aumenta gradualmente, \(c\) cae y luego supera su nivel inicial, y el crecimiento por trabajador sube de forma transitoria. La diferencia es que en Ramsey la fracción ahorrada <strong>no es constante</strong> durante el ajuste. El salto de \(c\) no contradice la optimización, porque el cambio es imprevisto: con la nueva información, recortar \(c\) es lo óptimo.</p>
+</section>
+
+<!-- ============================================================ 15 -->
+<section id="gasto">
+<h2 class="sec"><span class="num">15</span>Experimento: gasto público (Romer §2.7)</h2>
+<p>El Estado compra \(G\) (por trabajador efectivo), financiado con <strong>impuestos de suma fija</strong> y con presupuesto equilibrado. \(G\) no afecta a la utilidad marginal del consumo privado ni a la producción futura (es consumo público). Entonces:</p>
+<div class="formula">\[\dot k=f(k)-c-G-(\delta+n)k\qquad\text{(la ecuación de Euler no cambia)}\]</div>
+<div class="grid2">
+<div class="box key"><span class="tag">Aumento permanente e imprevisto de \(G\)</span>
+<p>La curva \(\dot k=0\) baja exactamente en \(\Delta G\); la curva \(\dot c=0\) no se mueve. <strong>\(c\) cae exactamente en \(\Delta G\)</strong> y la economía salta de inmediato a su nueva senda: <strong>\(k\) y \(r\) no cambian</strong>. El gasto permanente reduce la riqueza vital de las familias y, como es permanente, no les sirve reordenar su consumo en el tiempo. Hay un desplazamiento uno a uno del consumo, sin efecto sobre la inversión. En cambio, si el consumo fuera una fracción fija del ingreso disponible (Solow o una regla keynesiana), \(c\) caería menos que \(G\), la inversión caería y \(r\) subiría.</p></div>
+<div class="box note"><span class="tag">Aumento temporal (con fecha de fin conocida)</span>
+<p>\(c\) cae <strong>menos</strong> que \(\Delta G\). Si cayera exactamente \(\Delta G\), tendría que saltar hacia arriba cuando \(G\) volviera a su nivel, y un salto previsto de la utilidad marginal no es óptimo. Las familias financian parte del gasto con su ahorro: <strong>\(k\) cae</strong> mientras \(G\) está alto y <strong>\(r=f'(k)-\delta\) sube</strong>. La economía llega a la silla vieja justo cuando \(G\) regresa. Si el aumento es muy duradero, \(c\) cae casi \(\Delta G\); si es muy breve, \(c\) cambia poco y casi todo se paga desahorrando.</p></div>
+</div>
+<figure><div id="fig-G"></div><figcaption>Gráfico 8 (Romer 2.8): un aumento permanente de \(G\) baja la curva \(\dot k=0\). El consumo cae de \(E\) a \(E'\), con el mismo \(k^*\).</figcaption></figure>
+<div class="box note"><span class="tag">Evidencia: la guerra y los tipos de interés (Barro, 1987)</span>
+<p>Predicción: el gasto <em>temporal</em> (guerras) eleva el tipo de interés real; el permanente, no. Barro usa datos del Reino Unido, 1729–1918 (tipo de interés nominal de largo plazo y gasto militar temporal estimado): \(R_t=3{,}54+2{,}6\,\tilde G_t\) (e.e. 0,27 y 0,7), con AR(1) de 0,91 y \(R^2=0{,}89\). Si se excluye la Primera Guerra Mundial (hubo controles de precios), el coeficiente sube a 6,1 (e.e. 1,3). Pero en EE. UU. el tipo de interés real ha sido, en general, <em>menor</em> durante las guerras: una anomalía que la teoría aún no explica.</p></div>
+</section>
+
+<!-- ============================================================ 16 -->
+<section id="velocidad">
+<h2 class="sec"><span class="num">16</span>Velocidad de convergencia (Romer §2.6; Sala §3.8 y apéndice)</h2>
+<p>Se linealiza el sistema alrededor de \((k^*,c^*)\), con \(\tilde k=k-k^*\) y \(\tilde c=c-c^*\):</p>
+<div class="formula">\[\begin{pmatrix}\dot{\tilde k}\\ \dot{\tilde c}\end{pmatrix}=\underbrace{\begin{pmatrix}f'(k^*)-(\delta+n) &amp; -1\\ \dfrac{f''(k^*)c^*}{\theta} &amp; 0\end{pmatrix}}_{J}\begin{pmatrix}\tilde k\\ \tilde c\end{pmatrix},\qquad f'(k^*)-(\delta+n)=\rho-n\equiv\beta\]</div>
+<ul>
+<li>\(\det J=f''(k^*)c^*/\theta&lt;0\): los valores propios tienen <strong>signos opuestos</strong> (uno negativo y otro positivo), lo que caracteriza un <strong>punto de silla</strong>.</li>
+<li>Valores propios: \(\mu^2-\beta\mu+\dfrac{f''(k^*)c^*}{\theta}=0\Rightarrow\mu_{1,2}=\dfrac{\beta\mp\sqrt{\beta^2-4f''(k^*)c^*/\theta}}{2}\) (Romer 2.37).</li>
+<li>La solución general es \(\tilde k(t)=\Psi_1e^{\mu_1t}+\Psi_2e^{\mu_2t}\). Como \(\mu_2&gt;0\), la transversalidad obliga a \(\Psi_2=0\), y la condición inicial da \(\Psi_1=k_0-k^*\) (Sala A.6–A.8). Así, \(k(t)-k^*=e^{\mu_1t}(k_0-k^*)\) y lo mismo para \(c\).</li>
+<li>Sobre la silla lineal: \(\tilde c=\dfrac{f''(k^*)c^*}{\theta\mu_1}\tilde k\); la pendiente es positiva porque \(f''&lt;0\) y \(\mu_1&lt;0\).</li>
+</ul>
+<div class="formula main">\[\text{Cobb-Douglas:}\quad \lambda\equiv-\mu_1=\frac12\left\{\sqrt{\beta^2+\frac{4(1-\alpha)}{\theta}(\rho+\delta)\Big[\frac{\rho+\delta}{\alpha}-(n+\delta)\Big]}-\beta\right\}\]</div>
+<p>(Con progreso técnico se cambia \(\rho+\delta\to\rho+\delta+\theta g\), \(n+\delta\to n+g+\delta\) y \(\beta=\rho-n-(1-\theta)g\). Es la ec. 2.39 de Romer con \(\delta=0\) y la A.5 de Sala-i-Martin.)</p>
+<div class="box key"><span class="tag">Ejemplo de Romer</span>
+<p>\(\alpha=1/3\), \(\rho=4\%\), \(n=2\%\), \(g=1\%\), \(\theta=1\), \(\delta=0\). En la senda de crecimiento sostenido \(r=5\%\), \(s=20\%\) y \(\beta=2\%\). Resultado: <strong>\(\mu_1=-5{,}4\%\)</strong>. En Solow, con los mismos valores, la velocidad es \((1-\alpha)(n+g)=2\%\). Ramsey converge <strong>más rápido</strong> porque la tasa de ahorro es mayor que \(s^*\) cuando \(k&lt;k^*\) y menor cuando \(k&gt;k^*\) (en este ejemplo, \(1/\theta=1&gt;s^*=0{,}2\): caso A de <a href="#ahorro">§12</a>).</p></div>
+<h4>Regresión de convergencia (Sala 3.37)</h4>
+<div class="formula">\[\frac{\ln y_t-\ln y_0}{\ln y^*-\ln y_0}=1-e^{-\lambda t}\quad\Longleftrightarrow\quad \ln y_t-\ln y_0=(1-e^{-\lambda t})\big[\ln y^*-\ln y_0\big]\]</div>
+<p>Si un conjunto de economías comparte los parámetros estructurales (\(\rho, \theta, \alpha, \delta, n\)), las pobres crecen más rápido: en un corte transversal del crecimiento contra la renta inicial se obtiene un coeficiente negativo, porque tienen menos capital y mayor productividad marginal. Si convergen a estados estacionarios distintos, solo hay <strong>convergencia condicional</strong>, igual que en Solow. Sala-i-Martin muestra que los estados de EE. UU. convergen como predice la ecuación.</p>
+</section>
+
+<!-- ============================================================ 17 -->
+<section id="comparacion">
+<h2 class="sec"><span class="num">17</span>Solow vs. Ramsey: cuadro comparativo</h2>
+<div class="tablewrap"><table>
+<tr><th>Aspecto</th><th>Solow-Swan</th><th>Ramsey-Cass-Koopmans</th></tr>
+<tr><td>Ahorro</td><td>\(s\) exógena y constante</td><td>Endógeno: sale de maximizar la utilidad; varía en la transición</td></tr>
+<tr><td>Agentes</td><td>Familias productoras (Robinson Crusoe)</td><td>Familias, empresas y mercados (equivale a Robinson Crusoe y al planificador)</td></tr>
+<tr><td>Ecuaciones</td><td>Una: \(\dot k=sf(k)-(\delta+n)k\)</td><td>Dos: \(\dot k=f(k)-c-(\delta+n)k\) y \(\dot c/c=(f'(k)-\delta-\rho)/\theta\), más la transversalidad</td></tr>
+<tr><td>Estado estacionario</td><td>\(sf(k^*)=(\delta+n)k^*\)</td><td>\(f'(k^*)=\delta+\rho\) (regla de oro modificada)</td></tr>
+<tr><td>Relación con \(k_{oro}\)</td><td>\(k^*\) puede estar a cualquier lado de \(k_{oro}\)</td><td>Siempre \(k^*&lt;k_{oro}\) (porque \(\rho&gt;n\))</td></tr>
+<tr><td>Ineficiencia dinámica</td><td>Posible (\(s&gt;s_{oro}\), \(r&lt;n\))</td><td>Imposible (se viola la transversalidad)</td></tr>
+<tr><td>Estabilidad</td><td>Globalmente estable</td><td>Punto de silla (\(c\) salta hasta la silla)</td></tr>
+<tr><td>Bienestar</td><td>No se puede evaluar</td><td>El equilibrio es Pareto óptimo (primer teorema del bienestar)</td></tr>
+<tr><td>Crecimiento de largo plazo</td><td>Solo por \(g\) exógeno</td><td>Solo por \(g\) exógeno (igual)</td></tr>
+<tr><td>Velocidad de convergencia</td><td>\((1-\alpha)(n+g+\delta)\)</td><td>\(-\mu_1\), en general mayor si \(1/\theta&gt;s^*\)</td></tr>
+<tr><td>Efecto del gasto permanente</td><td>Desplaza consumo e inversión</td><td>Desplaza solo el consumo, uno a uno</td></tr>
+<tr><td>Convergencia</td><td>Condicional</td><td>Condicional</td></tr>
+</table></div>
+</section>
+
+<!-- ============================================================ 18 -->
+<section id="simulador">
+<h2 class="sec"><span class="num">18</span>Simulador del modelo de Ramsey (Cobb-Douglas, \(A=1\))</h2>
+<p>La trayectoria de silla se calcula numéricamente integrando hacia atrás desde el estado estacionario. Mueve los parámetros y el capital inicial y observa el diagrama de fases, las trayectorias explosivas (con un consumo inicial 5% mayor o menor que el de la silla) y las series de tiempo de \(k\), \(c\), la tasa de ahorro y el tipo de interés.</p>
+<div class="sim">
+  <div class="controls">
+    <label>Participación del capital \(\alpha\) <span class="v" id="v-a"></span><input type="range" id="p-a" min="0.2" max="0.6" step="0.01" value="0.33"></label>
+    <label>Tasa de descuento \(\rho\) <span class="v" id="v-r"></span><input type="range" id="p-r" min="0.011" max="0.1" step="0.001" value="0.03"></label>
+    <label>Inversa de la EIS \(\theta\) <span class="v" id="v-t"></span><input type="range" id="p-t" min="0.3" max="6" step="0.1" value="2"></label>
+    <label>Depreciación \(\delta\) <span class="v" id="v-d"></span><input type="range" id="p-d" min="0.01" max="0.12" step="0.005" value="0.05"></label>
+    <label>Crecimiento poblacional \(n\) <span class="v" id="v-n"></span><input type="range" id="p-n" min="0" max="0.03" step="0.001" value="0.01"></label>
+    <label>Capital inicial \(k_0/k^*\) <span class="v" id="v-k"></span><input type="range" id="p-k" min="0.1" max="2" step="0.05" value="0.3"></label>
+  </div>
+  <div class="stats" id="stats"></div>
+  <div class="flag" id="flag"></div>
+  <figure><div id="sim-fase"></div><figcaption>Curvas \(\dot k=0\) y \(\dot c=0\), trayectoria de silla (gruesa) y trayectorias explosivas desde \(k_0\) (punteadas).</figcaption></figure>
+  <figure><div id="sim-path"></div><figcaption>Sobre la silla: \(k(t)/k^*\), \(c(t)/c^*\), tasa de ahorro bruta \(s(t)=1-c/y\) y tipo de interés \(r(t)=f'(k)-\delta\).</figcaption></figure>
+</div>
+</section>
+
+<!-- ============================================================ 19 -->
+<section id="ejercicios">
+<h2 class="sec"><span class="num">19</span>Ejercicios resueltos</h2>
+
+<details open id="ej-taller"><summary>Ejercicio 1 — Taller: \(U(c)=\sqrt{c}\), \(y=A\ln k\). Encuentre \(k^*\).</summary>
+<p><strong>Consumidores.</strong> \(\max\int_0^\infty e^{-(\rho-n)t}\sqrt{c_t}\,dt\) s.a. \(\dot b=w+(r-n)b-c\).</p>
+\[H=e^{-(\rho-n)t}\sqrt{c}+\lambda\big[w+(r-n)b-c\big]\]
+<ol>
+<li>\(H_c=0\): \(e^{-(\rho-n)t}\dfrac{1}{2\sqrt c}=\lambda\)  (1)</li>
+<li>\(H_\lambda=\dot b\): \(w+(r-n)b-c=\dot b\)  (2)</li>
+<li>\(H_b=-\dot\lambda\): \((r-n)\lambda=-\dot\lambda\Rightarrow\dfrac{\dot\lambda}{\lambda}=-(r-n)\)  (3)</li>
+<li>Logaritmo de (1): \(-(\rho-n)t-\ln2-\tfrac12\ln c=\ln\lambda\). Derivando: \(\dfrac{\dot\lambda}{\lambda}=-(\rho-n)-\dfrac{\dot c}{2c}\).</li>
+<li>Igualando con (3): \(-(r-n)=-(\rho-n)-\dfrac{\dot c}{2c}\Rightarrow\boxed{\dfrac{\dot c}{c}=2(r-\rho)}\) (Euler con \(\theta=1/2\)).</li>
+</ol>
+<p><strong>Empresas.</strong> \(f(k)=A\ln k\Rightarrow f'(k)=A/k\). Entonces \(r=f'(k)-\delta=\dfrac Ak-\delta\) y \(w=A\ln k-A\).</p>
+<p><strong>Estado estacionario.</strong> \(\dot c=0\Rightarrow r=\rho\Rightarrow\dfrac{A}{k}-\delta=\rho\Rightarrow\boxed{k^*=\dfrac{A}{\delta+\rho}}\).</p>
+<p><strong>Lo que el Taller no pide, pero conviene añadir:</strong></p>
+<ul>
+<li>Consumo de estado estacionario (de \(\dot k=0\)): \(c^*=A\ln\!\Big(\dfrac{A}{\delta+\rho}\Big)-(\delta+n)\dfrac{A}{\delta+\rho}\).</li>
+<li>Regla de oro: \(f'(k_{oro})=\delta+n\Rightarrow k_{oro}=\dfrac{A}{\delta+n}&gt;k^*\), porque \(\rho&gt;n\). Es la regla de oro modificada.</li>
+<li>Ejemplo numérico con \(A=1\), \(\delta=0{,}05\), \(\rho=0{,}03\), \(n=0{,}01\): \(k^*=12{,}5\), \(c^*=\ln12{,}5-0{,}06(12{,}5)\approx1{,}776\), \(k_{oro}\approx16{,}7\).</li>
+<li>Advertencia: \(A\ln k\) no es una función neoclásica estricta (es negativa si \(k&lt;1\) y no cumple \(f(0)=0\)), pero sirve para el ejercicio porque \(f'&gt;0\), \(f''&lt;0\) y cumple Inada en \(f'\).</li>
+</ul></details>
+
+<details><summary>Ejercicio 2 — Cobb-Douglas numérico</summary>
+<p>\(y=k^{1/3}\), \(\delta=0{,}05\), \(\rho=0{,}03\), \(n=0{,}01\), \(\theta=2\).</p>
+<ul>
+<li>\(k^*=\big(\tfrac{1/3}{0{,}08}\big)^{3/2}=(4{,}17)^{1{,}5}\approx8{,}51\); \(y^*=k^{*1/3}\approx2{,}04\); \(c^*=2{,}04-0{,}06(8{,}51)\approx1{,}53\).</li>
+<li>\(s^*=\alpha(\delta+n)/(\delta+\rho)=\tfrac13(0{,}06)/0{,}08=0{,}25\). Comprobación: \(0{,}06\times8{,}51/2{,}04=0{,}25\).</li>
+<li>\(r^*=\rho=3\%&gt;n=1\%\): la economía es dinámicamente eficiente. \(k_{oro}=(\tfrac{1/3}{0{,}06})^{1{,}5}\approx13{,}09&gt;k^*\).</li>
+<li>Velocidad: \(\beta=\rho-n=0{,}02\); \(\lambda=\tfrac12\{\sqrt{0{,}02^2+\tfrac{4(2/3)}{2}(0{,}08)(0{,}24-0{,}06)}-0{,}02\}=\tfrac12(0{,}14-0{,}02)=0{,}06\). La vida media es \(\ln2/0{,}06\approx11{,}6\) años, frente a Solow con \(s=0{,}25\): \((2/3)(0{,}06)=0{,}04\), unos 17 años.</li>
+</ul></details>
+
+<details><summary>Ejercicio 3 — Euler con utilidad logarítmica y con progreso técnico</summary>
+<p>Con \(u=\ln c\) (\(\theta=1\)): \(\dot c/c=r-\rho=f'(k)-\delta-\rho\). Con progreso técnico \(g\) y variables por trabajador efectivo: \(\dot{\hat c}/\hat c=(f'(\hat k)-\delta-\rho-\theta g)/\theta\). En la senda de crecimiento sostenido, \(f'(\hat k^*)=\delta+\rho+\theta g\) y \(r^*=\rho+\theta g\). Con los valores de Romer (\(\rho=4\%,\ g=1\%,\ \theta=1\)): \(r^*=5\%\).</p></details>
+
+<details><summary>Ejercicio 4 — ¿Cuándo es óptima una tasa de ahorro constante?</summary>
+<p>Con \(\alpha=0{,}3\), \(\delta=0{,}05\), \(n=0{,}01\), \(\rho=0{,}03\), ¿qué \(\theta\) hace óptimo un \(s\) constante y cuál es ese \(s\)?</p>
+<p>Condición C: \(\dfrac{\rho+\delta}{\theta}=\alpha(n+\delta)\Rightarrow\theta=\dfrac{0{,}08}{0{,}3\times0{,}06}\approx4{,}44\). Entonces \(s=1/\theta\approx0{,}225\), que coincide con \(s^*=\alpha(\delta+n)/(\delta+\rho)=0{,}018/0{,}08=0{,}225\). Si \(\theta&lt;4{,}44\), el ahorro cae durante la transición (caso A); si \(\theta&gt;4{,}44\), sube (caso B).</p></details>
+
+<details><summary>Ejercicio 5 — Derive la restricción per cápita y el Hamiltoniano del planificador</summary>
+<p>Planificador: \(\max\int e^{-(\rho-n)t}u(c)\,dt\) s.a. \(\dot k=f(k)-c-(\delta+n)k\). \(H=e^{-(\rho-n)t}u(c)+\lambda[f(k)-c-(\delta+n)k]\). CPO: \(e^{-(\rho-n)t}u'(c)=\lambda\); \(\lambda[f'(k)-\delta-n]=-\dot\lambda\). Con \(u'=c^{-\theta}\): \(-(\rho-n)-\theta\tfrac{\dot c}{c}=-(f'(k)-\delta-n)\Rightarrow\tfrac{\dot c}{c}=\tfrac{f'(k)-\delta-\rho}{\theta}\). Es la misma ecuación que en el mercado, porque \(r=f'(k)-\delta\).</p></details>
+
+<details><summary>Ejercicio 6 — Efectos de un aumento permanente de \(G\) de 0 a 0,2</summary>
+<p>Con \(y=k^{1/3}\), \(\delta=0{,}05\), \(\rho=0{,}03\), \(n=0{,}01\): \(k^*\) sigue en 8,51 porque \(\dot c=0\) no cambia; \(r=3\%\) tampoco. \(c^*\) pasa de 1,53 a 1,33: cae exactamente 0,2. No hay transición: el salto es inmediato.</p></details>
+
+<details><summary>Ejercicio 7 — Linealización: pendiente de la silla</summary>
+<p>Con los datos del Ejercicio 2: \(f''(k^*)=-\alpha(1-\alpha)k^{*\alpha-2}=-\tfrac29(8{,}51)^{-5/3}\approx-0{,}0063\). Pendiente de la silla en \(E\): \(\dfrac{\tilde c}{\tilde k}=\dfrac{f''c^*}{\theta\mu_1}=\dfrac{-0{,}0063\times1{,}53}{2\times(-0{,}06)}\approx0{,}08\). Es positiva: si \(k_0\) está un 10% por debajo de \(k^*\) (\(\tilde k\approx-0{,}85\)), \(c_0\approx1{,}53-0{,}068\approx1{,}46\).</p></details>
+</section>
+
+<!-- ============================================================ 20 -->
+<section id="preguntas">
+<h2 class="sec"><span class="num">20</span>Preguntas tipo parcial (conceptuales)</h2>
+<details><summary>1. ¿Qué diferencia fundamental hay entre Ramsey y Solow?</summary><p>En Ramsey la tasa de ahorro es endógena: surge de familias que maximizan su utilidad intertemporal y de empresas que maximizan beneficios en mercados competitivos. En Solow es un parámetro exógeno y constante. La acumulación de capital proviene de la optimización intertemporal del consumo.</p></details>
+<details><summary>2. Interprete la ecuación de Euler.</summary><p>\(\rho+\theta\dot c/c=r\): el rendimiento de consumir hoy (impaciencia más deseo de suavizar) iguala al rendimiento de ahorrar (el tipo de interés). Si \(r&gt;\rho\) el consumo crece; la sensibilidad es \(1/\theta\), la elasticidad de sustitución intertemporal.</p></details>
+<details><summary>3. ¿Qué significa la condición de transversalidad y para qué sirve?</summary><p>\(\lim k_tv_t=0\): en el infinito, el valor de los activos debe ser cero; no se deja nada valioso sin usar. Sirve para descartar las trayectorias que llevan a \(\bar k\) (sobreacumulación con \(r&lt;n\)) y, junto con la factibilidad, deja una sola trayectoria: la de silla. Es la condición que determina \(c_0\).</p></details>
+<details><summary>4. ¿Por qué el equilibrio de mercado es igual a la solución del planificador?</summary><p>Porque no hay externalidades ni distorsiones y los agentes tienen toda la información. Las ecuaciones del mercado (con \(r=f'-\delta\) y \(b=k\)) son idénticas a las de Robinson Crusoe y a las del planificador. Es el primer teorema del bienestar.</p></details>
+<details><summary>5. ¿Por qué \(k^*&lt;k_{oro}\) en Ramsey?</summary><p>Porque \(f'(k^*)=\delta+\rho&gt;\delta+n=f'(k_{oro})\), ya que \(\rho&gt;n\) (condición para que la utilidad esté acotada). Las familias impacientes no aceptan el sacrificio de consumo presente necesario para llegar a \(k_{oro}\). Es la regla de oro modificada.</p></details>
+<details><summary>6. ¿Puede Ramsey ser dinámicamente ineficiente?</summary><p>No. Una trayectoria que acumulara capital más allá de \(k_{oro}\) terminaría en \(\bar k\) con \(r&lt;n\) y violaría la transversalidad. Las familias podrían consumir más en todo momento.</p></details>
+<details><summary>7. ¿Qué es un punto de silla? ¿Qué variables saltan?</summary><p>Un equilibrio al que solo se llega por una trayectoria (la de silla); cualquier otra diverge. Los valores propios de la linealización tienen signos opuestos (\(\det J&lt;0\)). \(k\) es predeterminado; \(c\) es de salto y se ubica sobre la silla.</p></details>
+<details><summary>8. ¿Qué pasa si \(\rho\) cae de forma imprevista?</summary><p>La curva \(\dot c=0\) se mueve a la derecha (\(k^*\) sube). \(k\) no cambia en el instante; \(c\) cae hasta la nueva silla y luego \(c\) y \(k\) suben hasta el nuevo estado estacionario, más alto. Es análogo a subir \(s\) en Solow por debajo de la regla de oro.</p></details>
+<details><summary>9. Compare un aumento permanente y uno temporal del gasto público.</summary><p>Permanente: \(c\) cae uno a uno y \(k\) y \(r\) no cambian. Temporal: \(c\) cae menos, se desahorra, \(k\) baja y \(r\) sube durante el episodio. Evidencia: Barro (1987) para las guerras británicas; EE. UU. es una anomalía.</p></details>
+<details><summary>10. ¿Cómo cambia la trayectoria de silla con \(\theta\)?</summary><p>Con \(\theta\) alta está cerca de \(\dot k=0\): se suaviza el consumo, que empieza alto, y se invierte poco. Con \(\theta\) baja está abajo y plana: se consume poco al inicio y se acumula rápido. \(k^*\) no depende de \(\theta\) (sin progreso técnico).</p></details>
+<details><summary>11. ¿La tasa de ahorro es constante en Ramsey?</summary><p>En el estado estacionario sí. En la transición cambia de forma monótona: cae si \((\rho+\delta)/\theta&gt;\alpha(n+\delta)\), sube en el caso contrario y es constante (\(s=1/\theta\)) solo en el caso de igualdad. Así, Solow es un caso particular.</p></details>
+<details><summary>12. ¿Converge Ramsey más rápido que Solow?</summary><p>Normalmente sí: en el ejemplo de Romer, 5,4% frente a 2% anual, porque las familias ahorran más cuando el capital es escaso (\(r\) alto) y menos cuando es abundante.</p></details>
+<details><summary>13. ¿Por qué se exige \(\rho&gt;n\)?</summary><p>Para que la utilidad dinástica sea finita. Si \(\rho\le n\), la integral \(\int e^{-(\rho-n)t}u(c^*)dt\) diverge y el problema no tiene una solución bien definida. Con progreso técnico: \(\rho&gt;n+(1-\theta)g\).</p></details>
+<details><summary>14. En el horizonte finito, ¿qué cambia?</summary><p>La transversalidad pasa a ser \(k_T=0\): el \(c_0\) óptimo es mayor que en el caso infinito y \(k\) sigue una U invertida. Teorema de la autopista: con \(T\) grande se pasa casi todo el tiempo cerca de \(k^*\).</p></details>
+</section>
+
+<!-- ============================================================ 21 -->
+<section id="formulario">
+<h2 class="sec"><span class="num">21</span>Formulario</h2>
+<div class="tablewrap"><table>
+<tr><th>Concepto</th><th>Fórmula</th></tr>
+<tr><td>Utilidad</td><td>\(U=\int_0^\infty e^{-(\rho-n)t}\frac{c^{1-\theta}-1}{1-\theta}dt\); EIS \(=1/\theta\); acotada si \(\rho&gt;n\ (+(1-\theta)g)\)</td></tr>
+<tr><td>Restricción de las familias</td><td>\(\dot b=w+(r-n)b-c\); no-Ponzi \(\lim e^{-R(t)}b\,e^{nt}\ge0\)</td></tr>
+<tr><td>Hamiltoniano</td><td>\(H=e^{-(\rho-n)t}u(c)+v[w+(r-n)b-c]\); \(H_c=0\), \(H_b=-\dot v\), \(\lim bv=0\)</td></tr>
+<tr><td>Euler</td><td>\(\dot c/c=(r-\rho)/\theta\)</td></tr>
+<tr><td>Empresas</td><td>\(r=f'(k)-\delta\), \(w=f(k)-kf'(k)\)</td></tr>
+<tr><td>Equilibrio financiero</td><td>\(b=k\)</td></tr>
+<tr><td>Sistema dinámico</td><td>\(\dot k=f(k)-c-(\delta+n)k\); \(\dot c/c=(f'(k)-\delta-\rho)/\theta\)</td></tr>
+<tr><td>Estado estacionario</td><td>\(f'(k^*)=\delta+\rho\ (+\theta g)\); \(c^*=f(k^*)-(\delta+n)k^*\); \(r^*=\rho\)</td></tr>
+<tr><td>Cobb-Douglas</td><td>\(k^*=(\alpha A/(\delta+\rho))^{1/(1-\alpha)}\); \(s^*=\alpha(\delta+n)/(\delta+\rho)\)</td></tr>
+<tr><td>Regla de oro modificada</td><td>\(f'(k^*)=\delta+\rho&gt;\delta+n=f'(k_{oro})\Rightarrow k^*&lt;k_{oro}\)</td></tr>
+<tr><td>Curva \(\dot k=0\)</td><td>\(c=f(k)-(\delta+n)k\); máximo en \(k_{oro}\); corta el eje en \(\bar k\)</td></tr>
+<tr><td>Curva \(\dot c=0\)</td><td>Vertical en \(k^*\)</td></tr>
+<tr><td>Linealización</td><td>\(J=\begin{pmatrix}\rho-n&amp;-1\\ f''c^*/\theta&amp;0\end{pmatrix}\); \(\mu_1=\frac{\beta-\sqrt{\beta^2-4f''c^*/\theta}}{2}\)</td></tr>
+<tr><td>Ahorro constante</td><td>\((\rho+\delta)/\theta=\alpha(n+\delta)\Rightarrow s=1/\theta\)</td></tr>
+<tr><td>Con progreso técnico</td><td>\(\dot{\hat c}/\hat c=(f'-\delta-\rho-\theta g)/\theta\); \(\dot{\hat k}=f-\hat c-(\delta+n+g)\hat k\); \(\beta=\rho-n-(1-\theta)g\)</td></tr>
+<tr><td>Gasto público</td><td>\(\dot k=f(k)-c-G-(\delta+n)k\)</td></tr>
+<tr><td>Convergencia</td><td>\(\ln y_t-\ln y_0=(1-e^{-\lambda t})(\ln y^*-\ln y_0)\)</td></tr>
+</table></div>
+</section>
+
+<!-- ============================================================ 22 -->
+<section id="errores">
+<h2 class="sec"><span class="num">22</span>Errores frecuentes</h2>
+<ol>
+<li>Poner \(\partial H/\partial b=+\dot v\). Es \(-\dot v\).</li>
+<li>Olvidar el \(-n\) en \((r-n)b\) o el \(e^{-(\rho-n)t}\) en la utilidad (viene de \(L_t=e^{nt}\)).</li>
+<li>Escribir \(r=f'(k)\) cuando hay depreciación: es \(r=f'(k)-\delta\). (En Romer \(\delta=0\), por eso ahí sí es \(r=f'(k)\).)</li>
+<li>Confundir \(\theta\) con la elasticidad de sustitución intertemporal: la EIS es \(1/\theta\).</li>
+<li>Decir que Ramsey converge a la regla de oro: converge a la <strong>regla de oro modificada</strong>, \(k^*&lt;k_{oro}\).</li>
+<li>Pensar que \(k\) puede saltar ante un shock: solo salta \(c\) (y los precios), no el capital.</li>
+<li>Dibujar la curva \(\dot c=0\) a la derecha del máximo de \(\dot k=0\). Está a la izquierda, porque \(\rho&gt;n\).</li>
+<li>Invertir las flechas: por encima de \(\dot k=0\), \(k\) baja (a la izquierda); a la derecha de \(\dot c=0\), \(c\) baja.</li>
+<li>Pensar que la transversalidad es una restricción “adicional” sin contenido. Es la que determina \(c_0\) y descarta las trayectorias explosivas.</li>
+<li>Olvidar calcular \(c^*\) después de \(k^*\), y comprobar que \(c^*&gt;0\).</li>
+<li>Decir que en Ramsey la política de ahorro cambia el crecimiento de largo plazo: igual que en Solow, solo \(g\) lo determina.</li>
+</ol>
+</section>
+
+</main>
+</div>
+<footer>Guía elaborada a partir del material del curso: Sala-i-Martin (cap. 3 y el inicio del cap. 4), Romer (cap. 2, Parte A) y Taller 1. Las fórmulas se muestran con KaTeX (requiere conexión a internet la primera vez).</footer>
+
+<script>
+(function(){
+  // ---- theme toggle
+  var root=document.documentElement, btn=document.getElementById('themeBtn');
+  try{var t=localStorage.getItem('solow-theme'); if(t) root.setAttribute('data-theme',t);}catch(e){}
+  btn.addEventListener('click',function(){
+    var cur=root.getAttribute('data-theme');
+    var dark=cur?cur==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;
+    var nt=dark?'light':'dark'; root.setAttribute('data-theme',nt);
+    try{localStorage.setItem('solow-theme',nt);}catch(e){}
+  });
+
+  // ---- SVG plotter (funciones, polilíneas, flechas 2D)
+  var NS='http://www.w3.org/2000/svg', uid=0;
+  function el(n,a,p){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e;}
+  function col(i){return 'var(--c'+i+')';}
+  function plot(target,o){
+    var W=o.w||560,H=o.h||340,m={l:46,r:18,t:16,b:38};
+    var host=typeof target==='string'?document.getElementById(target):target; if(!host)return;
+    host.innerHTML='';
+    var svg=el('svg',{viewBox:'0 0 '+W+' '+H,role:'img','aria-label':o.aria||'gráfico'},host);
+    var x0=o.xmin||0,x1=o.xmax,y0=(o.ymin===undefined?0:o.ymin),y1=o.ymax;
+    function X(x){return m.l+(x-x0)/(x1-x0)*(W-m.l-m.r);} function Y(y){return H-m.b-(y-y0)/(y1-y0)*(H-m.t-m.b);}
+    var cp=el('clipPath',{id:'rc'+(uid++)},svg); el('rect',{x:m.l,y:m.t-2,width:W-m.l-m.r+2,height:H-m.t-m.b+2},cp);
+    var clip='url(#'+cp.id+')';
+    el('line',{x1:m.l,y1:H-m.b,x2:W-m.r,y2:H-m.b,'class':'axis'},svg);
+    el('line',{x1:m.l,y1:m.t,x2:m.l,y2:H-m.b,'class':'axis'},svg);
+    if(o.xlabel){var tx=el('text',{x:W-m.r,y:H-m.b+26,'text-anchor':'end'},svg);tx.textContent=o.xlabel;}
+    if(o.ylabel){var ty=el('text',{x:m.l+6,y:m.t+4,'dominant-baseline':'hanging'},svg);ty.textContent=o.ylabel;}
+    (o.vlines||[]).forEach(function(v){
+      el('line',{x1:X(v.x),y1:H-m.b,x2:X(v.x),y2:Y(v.y===undefined?y1:v.y),'class':'guide'},svg);
+      if(v.label){var t=el('text',{x:X(v.x),y:H-m.b+15,'text-anchor':'middle'},svg);t.textContent=v.label;}
+    });
+    (o.hlines||[]).forEach(function(v){
+      el('line',{x1:m.l,y1:Y(v.y),x2:W-m.r,y2:Y(v.y),'class':'guide'},svg);
+      var t=el('text',{x:m.l-4,y:Y(v.y)+4,'text-anchor':'end'},svg);t.textContent=v.label;
+    });
+    function lineStyle(c){return {fill:'none',stroke:col(c.c||1),'stroke-width':c.w||2.2,'stroke-dasharray':c.dash||'','clip-path':clip};}
+    (o.curves||[]).forEach(function(c){
+      var pts=[],N=300,a=c.from!==undefined?c.from:x0,b=c.to!==undefined?c.to:x1;
+      for(var i=0;i<=N;i++){var x=a+(b-a)*i/N,y=c.f(x);if(!isFinite(y))continue;y=Math.max(y0-(y1-y0),Math.min(y1+(y1-y0),y));pts.push(X(x).toFixed(1)+','+Y(y).toFixed(1));}
+      var s=lineStyle(c);s.points=pts.join(' ');el('polyline',s,svg);
+      if(c.label){var lx=c.lx!==undefined?c.lx:b*0.97,ly=c.f(lx);var t=el('text',{x:X(lx)+(c.dx||0),y:Y(ly)+(c.dy||-6),'text-anchor':c.anchor||'end',style:'fill:'+col(c.c||1)+';font-weight:600'},svg);t.textContent=c.label;}
+    });
+    (o.paths||[]).forEach(function(p){
+      if(!p.pts||p.pts.length<2)return;
+      var s=lineStyle(p);s.points=p.pts.map(function(q){return X(q[0]).toFixed(1)+','+Y(Math.max(y0-(y1-y0),Math.min(y1+(y1-y0),q[1]))).toFixed(1)}).join(' ');el('polyline',s,svg);
+      if(p.label){var q=p.pts[p.lat===undefined?p.pts.length-1:p.lat];var t=el('text',{x:X(q[0])+(p.dx||0),y:Y(q[1])+(p.dy||-6),'text-anchor':p.anchor||'start',style:'fill:'+col(p.c||1)+';font-weight:600'},svg);t.textContent=p.label;}
+    });
+    (o.vecs||[]).forEach(function(v){ // flechas en píxeles: dx,dy en {-1,0,1}
+      var x=X(v.x),y=Y(v.y),L=v.L||18;
+      [[v.dx,0],[0,v.dy]].forEach(function(d){
+        if(!d[0]&&!d[1])return;
+        var ex=x+d[0]*L,ey=y-d[1]*L;
+        el('line',{x1:x,y1:y,x2:ex,y2:ey,stroke:col(v.c||4),'stroke-width':1.8},svg);
+        var ux=d[0],uy=-d[1],h=6;
+        var pts=[[ex+ux*h,ey+uy*h],[ex-uy*4,ey+ux*4],[ex+uy*4,ey-ux*4]];
+        el('polygon',{points:pts.map(function(q){return q.join(',')}).join(' '),fill:col(v.c||4)},svg);
+      });
+    });
+    (o.points||[]).forEach(function(p){el('circle',{cx:X(p.x),cy:Y(p.y),r:4.5,fill:col(p.c||1)},svg);
+      if(p.label){var t=el('text',{x:X(p.x)+(p.dx===undefined?8:p.dx),y:Y(p.y)+(p.dy===undefined?-8:p.dy),'text-anchor':p.anchor||'start',style:'font-weight:700'},svg);t.textContent=p.label;}});
+    (o.texts||[]).forEach(function(t){var e=el('text',{x:X(t.x),y:Y(t.y),'text-anchor':t.anchor||'middle',style:t.c?'fill:'+col(t.c)+';font-weight:600':''},svg);e.textContent=t.t;});
+    return {X:X,Y:Y,svg:svg};
+  }
+
+  // ---- modelo de Ramsey (Cobb-Douglas, A=1, g=0)
+  function model(p){
+    var a=p.a,rho=p.rho,th=p.th,d=p.d,n=p.n,G=p.G||0,e=d+n;
+    var m={p:p};
+    m.f=function(k){return Math.pow(k,a)}; m.f1=function(k){return a*Math.pow(k,a-1)};
+    m.kS=Math.pow(a/(d+rho),1/(1-a)); m.cS=m.f(m.kS)-e*m.kS-G;
+    m.kG=Math.pow(a/e,1/(1-a)); m.kB=Math.pow(1/e,1/(1-a));
+    m.kdot=function(k,c){return m.f(k)-c-G-e*k}; m.cdot=function(k,c){return c*(m.f1(k)-d-rho)/th};
+    var beta=rho-n,f2=-a*(1-a)*Math.pow(m.kS,a-2);
+    m.mu=(beta-Math.sqrt(beta*beta-4*f2*m.cS/th))/2; m.vc=beta-m.mu;
+    return m;
+  }
+  function rk4(m,k,c,h){
+    var a1=m.kdot(k,c),b1=m.cdot(k,c),a2=m.kdot(k+h/2*a1,c+h/2*b1),b2=m.cdot(k+h/2*a1,c+h/2*b1),
+        a3=m.kdot(k+h/2*a2,c+h/2*b2),b3=m.cdot(k+h/2*a2,c+h/2*b2),a4=m.kdot(k+h*a3,c+h*b3),b4=m.cdot(k+h*a3,c+h*b3);
+    return [k+h/6*(a1+2*a2+2*a3+a4),c+h/6*(b1+2*b2+2*b3+b4)];
+  }
+  // rama de la silla integrando hacia atrás; devuelve [[k,c,tau],...] con tau = tiempo hasta E
+  function saddle(m,sign,kmax){
+    var eps=1e-4*m.kS,k=m.kS+sign*eps,c=m.cS+sign*eps*m.vc,out=[[m.kS,m.cS,0],[k,c,0.001]],tau=0,h=-0.02;
+    for(var i=0;i<200000;i++){
+      var s=rk4(m,k,c,h);k=s[0];c=s[1];tau-=h;
+      if(!(k>1e-6)||!(c>0)||k>kmax||tau>2000)break;
+      if(i%5===0)out.push([k,c,tau]);
+    }
+    return out;
+  }
+  function forward(m,k,c,T,kmax){
+    var out=[[k,c]],h=0.02;
+    for(var i=0;i<T/h;i++){var s=rk4(m,k,c,h);k=s[0];c=s[1];if(!(k>0)||!(c>0)||k>kmax)break;if(i%5===0)out.push([k,c]);}
+    return out;
+  }
+  function cOnSaddle(br,k0){ // interpolar c en la rama (k monótono)
+    for(var i=1;i<br.length;i++){var A=br[i-1],B=br[i];if((A[0]-k0)*(B[0]-k0)<=0){var w=(k0-A[0])/(B[0]-A[0]||1);return [A[1]+w*(B[1]-A[1]),A[2]+w*(B[2]-A[2]),i];}}
+    return null;
+  }
+  function phase(target,m,o){
+    o=o||{};
+    var xmax=o.xmax||m.kB*1.05,ymax=o.ymax||Math.max(m.f(m.kG)-(m.p.d+m.p.n)*m.kG,m.cS)*1.35;
+    var e=m.p.d+m.p.n,G=m.p.G||0;
+    var kd={f:function(k){return m.f(k)-e*k-G},c:2,label:o.kdl||'dk/dt = 0',lx:o.kdlx,anchor:o.kdla,dy:o.kddy};
+    var up=saddle(m,1,xmax),dn=saddle(m,-1,xmax);
+    var sp=dn.slice().reverse().concat(up).map(function(q){return [q[0],q[1]]});
+    var cfg={xmax:xmax,ymax:ymax,xlabel:'k',ylabel:'c',aria:o.aria||'Diagrama de fases de Ramsey',h:o.h||360,
+      curves:[kd],paths:[{pts:[[m.kS,0],[m.kS,ymax*1.2]],c:3,label:'dc/dt = 0',lat:1,dy:14,dx:6}],
+      points:[{x:m.kS,y:m.cS,c:1,label:'E'}],vlines:(o.vlines||[]),vecs:o.vecs||[],texts:o.texts||[]};
+    if(o.saddle!==false) cfg.paths.push({pts:sp,c:1,w:3.5,label:o.sl===undefined?'silla':o.sl,lat:Math.min(sp.length-1,Math.round(sp.length*0.85)),dy:-8,anchor:'end'});
+    (o.extra||[]).forEach(function(x){cfg.paths.push(x)});
+    (o.extraCurves||[]).forEach(function(x){cfg.curves.push(x)});
+    (o.extraPoints||[]).forEach(function(x){cfg.points.push(x)});
+    var r=plot(target,cfg); r.sp=sp; r.dn=dn; r.up=up; return r;
+  }
+
+  // ---- figuras estáticas
+  // utilidad cóncava
+  (function(){var u=function(c){return Math.sqrt(c)},c1=0.8,c2=7.2,cm=(c1+c2)/2;
+    plot('fig-util',{xmax:9,ymax:3.3,xlabel:'c',ylabel:'u(c)',aria:'Utilidad cóncava',h:300,
+      curves:[{f:u,c:1,label:'u(c)',lx:8.8}],paths:[{pts:[[c1,u(c1)],[c2,u(c2)]],c:2,dash:'5 4'}],
+      points:[{x:cm,y:u(cm),c:3,label:'u((c₁+c₂)/2)',dx:-6,dy:-10,anchor:'end'},{x:cm,y:(u(c1)+u(c2))/2,c:2,label:'½[u(c₁)+u(c₂)]',dx:8,dy:16}],
+      vlines:[{x:c1,label:'c₁',y:u(c1)},{x:cm,label:'(c₁+c₂)/2',y:u(cm)},{x:c2,label:'c₂',y:u(c2)}]});})();
+  var P0={a:0.4,rho:0.04,th:1.5,d:0.08,n:0.02},E0=P0.d+P0.n;
+  var M0=model(P0), XM=M0.kB*1.05, YM=(M0.f(M0.kG)-E0*M0.kG)*1.35;
+  // k̇=0 sola
+  plot('fig-kdot',{xmax:XM,ymax:YM,xlabel:'k',ylabel:'c',w:420,h:300,aria:'Curva k punto igual a cero',
+    curves:[{f:function(k){return M0.f(k)-E0*k},c:2,label:'dk/dt = 0',lx:XM*0.8}],
+    vlines:[{x:M0.kG,label:'k_oro',y:M0.f(M0.kG)-E0*M0.kG},{x:M0.kB,label:'k̄',y:0}],
+    vecs:[{x:M0.kG*1.2,y:YM*0.85,dx:-1,dy:0},{x:M0.kG*2.6,y:YM*0.45,dx:-1,dy:0},{x:M0.kG*1.6,y:YM*0.25,dx:1,dy:0},{x:M0.kG*0.7,y:YM*0.15,dx:1,dy:0}],
+    texts:[{x:M0.kG*1.9,y:YM*0.93,t:'dk/dt < 0',c:2},{x:M0.kG*1.4,y:YM*0.08,t:'dk/dt > 0',c:3}]});
+  // ċ=0 sola
+  plot('fig-cdot',{xmax:XM*0.5,ymax:YM,xlabel:'k',ylabel:'c',w:420,h:300,aria:'Curva c punto igual a cero',
+    paths:[{pts:[[M0.kS,0],[M0.kS,YM*1.2]],c:3,label:'dc/dt = 0',lat:1,dy:14,dx:6}],
+    vlines:[{x:M0.kS,label:'k*',y:0}],
+    vecs:[{x:M0.kS*0.5,y:YM*0.4,dx:0,dy:1},{x:M0.kS*2,y:YM*0.6,dx:0,dy:-1}],
+    texts:[{x:M0.kS*0.5,y:YM*0.2,t:'dc/dt > 0',c:3},{x:M0.kS*2,y:YM*0.4,t:'dc/dt < 0',c:2},{x:M0.kS*0.55,y:YM*0.9,t:'f′(k) > δ+ρ'},{x:M0.kS*2,y:YM*0.9,t:'f′(k) < δ+ρ'}]});
+  // diagrama completo
+  (function(){
+    var k0=M0.kS*0.25, r0=phase('fig-fase',M0,{xmax:XM,ymax:YM,kdlx:XM*0.93,kddy:-8,
+      vlines:[{x:M0.kG,label:'k_oro',y:M0.f(M0.kG)-E0*M0.kG},{x:k0,label:'k₀'}],
+      vecs:[{x:M0.kS*0.5,y:YM*0.85,dx:-1,dy:1},{x:M0.kS*0.7,y:YM*0.12,dx:1,dy:1},{x:M0.kS*2.2,y:YM*0.12,dx:1,dy:-1},{x:M0.kS*3.2,y:YM*0.9,dx:-1,dy:-1},{x:M0.kB*0.93,y:YM*0.25,dx:-1,dy:-1}],
+      extraPoints:[{x:M0.kB,y:0,c:2,label:'k̄',dy:-8},{x:0,y:0,c:2}]});
+    var cs=cOnSaddle(r0.dn,k0); if(!cs)return;
+    var hi=forward(M0,k0,cs[0]*1.05,400,XM),lo=forward(M0,k0,cs[0]*0.95,800,XM);
+    phase('fig-fase',M0,{xmax:XM,ymax:YM,kdlx:XM*0.93,kddy:-8,
+      vlines:[{x:M0.kG,label:'k_oro',y:M0.f(M0.kG)-E0*M0.kG},{x:k0,label:'k₀',y:cs[0]}],
+      vecs:[{x:M0.kS*0.5,y:YM*0.85,dx:-1,dy:1},{x:M0.kS*0.7,y:YM*0.12,dx:1,dy:1},{x:M0.kS*2.2,y:YM*0.12,dx:1,dy:-1},{x:M0.kS*3.2,y:YM*0.9,dx:-1,dy:-1},{x:M0.kB*0.93,y:YM*0.25,dx:-1,dy:-1}],
+      extraPoints:[{x:M0.kB,y:0,c:2,label:'k̄',dy:-8},{x:0,y:0,c:2}],
+      extra:[{pts:hi,c:2,dash:'5 4',w:1.8,label:'c₀ alto: k → 0',lat:Math.round(hi.length*0.35),anchor:'start',dx:8},{pts:lo,c:4,dash:'5 4',w:1.8,label:'c₀ bajo: → k̄',lat:Math.round(lo.length*0.12),dy:18}]});
+  })();
+  // theta alta/baja
+  (function(){var Ma=model({a:0.4,rho:0.04,th:6,d:0.08,n:0.02}),Mb=model({a:0.4,rho:0.04,th:0.4,d:0.08,n:0.02});
+    var xm=M0.kS*3.2,ym=YM;
+    function sp(m){var up=saddle(m,1,xm),dn=saddle(m,-1,xm);return dn.slice().reverse().concat(up).map(function(q){return [q[0],q[1]]});}
+    var A=sp(Ma),B=sp(Mb);
+    plot('fig-theta',{xmax:xm,ymax:ym,xlabel:'k',ylabel:'c',aria:'Forma de la silla según theta',
+      curves:[{f:function(k){return M0.f(k)-E0*k},c:2,label:'dk/dt = 0',lx:xm*0.97,dy:-8}],
+      paths:[{pts:[[M0.kS,0],[M0.kS,ym*1.2]],c:3,label:'dc/dt = 0',lat:1,dy:14,dx:6},
+        {pts:A,c:1,w:3,label:'θ alta',lat:Math.round(A.length*0.25),dy:-8,anchor:'end'},
+        {pts:B,c:4,w:3,label:'θ baja',lat:Math.round(B.length*0.3),dy:18}],
+      points:[{x:M0.kS,y:M0.cS,c:1,label:'E'}]});})();
+  // autopista
+  (function(){var T=100,ks=1;
+    var f=function(t){return (0.2+0.8*(1-Math.exp(-t/7)))*(1-Math.exp(-(T-t)/6))*ks};
+    plot('fig-autopista',{xmax:T*1.05,ymax:1.3,xlabel:'t',ylabel:'k(t)',h:260,aria:'Teorema de la autopista',
+      curves:[{f:f,c:1,from:0,to:T,label:'k(t)',lx:50,dy:-10}],hlines:[{y:ks,label:'k*'}],vlines:[{x:T,label:'T'}]});})();
+  // caída de rho
+  (function(){var Mn=model({a:0.4,rho:0.025,th:1.5,d:0.08,n:0.02});
+    var xm=Mn.kS*2.4,ym=(M0.f(M0.kG)-E0*M0.kG)*1.15;
+    var up=saddle(Mn,1,xm),dn=saddle(Mn,-1,xm),sp=dn.slice().reverse().concat(up).map(function(q){return [q[0],q[1]]});
+    var cA=cOnSaddle(dn,M0.kS);
+    plot('fig-rho',{xmax:xm,ymax:ym,xlabel:'k',ylabel:'c',aria:'Caída de la tasa de descuento',
+      curves:[{f:function(k){return M0.f(k)-E0*k},c:2,label:'dk/dt = 0',lx:xm*0.97,dy:-8}],
+      paths:[{pts:[[M0.kS,0],[M0.kS,ym*1.2]],c:3,dash:'5 4',label:'dc/dt = 0 (ρ viejo)',lat:1,dy:14,dx:6},
+        {pts:[[Mn.kS,0],[Mn.kS,ym*1.2]],c:3,label:'dc/dt = 0 (ρ nuevo)',lat:1,dy:32,dx:6},
+        {pts:sp,c:1,w:3,label:'nueva silla',lat:Math.round(sp.length*0.2),dy:18}],
+      vlines:[{x:M0.kS,label:'k*',y:0},{x:Mn.kS,label:"k*'",y:0}],
+      points:[{x:M0.kS,y:M0.cS,c:2,label:'E',dx:-10,anchor:'end'},{x:Mn.kS,y:Mn.cS,c:1,label:'E′'}].concat(cA?[{x:M0.kS,y:cA[0],c:4,label:'A',dx:10,dy:14}]:[])});
+  })();
+  // gasto permanente
+  (function(){var MG=model({a:0.4,rho:0.04,th:1.5,d:0.08,n:0.02,G:0.35});
+    var xm=M0.kS*3,ym=YM;
+    plot('fig-G',{xmax:xm,ymax:ym,xlabel:'k',ylabel:'c',aria:'Aumento permanente del gasto',
+      curves:[{f:function(k){return M0.f(k)-E0*k},c:2,dash:'5 4',label:'dk/dt = 0 (G viejo)',lx:xm*0.97,dy:-14},{f:function(k){return M0.f(k)-E0*k-0.35},c:2,label:'dk/dt = 0 (G nuevo)',lx:xm*0.97,dy:16}],
+      paths:[{pts:[[M0.kS,0],[M0.kS,ym*1.2]],c:3,label:'dc/dt = 0',lat:1,dy:14,dx:6},{pts:[[M0.kS,M0.cS],[M0.kS,MG.cS]],c:4,w:3.5}],
+      points:[{x:M0.kS,y:M0.cS,c:1,label:'E',dx:-10,anchor:'end'},{x:MG.kS,y:MG.cS,c:4,label:'E′',dx:-10,anchor:'end',dy:14}],
+      texts:[{x:M0.kS*1.08,y:(M0.cS+MG.cS)/2,t:'Δc = −ΔG',anchor:'start',c:4}]});})();
+
+  // ---- simulador
+  var ids=['a','r','t','d','n','k'],inp={},out={};
+  ids.forEach(function(i){inp[i]=document.getElementById('p-'+i);out[i]=document.getElementById('v-'+i);});
+  function fmt(x,d){return (Math.abs(x)>=1000?x.toExponential(2):x.toFixed(d===undefined?3:d)).replace('.',',');}
+  function upd(){
+    var p={a:+inp.a.value,rho:+inp.r.value,th:+inp.t.value,d:+inp.d.value,n:+inp.n.value},kr=+inp.k.value;
+    out.a.textContent=fmt(p.a,2);out.r.textContent=fmt(p.rho,3);out.t.textContent=fmt(p.th,1);out.d.textContent=fmt(p.d,3);out.n.textContent=fmt(p.n,3);out.k.textContent=fmt(kr,2);
+    var fl=document.getElementById('flag');
+    if(p.rho<=p.n){fl.textContent='ρ ≤ n: la utilidad no está acotada. Sube ρ o baja n.';fl.style.background='var(--warn-bg)';document.getElementById('stats').innerHTML='';return;}
+    var m=model(p),e=p.d+p.n,yS=m.f(m.kS),sS=e*m.kS/yS,lam=-m.mu;
+    var st=[['k*',m.kS],['c*',m.cS],['y*',yS],['s* = α(δ+n)/(δ+ρ)',sS],['k oro',m.kG],['r* = ρ',p.rho],['Velocidad λ = −μ₁',lam],['Vida media (años)',Math.log(2)/lam],['Solow con s = s*: (1−α)(δ+n)',(1-p.a)*e]];
+    document.getElementById('stats').innerHTML=st.map(function(q){return '<div class="stat"><div class="l">'+q[0]+'</div><div class="n">'+fmt(q[1],q[0].indexOf('Vida')===0?1:3)+'</div></div>'}).join('');
+    var lhs=(p.rho+p.d)/p.th,rhs=p.a*(p.n+p.d);
+    if(Math.abs(lhs-rhs)<0.0015){fl.textContent='(ρ+δ)/θ ≈ α(n+δ): la tasa de ahorro óptima es casi constante (s ≈ 1/θ = '+fmt(1/p.th,3)+'). Caso C: Solow como caso particular.';fl.style.background='var(--ok-bg)';}
+    else if(lhs>rhs){fl.textContent='(ρ+δ)/θ = '+fmt(lhs,4)+' > α(n+δ) = '+fmt(rhs,4)+' → caso A: si k₀ < k*, la tasa de ahorro BAJA a lo largo de la transición.';fl.style.background='var(--note-bg)';}
+    else {fl.textContent='(ρ+δ)/θ = '+fmt(lhs,4)+' < α(n+δ) = '+fmt(rhs,4)+' → caso B: si k₀ < k*, la tasa de ahorro SUBE a lo largo de la transición.';fl.style.background='var(--warn-bg)';}
+    var k0=kr*m.kS,xm=Math.min(m.kB*1.05,Math.max(m.kG*2.2,k0*1.3)),ym=Math.max(m.f(m.kG)-e*m.kG,m.cS)*1.4;
+    var r=phase('sim-fase',m,{xmax:xm,ymax:ym,kdlx:xm*0.95,kddy:-8,vlines:[{x:m.kG,label:'k_oro',y:m.f(m.kG)-e*m.kG},{x:k0,label:'k₀'}]});
+    var br=k0<m.kS?r.dn:r.up, cs=Math.abs(k0-m.kS)<1e-9?[m.cS,0,0]:cOnSaddle(br,k0);
+    if(cs){
+      var hi=forward(m,k0,cs[0]*1.05,600,xm),lo=forward(m,k0,cs[0]*0.95,1500,xm);
+      phase('sim-fase',m,{xmax:xm,ymax:ym,kdlx:xm*0.95,kddy:-8,vlines:[{x:m.kG,label:'k_oro',y:m.f(m.kG)-e*m.kG},{x:k0,label:'k₀',y:cs[0]}],
+        extra:[{pts:hi,c:2,dash:'5 4',w:1.8},{pts:lo,c:4,dash:'5 4',w:1.8}],extraPoints:[{x:k0,y:cs[0],c:4,label:'c₀',dx:-8,anchor:'end'}]});
+      // series de tiempo sobre la silla
+      var seg=br.slice(0,cs[2]).reverse(),T0=cs[1],ts=[[0,k0,cs[0]]];
+      seg.forEach(function(q){ts.push([T0-q[2],q[0],q[1]])});
+      var Tm=Math.min(200,Math.max(60,5/lam)); ts.push([Tm,m.kS,m.cS]);
+      function interp(t,j){for(var i=1;i<ts.length;i++){if(ts[i][0]>=t){var A=ts[i-1],B=ts[i],w=(t-A[0])/((B[0]-A[0])||1);return A[j]+w*(B[j]-A[j]);}}return ts[ts.length-1][j];}
+      var fk=function(t){return interp(t,1)/m.kS},fc=function(t){return interp(t,2)/m.cS},
+          fs=function(t){var k=interp(t,1);return 1-interp(t,2)/m.f(k)},fr=function(t){return m.f1(interp(t,1))-p.d};
+      var host=document.getElementById('sim-path');host.innerHTML='';
+      [['k(t)/k*',fk,1],['c(t)/c*',fc,4],['s(t) = 1 − c/y',fs,3],['r(t) = f′(k) − δ',fr,2]].forEach(function(q){
+        var vals=[];for(var i=0;i<=200;i++)vals.push(q[1](Tm*i/200));
+        var mn=Math.min.apply(null,vals),mx=Math.max.apply(null,vals),pad=(mx-mn)*0.2||Math.abs(mx)*0.05||0.05;
+        var div=document.createElement('div');host.appendChild(div);
+        plot(div,{xmin:0,xmax:Tm,ymin:mn-pad,ymax:mx+pad,h:140,ylabel:q[0],xlabel:'t (años)',curves:[{f:q[1],c:q[2]}],hlines:[{y:vals[0],label:fmt(vals[0],2)},{y:vals[200],label:fmt(vals[200],2)}],aria:'Serie '+q[0]});
+      });
+    }
+  }
+  ids.forEach(function(i){inp[i].addEventListener('input',upd);});
+  upd();
+
+  // ---- KaTeX
+  function renderMath(){ if(window.renderMathInElement){ renderMathInElement(document.body,{delimiters:[{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false}); } }
+  if(document.readyState==='complete') renderMath(); else window.addEventListener('load',renderMath);
+})();
+</script>
+</body>
+</html>
