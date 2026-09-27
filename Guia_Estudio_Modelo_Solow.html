@@ -1,0 +1,869 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guía del Modelo de Solow</title>
+<meta name="description" content="Guía de estudio completa del modelo de crecimiento de Solow-Swan para el primer parcial de Dinámica Económica (UNAL Medellín).">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<style>
+:root{
+  --bg:#fbfaf7; --surface:#ffffff; --surface-2:#f3f1ec; --text:#1d1d1b; --muted:#5d5b55;
+  --border:#e2dfd7; --accent:#1f5fa8; --accent-soft:#e6eef8;
+  --c1:#1f5fa8; --c2:#c2410c; --c3:#15803d; --c4:#7c3aed; --grid:#e8e5dd;
+  --ok-bg:#e9f6ee; --ok-border:#15803d; --warn-bg:#fff4e5; --warn-border:#c2410c;
+  --note-bg:#eef3fb; --note-border:#1f5fa8; --class-bg:#f5effd; --class-border:#7c3aed;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#16171a; --surface:#1e2024; --surface-2:#25282d; --text:#e8e6e1; --muted:#a3a09a;
+    --border:#34373d; --accent:#7fb1ee; --accent-soft:#1f2d40;
+    --c1:#7fb1ee; --c2:#f59e62; --c3:#5fd08a; --c4:#b99bf6; --grid:#2c2f35;
+    --ok-bg:#16291e; --ok-border:#5fd08a; --warn-bg:#2e2116; --warn-border:#f59e62;
+    --note-bg:#1a2433; --note-border:#7fb1ee; --class-bg:#241d33; --class-border:#b99bf6;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#16171a; --surface:#1e2024; --surface-2:#25282d; --text:#e8e6e1; --muted:#a3a09a;
+  --border:#34373d; --accent:#7fb1ee; --accent-soft:#1f2d40;
+  --c1:#7fb1ee; --c2:#f59e62; --c3:#5fd08a; --c4:#b99bf6; --grid:#2c2f35;
+  --ok-bg:#16291e; --ok-border:#5fd08a; --warn-bg:#2e2116; --warn-border:#f59e62;
+  --note-bg:#1a2433; --note-border:#7fb1ee; --class-bg:#241d33; --class-border:#b99bf6;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
+a{color:var(--accent)}
+header.top{border-bottom:1px solid var(--border);background:var(--surface)}
+header.top .inner{max-width:1180px;margin:0 auto;padding:28px 16px 22px}
+header.top h1{margin:0 0 6px;font-size:clamp(1.6rem,4vw,2.3rem);line-height:1.2;letter-spacing:-.01em}
+header.top p{margin:4px 0;color:var(--muted)}
+.theme-btn{float:right;border:1px solid var(--border);background:var(--surface-2);color:var(--text);border-radius:8px;padding:6px 10px;cursor:pointer;font:inherit;font-size:.85rem}
+.layout{max-width:1180px;margin:0 auto;padding:0 16px;display:grid;grid-template-columns:250px minmax(0,1fr);gap:40px}
+nav.toc{position:sticky;top:0;align-self:start;max-height:100vh;overflow:auto;padding:24px 0;font-size:.9rem}
+nav.toc h2{font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:0 0 8px}
+nav.toc ol{list-style:none;margin:0;padding:0}
+nav.toc li{margin:0}
+nav.toc a{display:block;padding:4px 8px;border-radius:6px;color:var(--text);text-decoration:none}
+nav.toc a:hover{background:var(--surface-2)}
+nav.toc ol ol a{padding-left:20px;color:var(--muted);font-size:.85rem}
+main{padding:24px 0 80px;min-width:0}
+section{margin-bottom:48px}
+h2.sec{font-size:1.55rem;margin:8px 0 14px;padding-top:12px;border-top:2px solid var(--text);line-height:1.25}
+h2.sec .num{color:var(--accent);margin-right:8px}
+h3{font-size:1.18rem;margin:28px 0 8px}
+h4{font-size:1rem;margin:20px 0 6px}
+p{margin:10px 0}
+ul,ol{padding-left:22px}
+li{margin:4px 0}
+.box{border-left:4px solid;border-radius:0 10px 10px 0;padding:12px 16px;margin:16px 0}
+.box > :first-child{margin-top:0}.box > :last-child{margin-bottom:0}
+.box .tag{display:block;font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;font-weight:700;margin-bottom:4px}
+.key{background:var(--ok-bg);border-color:var(--ok-border)} .key .tag{color:var(--ok-border)}
+.warn{background:var(--warn-bg);border-color:var(--warn-border)} .warn .tag{color:var(--warn-border)}
+.note{background:var(--note-bg);border-color:var(--note-border)} .note .tag{color:var(--note-border)}
+.class{background:var(--class-bg);border-color:var(--class-border)} .class .tag{color:var(--class-border)}
+.formula{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin:14px 0;overflow-x:auto}
+.formula.main{border:2px solid var(--accent)}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:.95rem}
+.tablewrap{overflow-x:auto}
+th,td{border-bottom:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:var(--surface-2);font-weight:600}
+.src{font-size:.8rem;color:var(--muted)}
+figure{margin:18px 0;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px}
+figure svg{width:100%;height:auto;display:block}
+.katex-display{overflow-x:auto;overflow-y:hidden;padding:2px 0}
+figcaption{font-size:.88rem;color:var(--muted);margin-top:6px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+details{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin:10px 0}
+details summary{cursor:pointer;font-weight:600}
+details[open] summary{margin-bottom:8px}
+.pill{display:inline-block;font-size:.72rem;padding:2px 8px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-weight:600;vertical-align:middle}
+.sim{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px}
+.sim .controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px 18px}
+.sim label{display:block;font-size:.88rem}
+.sim label span.v{float:right;font-variant-numeric:tabular-nums;font-weight:600}
+.sim input[type=range]{width:100%;accent-color:var(--accent)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-top:12px}
+.stat{background:var(--surface-2);border-radius:8px;padding:8px 10px}
+.stat .l{font-size:.75rem;color:var(--muted)}
+.stat .n{font-size:1.1rem;font-weight:700;font-variant-numeric:tabular-nums}
+.flag{margin-top:10px;font-size:.9rem;padding:8px 10px;border-radius:8px}
+svg text{fill:var(--text);font:12px system-ui,sans-serif}
+svg .axis{stroke:var(--text);stroke-width:1.3}
+svg .gridl{stroke:var(--grid);stroke-width:1}
+svg .guide{stroke:var(--muted);stroke-dasharray:4 4;stroke-width:1}
+kbd{font-size:.85em}
+footer{border-top:1px solid var(--border);color:var(--muted);font-size:.85rem;padding:20px 16px;max-width:1180px;margin:0 auto}
+@media (max-width:900px){
+  .layout{grid-template-columns:1fr;gap:0}
+  nav.toc{position:static;max-height:none;border-bottom:1px solid var(--border)}
+  nav.toc ol ol{display:none}
+}
+@media print{nav.toc,.theme-btn,.sim{display:none}.layout{display:block}body{background:#fff;color:#000}}
+</style>
+</head>
+<body>
+<header class="top"><div class="inner">
+  <button class="theme-btn" id="themeBtn" type="button">Tema claro/oscuro</button>
+  <h1>Guía de estudio: el modelo de crecimiento de Solow-Swan</h1>
+  <p>Dinámica Económica (3009699) · UNAL Medellín · Prof. Camilo Galvis · Primer parcial (Unidades 1, 2 y 3)</p>
+  <p class="src">Fuentes: Sala-i-Martin, <em>Apuntes de crecimiento económico</em>, 2ª ed., caps. 1–2 · Romer, <em>Macroeconomía avanzada</em>, cap. 1 · Notas de tablero (clase del tiempo en economía y primera clase de Solow) · Taller 1. Continúa en la <a href="Guia_Estudio_Modelo_Ramsey.html">guía del modelo de Ramsey</a>.</p>
+</div></header>
+
+<div class="layout">
+<nav class="toc" aria-label="Contenido">
+  <h2>Contenido</h2>
+  <ol>
+    <li><a href="#mapa">0. Mapa del parcial</a></li>
+    <li><a href="#tiempo">1. El tiempo en economía</a>
+      <ol><li><a href="#edo">Ecuación diferencial</a></li><li><a href="#discreto">Tiempo discreto</a></li><li><a href="#tasas">Tasas de crecimiento</a></li></ol></li>
+    <li><a href="#motivacion">2. ¿Por qué estudiar crecimiento?</a></li>
+    <li><a href="#supuestos">3. Supuestos del modelo</a>
+      <ol><li><a href="#s-cerrada">Economía cerrada</a></li><li><a href="#s-prod">Función de producción</a></li><li><a href="#s-cd">Cobb-Douglas</a></li><li><a href="#s-otros">Ahorro, δ, n, A</a></li></ol></li>
+    <li><a href="#fundamental">4. Ecuación fundamental</a></li>
+    <li><a href="#ee">5. Estado estacionario</a></li>
+    <li><a href="#transicion">6. Tasa de crecimiento y transición</a></li>
+    <li><a href="#politicas">7. Cambios en s, n y A</a></li>
+    <li><a href="#oro">8. Regla de oro e ineficiencia dinámica</a></li>
+    <li><a href="#tecnologia">9. Progreso tecnológico</a></li>
+    <li><a href="#cuantitativo">10. Implicaciones cuantitativas</a></li>
+    <li><a href="#problemas">11. Problemas del modelo</a>
+      <ol><li><a href="#residuo">Residuo de Solow</a></li><li><a href="#convergencia">Convergencia</a></li><li><a href="#capital-dif">¿Explica K las diferencias?</a></li></ol></li>
+    <li><a href="#extensiones">12. Extensiones</a>
+      <ol><li><a href="#ampliado">Solow ampliado</a></li><li><a href="#recursos">Recursos naturales</a></li><li><a href="#ak">Modelo AK</a></li><li><a href="#romer86">Externalidades</a></li><li><a href="#barro">Gasto público</a></li><li><a href="#inada">Sobelow y CES</a></li><li><a href="#hd">Harrod-Domar</a></li><li><a href="#trampa">Trampas de pobreza</a></li><li><a href="#paro">Paro y crecimiento</a></li></ol></li>
+    <li><a href="#simulador">13. Simulador</a></li>
+    <li><a href="#ejercicios">14. Ejercicios resueltos</a></li>
+    <li><a href="#preguntas">15. Preguntas tipo parcial</a></li>
+    <li><a href="#formulario">16. Formulario</a></li>
+    <li><a href="#errores">17. Errores frecuentes</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<!-- ============================================================ 0 -->
+<section id="mapa">
+<h2 class="sec"><span class="num">0</span>Mapa del parcial y cómo usar esta guía</h2>
+<p>El primer parcial (25%) cubre las <strong>Unidades 1, 2 y 3</strong> del programa. Esta guía cubre las Unidades 1 y 2; la Unidad 3 (Ramsey-Cass-Koopmans) está en la <a href="Guia_Estudio_Modelo_Ramsey.html">guía de Ramsey</a>.</p>
+<div class="tablewrap"><table>
+<tr><th>Unidad del programa</th><th>Qué hay que dominar</th><th>Sección</th></tr>
+<tr><td><strong>1. El tiempo en economía</strong><br>Tiempo continuo (EDO de 1er orden) y discreto (ecuaciones en diferencias)</td><td>Resolver \(\dot y + ay = b\), condición inicial, estabilidad; tasas de crecimiento como derivadas del logaritmo</td><td><a href="#tiempo">§1</a></td></tr>
+<tr><td><strong>2. Modelo de Solow</strong><br>Supuestos</td><td>Economía cerrada, \(S=I\), función neoclásica (RCE, PMg decreciente, Inada), \(s\), \(\delta\), \(n\), \(A\)</td><td><a href="#supuestos">§3</a></td></tr>
+<tr><td>Ecuación fundamental de crecimiento</td><td>Derivar \(\dot k = sf(k)-(\delta+n)k\) de dos formas, interpretarla, estado estacionario, dinámica, estática comparativa</td><td><a href="#fundamental">§4–7</a></td></tr>
+<tr><td>Problemas del modelo: <strong>residuo, convergencia e ineficiencia dinámica</strong></td><td>Contabilidad del crecimiento, convergencia absoluta/condicional, regla de oro y \(r&lt;n\)</td><td><a href="#oro">§8</a>, <a href="#problemas">§11</a></td></tr>
+</table></div>
+<div class="box note"><span class="tag">Convenciones de notación</span>
+<p>Sala-i-Martin y la clase usan \(k=K/L\) (capital <em>per cápita</em>) con \(A\) constante; la tasa de progreso técnico se llama \(x\) en Sala y \(g\) en Romer y en el tablero. Romer usa \(k=K/(AL)\) (capital por <em>unidad de trabajo efectivo</em>). Cuando \(g=0\) y \(A=1\) ambas notaciones coinciden. En esta guía uso \(g\) para el progreso técnico y marco con \(\hat k\) el capital por trabajador efectivo cuando hace falta distinguir.</p></div>
+<div class="box class"><span class="tag">Recuadros morados = lo que se vio en clase</span><p>Estos recuadros recogen lo que quedó en el tablero, incluidas las precisiones sobre los errores que tenía.</p></div>
+</section>
+
+<!-- ============================================================ 1 -->
+<section id="tiempo">
+<h2 class="sec"><span class="num">1</span>Unidad 1 — El tiempo en economía</h2>
+<p><strong>Ecuación diferencial:</strong> ecuación que relaciona una función desconocida con una o varias de sus derivadas. En economía describe cómo evoluciona un sistema a partir de las reglas que gobiernan su cambio, o <strong>ecuación de movimiento</strong>. La ecuación fundamental de Solow es exactamente eso: una regla que dice cuánto cambia \(k\) en cada instante.</p>
+
+<h3 id="edo">1.1 Ecuación diferencial lineal de primer orden (tiempo continuo)</h3>
+<div class="formula">\[\dot y(t) + a\,y(t) = b \qquad\Longrightarrow\qquad y(t)=y_H(t)+y_P(t)\]</div>
+<h4>Solución homogénea (\(b=0\))</h4>
+<div class="formula">\[\dot y=-ay\;\Rightarrow\;\frac{\dot y}{y}=-a\;\Rightarrow\;\int\frac{\dot y}{y}\,dt=\int -a\,dt\;\Rightarrow\;\ln y=-at+c\;\Rightarrow\;y_H(t)=A\,e^{-at}\quad(A=e^{c})\]</div>
+<h4>Solución particular</h4>
+<p>Se busca una solución constante (un <em>equilibrio</em> o estado estacionario): si \(y\) es constante, \(\dot y = 0\), así que \(a y = b\) y \(y_P = b/a\) (con \(a\neq 0\)).</p>
+<h4>Solución general y condición inicial</h4>
+<div class="formula main">\[y(t)=\left[y(0)-\frac{b}{a}\right]e^{-at}+\frac{b}{a}\]</div>
+<p>Se obtiene evaluando en \(t=0\): \(y(0)=A+b/a\Rightarrow A=y(0)-b/a\).</p>
+<div class="box key"><span class="tag">Estabilidad</span>
+<p>Si \(a&gt;0\), \(e^{-at}\to 0\) y \(y(t)\to b/a\) desde cualquier \(y(0)\): el equilibrio es <strong>estable</strong>. Si \(a&lt;0\), la distancia al equilibrio crece exponencialmente (<strong>inestable</strong>). La velocidad de ajuste es \(a\): cada instante se cierra una fracción \(a\) de la brecha, y la mitad de la brecha se cierra en \(t_{1/2}=\ln 2/a\approx 0{,}69/a\).</p></div>
+<div class="box note"><span class="tag">Conexión con Solow (clave)</span>
+<p>Con Cobb-Douglas, el cambio de variable \(z=k^{1-\alpha}\) convierte la ecuación de Solow en una EDO lineal <em>exactamente</em> de esta forma:</p>
+\[\dot z=(1-\alpha)k^{-\alpha}\dot k=(1-\alpha)\big[sA-(\delta+n)z\big]\;\Longrightarrow\;\dot z+\underbrace{(1-\alpha)(\delta+n)}_{a}\,z=\underbrace{(1-\alpha)sA}_{b}\]
+<p>Por lo tanto \(z(t)=\big[z(0)-\tfrac{sA}{\delta+n}\big]e^{-(1-\alpha)(\delta+n)t}+\tfrac{sA}{\delta+n}\). Como \(b/a = sA/(\delta+n)=k^{*\,1-\alpha}\), el capital converge a \(k^*\) a la velocidad \(a=(1-\alpha)(\delta+n)\), que es justamente la <a href="#vel">velocidad de convergencia</a> de Sala-i-Martin.</p></div>
+
+<h3 id="discreto">1.2 Tiempo discreto: ecuación en diferencias de primer orden</h3>
+<p>Aquí las variables se miden en períodos \(t=0,1,2,\dots\):</p>
+<div class="formula">\[y_{t+1}=a\,y_t+b\qquad\Longrightarrow\qquad y_t=\Big(y_0-\bar y\Big)a^{t}+\bar y,\qquad \bar y=\frac{b}{1-a}\ (a\neq1)\]</div>
+<ul>
+<li>El equilibrio \(\bar y\) sale de imponer \(y_{t+1}=y_t=\bar y\).</li>
+<li><strong>Estable</strong> si \(|a|&lt;1\): converge de forma monótona si \(0&lt;a&lt;1\) y oscilando si \(-1&lt;a&lt;0\). Si \(|a|&gt;1\), diverge.</li>
+<li>En Solow discreto: \(I_t = K_{t+1}-K_t+\delta K_t\) (en el tablero, \(I_t=\Delta K+\delta K\)). Con \(S_t=sY_t=I_t\) y \(L_{t+1}=(1+n)L_t\) queda \(k_{t+1}=\dfrac{s f(k_t)+(1-\delta)k_t}{1+n}\), que no es lineal pero tiene la misma lógica: el estado estacionario satisface \(sf(k^*)=(\delta+n)k^*\). Romer (nota 7) aclara que las conclusiones son prácticamente iguales en ambos marcos y que el continuo es más fácil de analizar.</li>
+</ul>
+
+<h3 id="tasas">1.3 Tasas de crecimiento: la herramienta que se usa todo el tiempo</h3>
+<p>La tasa de crecimiento de \(X\) es \(\gamma_X=\dot X/X\), y es igual a la derivada de su logaritmo: \(\dfrac{d\ln X(t)}{dt}=\dfrac{1}{X}\dfrac{dX}{dt}=\dfrac{\dot X}{X}\) (Romer, ec. 1.10).</p>
+<div class="tablewrap"><table>
+<tr><th>Si…</th><th>entonces…</th><th>Uso en Solow</th></tr>
+<tr><td>\(Z=XY\)</td><td>\(\gamma_Z=\gamma_X+\gamma_Y\)</td><td>\(AL\) crece a \(n+g\)</td></tr>
+<tr><td>\(Z=X/Y\)</td><td>\(\gamma_Z=\gamma_X-\gamma_Y\)</td><td>\(\gamma_k=\gamma_K-n\)</td></tr>
+<tr><td>\(Z=X^{\alpha}\)</td><td>\(\gamma_Z=\alpha\gamma_X\)</td><td>\(y=Ak^\alpha\Rightarrow\gamma_y=\gamma_A+\alpha\gamma_k\)</td></tr>
+<tr><td>\(\dot X=gX\)</td><td>\(X(t)=X(0)e^{gt}\)</td><td>\(L=L_0e^{nt}\), \(A=A_0e^{gt}\)</td></tr>
+</table></div>
+<div class="box class"><span class="tag">En clase: el ejemplo de Colombia</span>
+<p>PIB per cápita: US$1.200 en 1900 y US$10.000 en 2026. El tablero calculó \(\Delta\% = 733{,}3\%\) y lo dividió entre 126 años (5,82% anual). <strong>Eso es un promedio aritmético, no una tasa de crecimiento.</strong> La tasa compuesta correcta es</p>
+\[g=\left(\tfrac{10.000}{1.200}\right)^{1/126}-1\approx 1{,}7\%\ \text{anual}\qquad\Big(\text{en continuo: } g=\tfrac{\ln(10.000/1.200)}{126}\approx1{,}68\%\Big).\]
+<p>Regla del 70: una variable que crece al \(g\%\) se duplica en unos \(70/g\) años. Al 1,7%, el ingreso colombiano se duplica cada ~41 años.</p></div>
+</section>
+
+<!-- ============================================================ 2 -->
+<section id="motivacion">
+<h2 class="sec"><span class="num">2</span>¿Por qué estudiar el crecimiento de largo plazo?</h2>
+<ul>
+<li><strong>Pequeñas diferencias de tasa generan diferencias enormes de nivel</strong> (Sala-i-Martin, introducción). El PIB per cápita de EE. UU. pasó de US$2.244 (1870) a US$18.258 (1990), un 1,75% anual. Si hubiera crecido al 0,75%, en 1990 tendría US$5.519 (el nivel de México); si hubiera crecido al 2,75%, tendría US$60.841. Un punto porcentual de diferencia separa al país más rico del mundo de un país de renta media.</li>
+<li>Los ciclos de corto plazo son “altibajos minúsculos” frente a la tendencia. La pregunta central es cómo convertir una economía que crece poco en una que crece mucho.</li>
+<li>Romer: la renta real media en EE. UU. y Europa es hoy entre 10 y 30 veces mayor que hace un siglo; hay <strong>milagros</strong> (Japón y los NPI asiáticos, más de 5% anual desde 1960) y <strong>desastres</strong> de crecimiento (Argentina, África subsahariana). Lucas (1988): “cuando uno empieza a pensar en el crecimiento económico, le resulta difícil pensar en otra cosa”.</li>
+<li>Tres respuestas populares a “¿por qué crecen las economías?”: más <strong>capital</strong> (inversión), más <strong>educación</strong> (capital humano), mejor <strong>tecnología</strong>. Solow estudia la primera y muestra que <em>no basta</em>.</li>
+</ul>
+<div class="box class"><span class="tag">En clase: hechos estilizados (Kaldor) y el debate de fondo</span>
+<ol>
+<li>El PIB per cápita tiende a crecer en el tiempo.</li>
+<li>La relación \(K/L\) es creciente, y con ella la productividad marginal del trabajo (los salarios).</li>
+<li>La participación del capital en el PIB es estable, e incluso ha crecido.</li>
+</ol>
+<p>Complemento: la lista completa de Kaldor (1961) también incluye una tasa de rentabilidad del capital sin tendencia, una razón \(K/Y\) aproximadamente constante, participaciones de los factores estables y tasas de crecimiento muy distintas entre países. El modelo de Solow con progreso técnico reproduce los primeros: en la senda de crecimiento equilibrado \(y\) y \(k\) crecen a \(g\), mientras que \(K/Y\), \(r\) y \(\alpha\) son constantes.</p>
+<p><strong>Marx ↔ Piketty.</strong> Marx: ley de la tendencia decreciente de la tasa de ganancia; un \(K/L\) creciente produce el ejército industrial de reserva (desempleo). Piketty (<em>El capital en el siglo XXI</em>): si \(r&gt;g_{PIB}\), aumenta la participación del capital \(\alpha\). Asignación funcional del ingreso: \(K\to r\) (ganancia), \(L\to w\) (salario). En el esquema de la jornada (0–4 h–8 h) el trabajo necesario se paga como \(w\) y el resto es plusvalía.</p></div>
+</section>
+
+<!-- ============================================================ 3 -->
+<section id="supuestos">
+<h2 class="sec"><span class="num">3</span>Supuestos del modelo de Solow-Swan</h2>
+<p>Solow (1956) y Swan (1956). <span class="pill">Ojo</span> El tablero dice “Solow (1954)”, pero el artículo es de <strong>1956</strong>. Sala-i-Martin lo presenta como una economía tipo <strong>Robinson Crusoe</strong>: no hay empresas ni mercados, y las familias son dueñas de los factores y de la tecnología (en Ramsey sí aparecerán empresas y mercados). Romer insiste en que el modelo es una simplificación extrema <em>a propósito</em>: sirve para aislar el papel de la acumulación de capital físico.</p>
+
+<h3 id="s-cerrada">3.1 Economía cerrada y sin gobierno</h3>
+<div class="formula">\[Y_t=C_t+I_t+G_t+NX_t\;\xrightarrow{\;G=0,\ NX=0\;}\;Y_t=C_t+I_t\;\Rightarrow\;Y_t-C_t=S_t=I_t\]</div>
+<p>Por el lado del gasto \(Y=C+I\); por el lado del ingreso \(Y=C+S\). Entonces <strong>\(S=I\)</strong>: todo lo ahorrado se invierte dentro del país. El supuesto no es realista, pero permite aislar la inversión en capital físico como posible motor del crecimiento. Motivación de Sala-i-Martin: entre 1960 y 1990 los tigres asiáticos invertían más del 20% del PIB (Hong Kong 22,9%, Taiwán 24,6%, Singapur 32,6%, Japón 36,6%) y varios países africanos menos del 10% (Etiopía 5,7%, Uganda 4,7%, Chad 3,7%, Mozambique 2,0%).</p>
+
+<h3 id="s-prod">3.2 La función de producción neoclásica</h3>
+<p>\(Y_t=F(K_t,L_t,A_t)\), donde \(L\) es trabajo (todos los trabajadores son idénticos), \(K\) es capital físico (máquinas, edificios, estructuras, ordenadores: bienes producidos que sirven para producir) y \(A\) es tecnología (la “receta” o fórmula).</p>
+<div class="box note"><span class="tag">Rival vs. no rival</span>
+<p>\(K\) y \(L\) son <strong>bienes rivales</strong>: un horno o un cocinero no pueden estar en dos fábricas a la vez. La tecnología es <strong>no rival</strong>: la misma receta puede usarse a la vez en Camprodon y en Rentería. Sala-i-Martin prefiere decir “no rival” en lugar de “bien público” porque los bienes públicos además son <em>no excluibles</em>.</p></div>
+<p>Una función es <strong>neoclásica</strong> si cumple tres propiedades:</p>
+<ol>
+<li><strong>Rendimientos constantes a escala (RCE) en los factores rivales</strong>: \(F(\lambda K,\lambda L,A)=\lambda F(K,L,A)\), es decir, es homogénea de grado uno. Se multiplican \(K\) y \(L\) pero <em>no</em> \(A\). La justificación es el <strong>principio de réplica</strong>: si se construye una fábrica idéntica en otro lugar, con las mismas máquinas y trabajadores, se debe poder duplicar la producción, y la receta no hace falta duplicarla porque es no rival. Romer añade que la economía ya es grande (se agotaron las ganancias de especialización) y que los factores fijos, como tierra y recursos naturales, son relativamente poco importantes (ver <a href="#recursos">§12.2</a>).</li>
+<li><strong>Productividad marginal positiva pero decreciente</strong>: \(F_K&gt;0,\ F_{KK}&lt;0,\ F_L&gt;0,\ F_{LL}&lt;0\). Si se añaden cocineros sin añadir hornos, la producción aumenta cada vez menos porque los cocineros se estorban. <span class="pill">Distinción</span> Los <em>rendimientos de un factor</em> (se mueve uno solo) son distintos de los <em>rendimientos a escala</em> (se mueven todos los rivales a la vez).</li>
+<li><strong>Condiciones de Inada</strong>: \(\lim_{K\to0}F_K=\infty,\ \lim_{K\to\infty}F_K=0\), y lo análogo para \(L\). Cuando el capital es escaso es muy productivo; cuando abunda, casi no aporta. Romer: son condiciones más fuertes de lo necesario, pero garantizan que la economía no diverja.</li>
+</ol>
+<h4>Forma intensiva</h4>
+<p>Por RCE, con \(\lambda=1/L\): \(\;y=\dfrac{Y}{L}=F\!\left(\tfrac KL,1,A\right)=f(k,A)\). La producción per cápita depende solo del capital per cápita (y de \(A\)), no del tamaño de la economía. Romer lo explica así: se divide la economía en \(AL\) economías pequeñas con una unidad de trabajo efectivo cada una; cada una produce la fracción \(1/AL\) del total. Con Romer, \(f(0)=0,\ f'&gt;0,\ f''&lt;0\) e Inada: \(\lim_{k\to0}f'(k)=\infty,\ \lim_{k\to\infty}f'(k)=0\).</p>
+
+<h3 id="s-cd">3.3 La función Cobb-Douglas</h3>
+<div class="formula">\[Y=AK^{\alpha}L^{1-\alpha},\quad 0&lt;\alpha&lt;1\qquad\Longrightarrow\qquad y=Ak^{\alpha}\]</div>
+<p><strong>Historia (Sala-i-Martin):</strong> Paul Douglas notó que en EE. UU. los trabajadores se quedaban con cerca del 70% de la renta y los capitalistas con cerca del 30%, de forma estable. Le preguntó al matemático Charles Cobb qué función hacía que, pagando a cada factor su producto marginal, las participaciones fueran constantes. La respuesta fue \(Y=AK^\alpha L^{1-\alpha}\):</p>
+<div class="formula">\[\underbrace{\frac{\partial Y}{\partial K}K}_{\text{renta del capital}}=\alpha AK^{\alpha-1}L^{1-\alpha}K=\alpha Y,\qquad \underbrace{\frac{\partial Y}{\partial L}L}_{\text{renta del trabajo}}=(1-\alpha)Y\]</div>
+<p>Por eso \(\alpha\) es a la vez la <strong>participación del capital en el ingreso</strong> y la <strong>elasticidad del producto respecto al capital</strong> (dato típico: \(\alpha\approx 1/3\)).</p>
+<p><strong>Es neoclásica:</strong></p>
+<ul>
+<li>RCE: \(A(\lambda K)^\alpha(\lambda L)^{1-\alpha}=\lambda^{\alpha+1-\alpha}AK^\alpha L^{1-\alpha}=\lambda Y\).</li>
+<li>\(F_K=\alpha AK^{\alpha-1}L^{1-\alpha}&gt;0\) y \(F_{KK}=-\alpha(1-\alpha)AK^{\alpha-2}L^{1-\alpha}&lt;0\); lo mismo para \(L\).</li>
+<li>Forma intensiva: \(f'(k)=\alpha Ak^{\alpha-1}=\dfrac{\alpha A}{k^{1-\alpha}}\to\infty\) si \(k\to0\) y \(\to0\) si \(k\to\infty\) (Inada). Además \(f''(k)=-\alpha(1-\alpha)Ak^{\alpha-2}&lt;0\) (cóncava).</li>
+</ul>
+
+<h3 id="s-otros">3.4 Los demás supuestos</h3>
+<div class="tablewrap"><table>
+<tr><th>Supuesto</th><th>Formulación</th><th>Comentario</th></tr>
+<tr><td>Tasa de ahorro constante (keynesiana)</td><td>\(S=sY,\ C=(1-s)Y,\ 0&lt;s&lt;1\)</td><td>Es exógena. Históricamente las tasas de ahorro no muestran tendencia; en Ramsey (cap. 3) \(s\) será óptima. En el Taller: \(C=bY\), con \(b\) la PMgC y \(s=1-b\) la PMgS. Como \(S=I\), <strong>la tasa de ahorro es también la tasa de inversión</strong>.</td></tr>
+<tr><td>Depreciación constante</td><td>\(I=\dot K+\delta K\ \Rightarrow\ \dot K=sY-\delta K\)</td><td>Inversión bruta = inversión neta + reposición. Las máquinas son como <strong>bombillas</strong>: todas producen igual mientras funcionan y se dañan con probabilidad \(\delta\) (no hay máquinas “viejas” menos productivas).</td></tr>
+<tr><td>Población = trabajo, crece a tasa \(n\)</td><td>\(L(t)=L_0e^{nt},\ \dot L/L=n\)</td><td>Supuesto poco realista (niños, ancianos, desempleados no producen PIB), pero simplifica. Interesa el per cápita: un país es rico si sus habitantes producen mucho <em>en promedio</em>, no si produce mucho en total (India).</td></tr>
+<tr><td>Tecnología</td><td>Sala: \(A_t=A\) constante. Clase y Romer: \(A(t)=A_0e^{gt}\)</td><td>En el tablero: tecnología <strong>exógena</strong>, “otro problema”. Sala la fija para aislar el papel del capital y luego la deja crecer (<a href="#tecnologia">§9</a>).</td></tr>
+</table></div>
+<div class="box class"><span class="tag">En clase: stock vs. flujo (ejemplo numérico)</span>
+<p>\(K\) es un <strong>stock</strong> (patrimonio: máquinas, equipos e inmuebles en un momento dado) y \(Y\) es un <strong>flujo</strong> (ingreso por unidad de tiempo). Datos del tablero: \(Y_{2026}=\$7.000\) billones, \(K_{2026}=\$8.000\) billones, \(K_{2025}=\$7.800\) billones, \(\delta=3\%\).</p>
+<p>Ilustración: inversión neta \(\Delta K=200\); depreciación \(\approx0{,}03\times7.800=234\); inversión bruta \(I=\Delta K+\delta K\approx434\) billones, es decir, \(I/Y\approx6{,}2\%\). Discreto: \(I_t=\Delta K+\delta K\); continuo: \(I(t)=\dot K(t)+\delta K(t)\).</p></div>
+</section>
+
+<!-- ============================================================ 4 -->
+<section id="fundamental">
+<h2 class="sec"><span class="num">4</span>La ecuación fundamental de Solow</h2>
+<p>Combinando \(S=I\), \(S=sY\) e \(I=\dot K+\delta K\) se obtiene la acumulación agregada:</p>
+<div class="formula">\[sF(K,L,A)=\dot K+\delta K\qquad\Longrightarrow\qquad \dot K=sF(K,L,A)-\delta K\qquad\text{(Sala 1.8; Romer 1.15)}\]</div>
+<p>Si se conocen \(K\), \(L\) y \(A\) hoy, esta ecuación dice cuánto aumenta el capital en el instante siguiente; eso a su vez determina la producción, y así sucesivamente hasta el infinito. Por eso es la ecuación que gobierna todo el modelo.</p>
+
+<h3>Derivación 1 — regla del producto (como en el tablero)</h3>
+<ol>
+<li>Se divide entre \(L\): \(\dfrac{\dot K}{L}=s\,y-\delta k\).  (1)</li>
+<li><strong>El truco:</strong> \(\dfrac{\dot K}{L}\neq\dot k\). Como \(K=kL\), por la regla del producto \(\dot K=\dot k\,L+k\,\dot L\).</li>
+<li>Se divide entre \(L\): \(\dfrac{\dot K}{L}=\dot k+k\dfrac{\dot L}{L}=\dot k+nk\).</li>
+<li>Se sustituye en (1): \(\dot k+nk=sy-\delta k\).</li>
+</ol>
+<h3>Derivación 2 — derivada del cociente (Sala-i-Martin y Taller)</h3>
+<div class="formula">\[\dot k=\frac{d}{dt}\!\left(\frac KL\right)=\frac{\dot KL-K\dot L}{L^2}=\frac{\dot K}{L}-\frac KL\frac{\dot L}{L}=\frac{\dot K}{L}-nk\]</div>
+<p>Una tercera vía, con logaritmos: \(\ln k=\ln K-\ln L\Rightarrow \gamma_k=\gamma_K-n=\dfrac{sY}{K}-\delta-n\), y multiplicando por \(k\) se obtiene lo mismo.</p>
+<div class="formula main">\[\boxed{\ \dot k(t)=s\,f(k(t))-(\delta+n)\,k(t)\ }\qquad\text{Cobb-Douglas: }\ \dot k=sAk^{\alpha}-(\delta+n)k\]</div>
+<h3>Interpretación de cada término</h3>
+<div class="tablewrap"><table>
+<tr><th>Término</th><th>Nombre</th><th>Significado</th></tr>
+<tr><td>\(\dot k\)</td><td>Acumulación de capital per cápita</td><td>Cambio instantáneo de \(k\)</td></tr>
+<tr><td>\(s\,f(k)\)</td><td>Ahorro (inversión) <strong>observado o efectivo</strong> por persona</td><td>Si sube \(s\) (tasa de inversión en economía cerrada), hay más máquinas</td></tr>
+<tr><td>\((\delta+n)k\)</td><td>Ahorro <strong>requerido</strong> o <strong>inversión de reposición</strong></td><td>Lo mínimo que hay que invertir para que \(k\) no caiga</td></tr>
+<tr><td>\(\delta k\)</td><td>Reposición del capital depreciado</td><td>Cuanto más se deprecia, menos aumenta \(k\)</td></tr>
+<tr><td>\(nk\)</td><td>“Dilución” del capital, o <em>ampliación</em> del capital</td><td>Dotar de capital a los nuevos habitantes</td></tr>
+</table></div>
+<div class="box class"><span class="tag">En clase: los monigotes</span><p>Si hay un trabajador con capital \(K\) y llegan más trabajadores, ese mismo \(K\) se reparte entre más gente y \(k\) cae. Por eso hay que invertir \(nk\) solo para <em>mantener</em> constante el capital por persona. Sala-i-Martin lo muestra con \(s=0\): aunque no se invierta nada, \(k\) cae por dos razones, la depreciación (\(\delta k\)) y el aumento del número de “cápitas” (\(nk\)).</p></div>
+<div class="box note"><span class="tag">Versión con progreso técnico (Romer)</span>
+<p>Con \(\hat k=K/(AL)\) y \(\hat y=Y/(AL)=f(\hat k)\): \(\ \dot{\hat k}=\dfrac{\dot K}{AL}-\hat k\,(n+g)\), así que</p>
+\[\dot{\hat k}=s f(\hat k)-(n+g+\delta)\hat k\qquad\text{(Romer 1.18; Sala 1.24 con }x\text{ en lugar de }g).\]
+<p>La única diferencia es que la “depreciación efectiva” pasa a ser \(n+g+\delta\): el trabajo efectivo \(AL\) crece a \(n+g\) (nota 9 de Romer), así que \(K\) tiene que crecer a \(n+g\) para que \(\hat k\) no cambie.</p></div>
+</section>
+
+<!-- ============================================================ 5 -->
+<section id="ee">
+<h2 class="sec"><span class="num">5</span>Estado estacionario: existencia, unicidad, estabilidad</h2>
+<figure><div id="fig-ee"></div><figcaption>Gráfico 1 (Sala 1.1, Romer 1.2): producción \(f(k)\), <em>curva de ahorro</em> \(sf(k)\) (inversión realizada) y <em>curva de depreciación</em> \((\delta+n)k\) (inversión de reposición). Se cruzan en \(k^*\). La distancia vertical entre \(f(k^*)\) y \(sf(k^*)\) es el consumo \(c^*\). Este es el diagrama que quedó a medias en el tablero.</figcaption></figure>
+<h3>¿Por qué existe y es único?</h3>
+<ul>
+<li>En \(k=0\) ambas curvas valen 0 (el cruce en el origen es trivial y se ignora; si \(k(0)=0\) la economía se queda ahí).</li>
+<li>Cerca de 0, \(sf(k)\) es <strong>vertical</strong> (Inada: \(f'(0)=\infty\)), mientras que la recta tiene pendiente finita \(\delta+n\). Por eso la curva de ahorro empieza <em>por encima</em> de la recta.</li>
+<li>La pendiente \(sf'(k)\) cae hacia 0 (Inada en \(\infty\)); en algún punto queda por debajo de \(\delta+n\) y las curvas se cruzan.</li>
+<li>Como \(f''&lt;0\), después del cruce la curva sigue aplanándose y la recta sigue igual: <strong>se cruzan una sola vez</strong> con \(k&gt;0\).</li>
+</ul>
+<h3>Estabilidad (diagrama de fases)</h3>
+<figure><div id="fig-fase"></div><figcaption>Gráfico 2 (Romer 1.3): \(\dot k\) como función de \(k\). A la izquierda de \(k^*\), \(\dot k&gt;0\) y \(k\) sube; a la derecha, \(\dot k&lt;0\) y \(k\) baja. Las flechas apuntan hacia \(k^*\): el equilibrio es <strong>globalmente estable</strong> para cualquier \(k_0&gt;0\).</figcaption></figure>
+<div class="tablewrap"><table>
+<tr><th>Condición</th><th>Significado</th></tr>
+<tr><td>\(sf(k)&gt;(\delta+n)k\iff\dot k&gt;0\)</td><td>El ahorro efectivo supera al requerido: \(k\) crece</td></tr>
+<tr><td>\(sf(k)=(\delta+n)k\iff\dot k=0\)</td><td><strong>Estado estacionario</strong> \(k^*\)</td></tr>
+<tr><td>\(sf(k)&lt;(\delta+n)k\iff\dot k&lt;0\)</td><td>El ahorro no alcanza: \(k\) cae</td></tr>
+</table></div>
+<p><strong>Intuición (Sala-i-Martin):</strong> en \(k^*\), la producción \(f(k^*)\) es tal que, al ahorrar la fracción \(s\), la inversión alcanza <em>justo</em> para reponer el capital depreciado y equipar a los nuevos trabajadores. No sobra nada para aumentar \(k\), así que se repite el mismo proceso “hasta el final de los tiempos”.</p>
+<div class="box class"><span class="tag">En clase: distinción clave</span><p>\(k^*\) es el <strong>equilibrio de estado estacionario</strong>; el camino de \(k_0\) a \(k^*\) es la <strong>dinámica de transición</strong>. Son preguntas distintas y el parcial puede preguntar por cualquiera de las dos.</p></div>
+
+<h3>Solución con Cobb-Douglas (Sala 1.16 y Taller)</h3>
+<div class="formula">\[\dot k=0:\ sA(k^*)^{\alpha}=(\delta+n)k^*\ \Rightarrow\ (k^*)^{1-\alpha}=\frac{sA}{\delta+n}\ \Rightarrow\ \boxed{k^*=\left(\frac{sA}{\delta+n}\right)^{\frac1{1-\alpha}}}\]
+\[y^*=A(k^*)^{\alpha}=A^{\frac1{1-\alpha}}\left(\frac{s}{\delta+n}\right)^{\frac{\alpha}{1-\alpha}},\qquad c^*=(1-s)\,y^*\]</div>
+<p>Con progreso técnico (Romer, Problema 1.5): \(\hat k^*=\big(\tfrac{s}{n+g+\delta}\big)^{1/(1-\alpha)}\), \(\hat y^*=\big(\tfrac{s}{n+g+\delta}\big)^{\alpha/(1-\alpha)}\) y \(\hat c^*=(1-s)\hat y^*\).</p>
+
+<h3>¿Qué crece en el estado estacionario?</h3>
+<div class="tablewrap"><table>
+<tr><th>Variable</th><th>Sin progreso técnico (\(A\) constante)</th><th>Con \(A\) creciendo a \(g\)</th></tr>
+<tr><td>\(k,\ y,\ c\) per cápita</td><td>constantes: \(\gamma=0\)</td><td>crecen a \(g\)</td></tr>
+<tr><td>\(\hat k,\ \hat y\) (por trabajador efectivo)</td><td>—</td><td>constantes</td></tr>
+<tr><td>\(K,\ Y,\ C\) agregadas</td><td>crecen a \(n\) (\(\gamma_K=\gamma_k+n\))</td><td>crecen a \(n+g\)</td></tr>
+<tr><td>\(K/Y\), \(r\), participaciones</td><td>constantes</td><td>constantes</td></tr>
+</table></div>
+<p>Romer llama <strong>senda de crecimiento sostenido</strong> (<em>balanced growth path</em>) a la situación en que todas las variables crecen a tasas constantes. En ella, el crecimiento del producto por trabajador depende <strong>solo</strong> del progreso técnico.</p>
+
+<h3>Estática comparativa del estado estacionario</h3>
+<p>\(k^*=k^*(s,A,\delta,n)\): <strong>aumenta con \(s\) y con \(A\)</strong>, <strong>disminuye con \(\delta\) y con \(n\)</strong>. Lo mismo vale para \(y^*\): en estado estacionario, los países con más ahorro (o mejor tecnología, o menor crecimiento poblacional) son más ricos. El Taller lo resume como \(y^*=f(A,s,\delta,n)\).</p>
+<div class="grid2">
+<figure><div id="fig-subes"></div><figcaption>Gráfico 3 (Taller 1.2): sube \(s\to s'\). La curva de ahorro se desplaza hacia arriba y \(k^*\) aumenta a \(k^{**}\). Un aumento de \(A\) tiene el mismo efecto.</figcaption></figure>
+<figure><div id="fig-suben"></div><figcaption>Gráfico 4 (Taller 1.3): sube \(\delta\) o \(n\). La recta \((\delta+n)k\) gira hacia arriba y \(k^*\) cae a \(k^{**}\).</figcaption></figure>
+</div>
+</section>
+
+<!-- ============================================================ 6 -->
+<section id="transicion">
+<h2 class="sec"><span class="num">6</span>La tasa de crecimiento y la dinámica de transición</h2>
+<p>Si se divide la ecuación fundamental entre \(k\) se obtiene la misma ecuación expresada en tasas de crecimiento (Sala 1.20):</p>
+<div class="formula main">\[\gamma_k\equiv\frac{\dot k}{k}=\underbrace{\frac{s f(k)}{k}}_{\text{curva de ahorro (CA)}}-\underbrace{(\delta+n)}_{\text{curva de depreciación (CD)}}\qquad\text{Cobb-Douglas: }\ \gamma_k=sAk^{-(1-\alpha)}-(\delta+n)\]</div>
+<ul>
+<li>\(f(k)/k\) es el <strong>producto medio del capital</strong>. Con Cobb-Douglas, la CA \(=sA/k^{1-\alpha}\) es <strong>decreciente</strong>, tiende a \(\infty\) cuando \(k\to0\) y tiende a \(0\) cuando \(k\to\infty\).</li>
+<li>La CD es una <strong>recta horizontal</strong> en \(\delta+n\). Como la CA recorre todos los valores de \(\infty\) a 0 y es estrictamente decreciente, se cruzan una sola vez: otra prueba de existencia y unicidad.</li>
+<li>La tasa de crecimiento es la <strong>distancia vertical</strong> entre CA y CD: es positiva si \(k&lt;k^*\), negativa si \(k&gt;k^*\), y <strong>es mayor cuanto más lejos está la economía por debajo de \(k^*\)</strong>.</li>
+<li>Con Cobb-Douglas, \(\gamma_y=\alpha\gamma_k\) y \(\gamma_c=\gamma_y\) (porque \(c=(1-s)y\)). Basta con estudiar \(\gamma_k\).</li>
+</ul>
+<figure><div id="fig-gamma"></div><figcaption>Gráfico 5 (Sala 1.10): una economía que parte de \(k_0&lt;k^*\) crece rápido al principio y cada vez más despacio, hasta detenerse en \(k^*\).</figcaption></figure>
+<div class="box key"><span class="tag">La gran lección (y el gran problema)</span>
+<p>Si la función es neoclásica y \(A\) es constante, <strong>la economía deja de crecer en el largo plazo</strong>. El crecimiento de largo plazo no puede sostenerse invirtiendo una fracción constante del PIB. Pero la evidencia de los últimos 200 años muestra crecimiento sostenido, así que el modelo sin progreso técnico no describe el mundo.</p></div>
+<div class="box warn"><span class="tag">Por qué cae la tasa de crecimiento (trampa conceptual)</span>
+<p>La causa son los <strong>rendimientos decrecientes del capital</strong>: cada máquina adicional produce menos, y como se ahorra una fracción <em>constante</em> de un producto que crece cada vez menos, los aumentos de \(k\) son cada vez menores hasta cubrir apenas \((\delta+n)k\). <strong>No</strong> es porque “los inversores inviertan menos al caer la rentabilidad”: en Solow las familias ahorran una fracción fija y <em>no reaccionan</em> a la rentabilidad. Ese mecanismo aparece recién en Ramsey (cap. 3).</p></div>
+</section>
+
+<!-- ============================================================ 7 -->
+<section id="politicas">
+<h2 class="sec"><span class="num">7</span>Experimentos: cambios en \(s\), \(n\) y \(A\)</h2>
+<h3>7.1 Aumento permanente de la tasa de ahorro (Sala 1.4.1; Romer 1.4)</h3>
+<p>La economía parte de \(k^*\) y en \(t_0\) sube \(s\) de forma permanente (por ejemplo, con política fiscal; el Banco Mundial suele recomendarlo).</p>
+<ol>
+<li>La CA salta hacia arriba. En \(t_0\), \(k\) todavía vale \(k^*_{viejo}\), pero ahora el ahorro efectivo supera al requerido: \(\dot k\) salta a un valor positivo.</li>
+<li>\(k\) sube gradualmente y \(\dot k\) cae hacia 0 (rendimientos decrecientes) hasta llegar a \(k^{**}\).</li>
+<li>La tasa de crecimiento de \(Y/L\) salta por encima de \(g\) y luego vuelve a \(g\). El logaritmo de \(Y/L\) termina en una <strong>senda paralela, pero más alta</strong>.</li>
+<li>El consumo \(c=(1-s)f(k)\) <strong>cae de golpe</strong> en \(t_0\) (sube \(s\) y \(k\) aún no ha cambiado) y luego sube. Termina por encima o por debajo del nivel inicial según la <a href="#oro">regla de oro</a>.</li>
+</ol>
+<figure><div id="fig-panels"></div><figcaption>Gráfico 6 (Romer 1.5): efectos de un aumento permanente de \(s\) en \(t_0\). De arriba a abajo: \(s\), \(\dot k\), \(k\), tasa de crecimiento de \(Y/L\), \(\ln(Y/L)\) y \(c\).</figcaption></figure>
+<div class="box key"><span class="tag">Efecto nivel vs. efecto crecimiento</span>
+<p>Un cambio en \(s\) tiene un <strong>efecto nivel</strong> (desplaza la senda de \(Y/L\)), pero <strong>no un efecto crecimiento</strong> (en el nuevo estado estacionario la tasa de crecimiento es la misma). Un aumento <em>permanente</em> de \(s\) produce un aumento <em>temporal</em> del crecimiento. En Solow, <strong>solo los cambios en la tasa de progreso técnico tienen efecto crecimiento</strong>; todo lo demás tiene únicamente efecto nivel.</p>
+<p>¿Y si se sube \(s\) una y otra vez? No se puede de forma indefinida: \(s\le1\). Una vez se ahorra todo lo que se produce, la economía converge a un estado estacionario final sin crecimiento. <strong>No se pueden generar aumentos permanentes del crecimiento con políticas de ahorro e inversión</strong> (Sala-i-Martin).</p></div>
+<h3>7.2 Reducción de la tasa de crecimiento de la población (Sala 1.4.2)</h3>
+<p>Planificación familiar, otra recomendación típica. La CD (\(\delta+n\)) baja; en \(k^*\) la CA queda por encima, así que hay crecimiento positivo transitorio hasta un \(k^{**}\) mayor, con crecimiento nulo al final. De nuevo es un efecto nivel. Tampoco se puede repetir indefinidamente: haría falta un \(n\) cada vez más negativo y la población se extinguiría. Sala-i-Martin advierte además que un mayor PIB per cápita no implica mayor bienestar si las familias <em>quieren</em> tener hijos.</p>
+<h3>7.3 Mejora tecnológica (Sala 1.5)</h3>
+<p>Un aumento de \(A\) desplaza la CA hacia arriba, igual que un aumento de \(s\): crecimiento transitorio y un nivel mayor. La diferencia decisiva es que <strong>\(s\) está acotada por 1, mientras que \(A\) puede mejorar sin límite</strong> (“la imaginación humana no tiene límites”). Si \(A\) crece continuamente a tasa \(g\), la CA se desplaza continuamente, \(k^*\) se mueve a tasa \(g\) y el crecimiento per cápita de largo plazo es positivo e igual a \(g\).</p>
+</section>
+
+<!-- ============================================================ 8 -->
+<section id="oro">
+<h2 class="sec"><span class="num">8</span>La regla de oro y la ineficiencia dinámica</h2>
+<p>Si el Estado pudiera elegir \(s\) (con incentivos fiscales), ¿cuál elegiría? El bienestar no depende de lo que se produce ni del capital, sino de lo que se <strong>consume</strong>. La <strong>regla de oro de la acumulación de capital</strong> (nombre de Phelps, 1961, tomado del Evangelio de San Mateo: no hacer a las generaciones futuras lo que no quisiéramos que nos hicieran) es el estado estacionario con el <strong>máximo consumo per cápita</strong>.</p>
+<div class="formula">\[c^*=f(k^*)-sf(k^*)=f(k^*)-(\delta+n)k^*\qquad\Longrightarrow\qquad\frac{dc^*}{dk^*}=f'(k^*)-(\delta+n)=0\]
+\[\boxed{f'(k_{oro})=\delta+n}\qquad(\text{con progreso técnico: } f'(\hat k_{oro})=n+g+\delta)\]</div>
+<p>Aumentar \(k^*\) tiene dos efectos sobre \(c^*\): sube la producción (\(f'\)) y sube la inversión necesaria para mantenerlo (\(\delta+n\)). En el óptimo se igualan. Gráficamente, es el punto donde la pendiente de \(f(k)\) es paralela a la recta \((\delta+n)k\), es decir, donde la distancia entre ambas es máxima.</p>
+<figure><div id="fig-oro"></div><figcaption>Gráfico 7 (Sala 1.4): el consumo de estado estacionario es la distancia vertical entre \(f(k)\) y \((\delta+n)k\), y es máximo donde la tangente a \(f\) es paralela a la recta.</figcaption></figure>
+<h3>Cobb-Douglas: \(s_{oro}=\alpha\)</h3>
+<div class="formula">\[\alpha Ak_{oro}^{\alpha-1}=\delta+n\Rightarrow k_{oro}=\left(\frac{\alpha A}{\delta+n}\right)^{\frac1{1-\alpha}};\qquad k^*=k_{oro}\iff\left(\frac{sA}{\delta+n}\right)=\left(\frac{\alpha A}{\delta+n}\right)\iff \boxed{s_{oro}=\alpha}\]</div>
+<p>Otra forma de verlo: en la regla de oro, la inversión \(sf(k)=(\delta+n)k=f'(k)k\), así que \(s=f'(k)k/f(k)=\alpha\). <strong>La regla de oro se alcanza cuando se ahorra exactamente la renta del capital.</strong></p>
+<h3>Romer: efecto de \(s\) sobre \(c^*\)</h3>
+<div class="formula">\[\frac{\partial c^*}{\partial s}=\big[f'(k^*)-(n+g+\delta)\big]\frac{\partial k^*}{\partial s},\qquad\frac{\partial k^*}{\partial s}&gt;0\]</div>
+<p>Si \(f'(k^*)&gt;n+g+\delta\) (hay poco capital, \(s&lt;s_{oro}\)), subir \(s\) aumenta el consumo de largo plazo. Si \(f'(k^*)&lt;n+g+\delta\) (hay demasiado capital, \(s&gt;s_{oro}\)), lo reduce. Romer (gráfico 1.6) lo muestra con tres economías: \(s_H\) alto, \(s_L\) bajo y \(s_M\) justo en la regla de oro.</p>
+
+<h3>Ineficiencia dinámica</h3>
+<div class="grid2">
+<div class="box warn"><span class="tag">Ahorro excesivo: \(s&gt;s_{oro}\), \(k^*&gt;k_{oro}\)</span>
+<p>Si se baja \(s\) a \(s_{oro}\), el consumo <strong>sube de inmediato</strong> (se consume más de lo mismo), luego cae un poco mientras \(k\) desciende, pero converge a \(c_{oro}\), que es mayor que el \(c^*\) inicial. <strong>El consumo es mayor en todos los momentos</strong> (Sala, gráfico 1.7). Cualquiera que prefiera más consumo estaría mejor, sea cual sea su función de utilidad. Esta zona es <strong>dinámicamente ineficiente</strong>: ahorrar demasiado es malo sin ambigüedad.</p></div>
+<div class="box note"><span class="tag">Ahorro insuficiente: \(s&lt;s_{oro}\), \(k^*&lt;k_{oro}\)</span>
+<p>Para llegar a \(c_{oro}\) hay que subir \(s\): el consumo <strong>cae al principio</strong> y solo después supera el nivel inicial (Sala, gráfico 1.9). Hay un sacrificio presente a cambio de consumo futuro, y un agente impaciente puede rechazarlo. <strong>No se puede afirmar</strong> que estas economías sean ineficientes: depende de cómo se ponderen el corto y el largo plazo, lo que requiere preferencias (Ramsey).</p></div>
+</div>
+<div class="box key"><span class="tag">Condición de ineficiencia dinámica: \(r&lt;\) crecimiento agregado</span>
+<p>El tipo de interés es \(r=f'(k)-\delta\) (se demuestra en el cap. 3). En la zona ineficiente, \(f'(k^*)&lt;f'(k_{oro})=\delta+n\), así que</p>
+\[r^*=f'(k^*)-\delta&lt;n=\gamma_Y^{agregado}\qquad(\text{con progreso técnico: } r^*&lt;n+g).\]
+<p><strong>Una economía es dinámicamente ineficiente si su tipo de interés real es menor que su tasa de crecimiento agregado.</strong> Esta es la “ineficiencia dinámica” que el programa lista entre los problemas del modelo: como \(s\) es exógena, nada garantiza que la economía no ahorre de más. En Ramsey esto no puede ocurrir.</p></div>
+</section>
+
+<!-- ============================================================ 9 -->
+<section id="tecnologia">
+<h2 class="sec"><span class="num">9</span>Progreso tecnológico</h2>
+<h3>Tipos de progreso técnico</h3>
+<div class="tablewrap"><table>
+<tr><th>Forma</th><th>Nombre</th></tr>
+<tr><td>\(Y=F(K,AL)\)</td><td><strong>Aumentador de trabajo</strong> o neutral en el sentido de <strong>Harrod</strong>. \(AL\) es el <em>trabajo efectivo</em>.</td></tr>
+<tr><td>\(Y=F(AK,L)\)</td><td>Aumentador de capital, o neutral en el sentido de Solow</td></tr>
+<tr><td>\(Y=AF(K,L)\)</td><td>Neutral en el sentido de <strong>Hicks</strong></td></tr>
+</table></div>
+<p>Solow y Romer usan la forma de Harrod porque es la que hace que \(K/Y\) se estabilice, lo cual es consistente con los datos: no hay tendencia clara en la razón capital-producto. Sala-i-Martin anticipa (cap. 4) que, para que exista un estado estacionario con crecimiento, el progreso técnico debe poder escribirse como aumentador de trabajo. Con Cobb-Douglas los tres tipos son equivalentes (nota 6 de Romer): \(K^\alpha(AL)^{1-\alpha}=\tilde AK^\alpha L^{1-\alpha}\) con \(\tilde A=A^{1-\alpha}\).</p>
+<h3>El modelo con \(A\) creciendo a tasa \(g\)</h3>
+<p>Si \(x=0{,}02\) (o \(g=0{,}02\)), es como si cada trabajador hiciera el trabajo de 1,02 trabajadores del año anterior. \(\hat k=K/(AL)\) se comporta exactamente como \(k\) sin progreso técnico:</p>
+<div class="formula">\[\dot{\hat k}=sf(\hat k)-(\delta+n+g)\hat k\;\Rightarrow\;\hat k^*\text{ constante}\;\Rightarrow\;\gamma_{k}=\gamma_{y}=\gamma_c=g,\quad\gamma_K=\gamma_Y=n+g\]</div>
+<figure><div id="fig-gamma-tec"></div><figcaption>Gráfico 8 (Sala 1.14): el mismo diagrama de tasas, con \(\hat k\) en el eje y la CD en \(\delta+n+g\).</figcaption></figure>
+<div class="box warn"><span class="tag">El gran problema del modelo neoclásico: el progreso técnico DEBE ser exógeno</span>
+<p>El modelo dice que la única fuente de crecimiento de largo plazo es el progreso técnico, pero <strong>no explica de dónde sale</strong>: “explica muchas cosas, pero deja sin explicar precisamente el crecimiento económico”. Y es peor de lo que parece. Por el <strong>teorema de Euler</strong>, con RCE en \(K\) y \(L\):</p>
+\[F(K,L,A)=\frac{\partial F}{\partial K}K+\frac{\partial F}{\partial L}L.\]
+<p>En competencia perfecta cada factor cobra su producto marginal (\(R=F_K\), \(w=F_L\)), así que \(F=RK+wL\): <strong>una vez pagados el capital y el trabajo, el producto se agota</strong> y no quedan recursos para financiar la I+D. Los neoclásicos se ven <em>obligados</em> a suponer un \(A\) exógeno. Para endogeneizar el crecimiento hay que abandonar un supuesto: o la función no es neoclásica (<a href="#extensiones">§12</a>), o no hay competencia perfecta (Unidad 4: Romer, modelos neoschumpeterianos).</p></div>
+<p><strong>¿Qué es \(A\)?</strong> Romer: la “eficacia del trabajo” es un <em>cajón de sastre</em> de todo lo que influye en la producción aparte de \(K\) y \(L\): conocimiento abstracto, educación y cualificación, derechos de propiedad, infraestructura, cultura empresarial… Para cada interpretación habría que explicar cómo afecta a la producción, cómo evoluciona y por qué difiere entre países.</p>
+</section>
+
+<!-- ============================================================ 10 -->
+<section id="cuantitativo">
+<h2 class="sec"><span class="num">10</span>Implicaciones cuantitativas (Romer §1.5; Sala §1.6)</h2>
+<h3>10.1 ¿Cuánto afecta \(s\) a la producción de largo plazo?</h3>
+<p>Por diferenciación implícita de \(sf(k^*)=(n+g+\delta)k^*\):</p>
+<div class="formula">\[\frac{\partial k^*}{\partial s}=\frac{f(k^*)}{(n+g+\delta)-sf'(k^*)},\qquad \frac{s}{y^*}\frac{\partial y^*}{\partial s}=\frac{\alpha_K(k^*)}{1-\alpha_K(k^*)}\qquad\text{(Romer 1.24–1.27)}\]</div>
+<p>donde \(\alpha_K(k^*)=k^*f'(k^*)/f(k^*)\) es la elasticidad del producto respecto al capital, que con competencia perfecta es la <strong>participación del capital</strong> (\(\approx1/3\)). Entonces la elasticidad de \(y^*\) respecto a \(s\) es \(\approx 1/2\): <strong>si \(s\) sube un 10% (de 20% a 22% del PIB), \(y^*\) sube solo ~5%</strong>, y un aumento del 50% en \(s\) lo sube ~22%. Cambios grandes en \(s\) tienen efectos moderados. Con Cobb-Douglas se ve directamente: \(\ln y^*=\frac{\alpha}{1-\alpha}\big[\ln s-\ln(n+g+\delta)\big]+\text{cte}\).</p>
+
+<h3 id="vel">10.2 Velocidad de convergencia</h3>
+<p><strong>Método de Romer (Taylor de primer orden alrededor de \(k^*\)):</strong></p>
+<div class="formula">\[\dot k\simeq\left.\frac{\partial\dot k}{\partial k}\right|_{k^*}(k-k^*)\equiv-\lambda\,(k-k^*),\qquad\lambda=(n+g+\delta)-sf'(k^*)=\big[1-\alpha_K(k^*)\big](n+g+\delta)\]
+\[\Rightarrow\ k(t)\simeq k^*+e^{-\lambda t}\big[k(0)-k^*\big],\qquad y(t)-y^*\simeq e^{-\lambda t}\big[y(0)-y^*\big]\]</div>
+<p>Es la EDO de <a href="#edo">§1.1</a> con \(a=\lambda\). <strong>Método de Sala-i-Martin:</strong> define \(\beta\equiv-\partial\gamma_k/\partial\ln k\). Con Cobb-Douglas, \(\gamma_k=sAe^{-(1-\alpha)\ln k}-(\delta+n)\), así que \(\beta=(1-\alpha)sAk^{-(1-\alpha)}\), que es <em>decreciente</em> en \(k\) (la velocidad cae durante la transición). En el estado estacionario:</p>
+<div class="formula main">\[\beta^*=(1-\alpha)(\delta+n)\quad\big[\text{con progreso técnico: }(1-\alpha)(\delta+n+g)\big],\qquad \gamma_k\simeq-\beta^*\big[\ln k-\ln k^*\big]\ \text{(Sala 1.28)}\]</div>
+<p>Vida media (tiempo en cerrar la mitad de la brecha): \(e^{-\beta t}=1/2\Rightarrow t_{1/2}=\ln2/\beta\approx0{,}69/\beta\).</p>
+<div class="tablewrap"><table>
+<tr><th>Calibración</th><th>\(\alpha\)</th><th>\(\delta+n\,(+g)\)</th><th>\(\beta^*\)</th><th>Vida media</th></tr>
+<tr><td>Romer: \(n\approx1\text{–}2\%\), \(g\approx1\text{–}2\%\), \(\delta\approx3\text{–}4\%\)</td><td>1/3</td><td>6%</td><td>≈ 4% anual</td><td>≈ 17 años</td></tr>
+<tr><td>Sala-i-Martin: \(n=0{,}01\), \(\delta=0{,}10\)</td><td>0,30</td><td>11%</td><td>7,7% anual</td><td>≈ 9 años</td></tr>
+<tr><td>Capital en sentido amplio (Sala)</td><td>0,80</td><td>11%</td><td>2,2% anual</td><td>≈ 32 años</td></tr>
+</table></div>
+<p>Con \(\alpha\) físico (~0,3) el modelo predice convergencia <strong>demasiado rápida</strong>; los datos (Barro y Sala-i-Martin 1991, 1992; Mankiw, Romer y Weil 1992) sugieren \(\beta\approx2\%\), lo que exige \(\alpha\approx0{,}75\text{–}0{,}8\): capital en sentido amplio, incluido el humano (<a href="#ampliado">§12.1</a>). Ejemplo de Romer: si \(s\) sube 10%, \(y\) está 0,04 × 5% = 0,2% más arriba tras un año y 2,5% tras 17 años; el efecto no solo es modesto, también tarda mucho.</p>
+</section>
+
+<!-- ============================================================ 11 -->
+<section id="problemas">
+<h2 class="sec"><span class="num">11</span>Problemas del modelo: residuo, convergencia y capital</h2>
+
+<h3 id="residuo">11.1 El residuo de Solow y la contabilidad del crecimiento</h3>
+<p>Pioneros: Abramovitz (1956) y Solow (1957). Se quiere saber qué parte del crecimiento se debe a cada factor. Se deriva \(Y=F(K,AL)\) respecto al tiempo:</p>
+<div class="formula">\[\dot Y=\frac{\partial Y}{\partial K}\dot K+\frac{\partial Y}{\partial L}\dot L+\frac{\partial Y}{\partial A}\dot A\;\Rightarrow\;\frac{\dot Y}{Y}=\alpha_K(t)\frac{\dot K}{K}+\alpha_L(t)\frac{\dot L}{L}+R(t)\qquad\text{(Romer 1.34)}\]
+\[\text{Con }\alpha_K+\alpha_L=1:\qquad \boxed{\frac{\dot Y}{Y}-\frac{\dot L}{L}=\alpha_K(t)\left[\frac{\dot K}{K}-\frac{\dot L}{L}\right]+R(t)}\qquad\text{(Romer 1.35)}\]</div>
+<ul>
+<li>\(\alpha_K=\frac{K}{Y}\frac{\partial Y}{\partial K}\) es la elasticidad del producto respecto al capital. Con competencia perfecta se mide con la <strong>participación del capital en la renta</strong>.</li>
+<li>\(R(t)=\frac{A}{Y}\frac{\partial Y}{\partial A}\frac{\dot A}{A}\) es el <strong>residuo de Solow</strong>: lo que queda del crecimiento después de restar la contribución de los factores. Se calcula como <em>residuo</em>, no se observa (con Cobb-Douglas \(Y=K^\alpha(AL)^{1-\alpha}\), \(R=(1-\alpha)g\)).</li>
+<li>A veces se interpreta como “progreso técnico” o productividad total de los factores (PTF), pero en realidad recoge <strong>todas las fuentes de crecimiento distintas de la acumulación de capital a través de su rendimiento privado</strong>: calidad de los factores, errores de medición, externalidades… Por eso se le llama “la medida de nuestra ignorancia”.</li>
+</ul>
+<div class="box warn"><span class="tag">Por qué es un “problema del modelo”</span>
+<p>(1) La contabilidad solo estudia determinantes <em>inmediatos</em>, no las causas de fondo. (2) En una economía de Solow en su senda de crecimiento sostenido <em>todo</em> el crecimiento de \(y\) se debe a \(A\), pero la contabilidad atribuye una fracción \(\alpha_K\) al capital y solo \(1-\alpha_K\) al residuo, porque el propio \(k\) crece gracias a \(A\) (Romer, Problema 1.13). (3) Empíricamente el residuo explica una parte grande del crecimiento, y el modelo lo deja sin explicar: es exógeno.</p></div>
+<p><strong>Aplicaciones (Romer):</strong> Young (1995), con los NPI asiáticos: su crecimiento se explica por inversión, participación laboral y educación, no por un residuo grande, así que para imitarlos bastaría con acumular. Hsieh (2002) hizo la contabilidad con precios de los factores (la rentabilidad del capital debería caer si solo se acumulara) y encontró un residuo mayor; Young (1998) discrepó. También se ha aplicado a la desaceleración de la productividad desde los años 70 y a su repunte a mediados de los 90, atribuido a las tecnologías de la información (Oliner y Sichel, 2002).</p>
+
+<h3 id="convergencia">11.2 Convergencia</h3>
+<h4>Absoluta vs. condicional (Sala §1.7)</h4>
+<ul>
+<li><strong>Convergencia absoluta:</strong> si las economías solo difieren en su \(k_0\) (mismos \(s, A, \delta, n\), y por tanto el mismo \(k^*\)), las pobres crecen más rápido que las ricas. Habría una correlación negativa entre la renta inicial y el crecimiento posterior (la CA es decreciente).</li>
+<li><strong>Convergencia condicional:</strong> si también difieren en \(s, A, \delta\) o \(n\), cada una converge a su <em>propio</em> estado estacionario. El modelo solo predice que <strong>el crecimiento está relacionado con la distancia a su propio estado estacionario</strong>. Un país pobre que va a seguir siendo pobre (bajo \(s\)) puede crecer menos que uno rico con \(s\) alto.</li>
+</ul>
+<figure><div id="fig-condicional"></div><figcaption>Gráfico 9 (Sala 1.15): un país pobre con \(s\) baja (CA baja) puede crecer menos que un país rico con \(s\) alta, aunque tenga menos capital.</figcaption></figure>
+<p>Intuición: una máquina extra rinde más en el país pobre (PMgK mayor), pero el crecimiento también depende de <em>cuántas</em> máquinas se compran, y eso lo determina \(s\). Empíricamente, en \(\gamma_k\simeq-\beta[\ln k-\ln k^*]\), si \(\ln k^*\) difiere entre países y se omite en la regresión, el coeficiente de \(\ln k\) queda sesgado si \(k^*\) está correlacionado con \(k\). Barro y Sala-i-Martin, y Mankiw, Romer y Weil, encuentran apoyo a la convergencia <strong>condicional</strong>, pero con una participación del capital cercana a 0,75.</p>
+<h4>Evidencia (Romer §1.7)</h4>
+<p>Existen tres razones para esperar convergencia: el modelo de Solow (convergencia al estado estacionario), la mayor rentabilidad del capital en los países pobres (flujos de capital hacia ellos) y la difusión tecnológica.</p>
+<div class="formula">\[\ln\!\Big[\big(\tfrac YN\big)_{i,1979}\Big]-\ln\!\Big[\big(\tfrac YN\big)_{i,1870}\Big]=a+b\,\ln\!\Big[\big(\tfrac YN\big)_{i,1870}\Big]+\varepsilon_i\]</div>
+<ul>
+<li>\(b&lt;0\) indica convergencia; \(b=-1\) es convergencia perfecta (la renta de 1979 no se correlaciona con la de 1870); \(b=0\), ninguna.</li>
+<li><strong>Baumol (1986)</strong>, 16 países industrializados, 1870–1979: \(\hat b=-0{,}995\) (e.e. 0,094), \(R^2=0{,}87\). Convergencia casi perfecta.</li>
+<li><strong>Crítica de DeLong (1988):</strong> (i) <strong>sesgo de selección muestral</strong>: los países con datos largos son los que <em>hoy</em> son ricos, así que se seleccionaron por su crecimiento. Con una muestra definida por la renta de 1870 (se añaden Alemania del Este, Argentina, Chile, Irlanda, Nueva Zelanda, Portugal y España, y se quita Japón), \(\hat b=-0{,}566\) (e.e. 0,144): desaparece la mitad de la convergencia. (ii) <strong>Error de medición</strong> en la renta de 1870: si está sobrestimada, el crecimiento medido es menor, lo que crea una correlación negativa espuria. Con \(\sigma_u\approx0{,}15\) se obtiene \(b\approx0\); con \(\sigma_u\approx0{,}20\), \(b\approx1\) (divergencia).</li>
+<li>Muestra amplia de posguerra (1960–2000): <strong>no hay convergencia absoluta</strong> (Romer, gráfico 1.9).</li>
+</ul>
+<div class="box note"><span class="tag">Complemento: ahorro e inversión (Feldstein-Horioka, 1980)</span>
+<p>Con movilidad perfecta de capitales, el ahorro de un país no tendría por qué invertirse en ese país. Pero en 21 países de la OCDE, 1960–1974: \(\big(\tfrac IY\big)_i=0{,}035+0{,}887\big(\tfrac SY\big)_i\), \(R^2=0{,}91\). Ahorro e inversión casi coinciden uno a uno. Explicaciones: barreras al capital, variables comunes (impuestos, descuento) o políticas que evitan grandes desequilibrios de cuenta corriente. El supuesto de economía cerrada de Solow resulta menos descabellado de lo que parece.</p></div>
+
+<h3 id="capital-dif">11.3 ¿Pueden las diferencias de capital explicar las diferencias de renta? (Romer §1.6)</h3>
+<p><strong>No, si el capital cobra su producto marginal.</strong> Hay dos argumentos:</p>
+<ol>
+<li><strong>Directo:</strong> para una diferencia de un factor \(X\) en \(y\) se necesita un factor \(X^{1/\alpha_K}\) en \(k\). Para \(X=10\) (ricos vs. pobres, o hoy vs. hace un siglo) con \(\alpha_K=1/3\), se requiere \(10^3=1.000\) veces más capital por trabajador; incluso con \(\alpha_K=1/2\), 100 veces. En los datos, \(K/Y\) es aproximadamente constante, así que \(k\) es solo ~10 veces mayor que hace un siglo, y entre países difiere 2–3 veces.</li>
+<li><strong>Indirecto (Lucas, 1990):</strong> con Cobb-Douglas, \(f'(k)=\alpha k^{\alpha-1}=\alpha y^{(\alpha-1)/\alpha}\). Si \(y\) es 10 veces menor por falta de capital, la PMgK sería \(10^2=100\) veces mayor en el país pobre. Deberían verse enormes flujos de capital de ricos a pobres, y no se ven.</li>
+</ol>
+<p>Por tanto, las diferencias deben venir de la <strong>eficacia del trabajo \(A\)</strong>, que el modelo trata como exógena, o bien el capital importa más de lo que dice su participación (externalidades, capital humano).</p>
+</section>
+
+<!-- ============================================================ 12 -->
+<section id="extensiones">
+<h2 class="sec"><span class="num">12</span>Extensiones (Sala cap. 1 §1.8–1.9, cap. 2; Romer §1.8)</h2>
+<p>Todas usan la misma herramienta: se escribe \(y\) per cápita, se sustituye en \(\dot k=sy-(\delta+n)k\), se divide entre \(k\) y se analizan la CA y la CD.</p>
+
+<h3 id="ampliado">12.1 Solow ampliado con capital humano (Mankiw, Romer y Weil, 1992)</h3>
+<div class="formula">\[Y=BK^{\lambda}H^{\eta}L^{1-\lambda-\eta},\qquad \dot K+\dot H=sY-\delta K-\delta H\]</div>
+<p>Si ambos capitales se deprecian igual, se acumulan de forma que \(H=(\eta/\lambda)K\) en todo momento; sustituyendo, \(Y=AK^{\alpha}L^{1-\alpha}\) con \(\alpha=\lambda+\eta\). Es un argumento para que la participación del capital <em>relevante</em> sea ≈0,8 y no 0,3. Con \(\lambda=0{,}3\) y \(\eta=0{,}5\): \(\beta^*=(1-0{,}8)(0{,}1+0{,}01)=0{,}022\), en línea con los datos. En economía abierta (Barro, Mankiw y Sala-i-Martin, 1992), con \(K\) móvil y \(H\) inmóvil, la forma reducida es \(Y=\tilde AH^{\eta/(1-\lambda)}L^{1-\eta/(1-\lambda)}\), con participación relevante \(0{,}5/0{,}7\approx0{,}71\) y \(\beta\approx0{,}02\): tratar la economía como cerrada no es tan grave.</p>
+
+<h3 id="recursos">12.2 Recursos naturales, tierra y medio ambiente (Romer §1.8)</h3>
+<div class="formula">\[Y=K^{\alpha}R^{\beta}T^{\gamma}(AL)^{1-\alpha-\beta-\gamma},\qquad \dot T=0,\quad \dot R=-bR\]</div>
+<p>En la senda de crecimiento sostenido \(g_K=g_Y\) (porque \(\dot K/K=sY/K-\delta\) debe ser constante). Tomando logaritmos y derivando:</p>
+<div class="formula">\[g_{Y/L}^{bgp}=\frac{(1-\alpha-\beta-\gamma)g-\beta b-(\beta+\gamma)n}{1-\alpha},\qquad \text{Freno}=\frac{\beta b+(\beta+\gamma)n}{1-\alpha}\]</div>
+<p>El crecimiento por trabajador puede ser negativo si los recursos pesan mucho; el progreso técnico lo compensa (lo que ha pasado históricamente). El freno es mayor cuanto mayores son \(\beta\), \(\gamma\), \(b\), \(n\) y \(\alpha\). Nordhaus (1992): \(\beta+\gamma\approx0{,}2\) y un freno de ≈0,0024 (un cuarto de punto al año), sobre todo por los recursos energéticos. Si la elasticidad de sustitución es menor que 1, la participación de los factores escasos crece y el freno aumenta; los datos (participaciones decrecientes de tierra y recursos) sugieren una elasticidad mayor que 1. La contaminación es una externalidad sin precio de mercado; la solución es un impuesto pigouviano. Nordhaus estima que el calentamiento global reduciría el crecimiento en ~0,03 pp.</p>
+
+<h3 id="ak">12.3 El modelo AK (Rebelo, 1991): el crecimiento endógeno más simple</h3>
+<div class="formula">\[Y=AK\;\Rightarrow\;y=Ak\;\Rightarrow\;\dot k=sAk-(\delta+n)k\;\Rightarrow\;\boxed{\gamma=sA-(\delta+n)}\]</div>
+<p>Justificación: si el “trabajo” es en realidad capital humano, que se acumula sacrificando consumo, y hay RCE, entonces \(Y=AK\) con \(K\) en sentido amplio. Cumple RCE, pero <strong>no tiene rendimientos decrecientes</strong> (\(F''=0\)) y <strong>viola Inada</strong> (\(F'=A\) siempre). La CA es horizontal en \(sA\). Si \(sA&gt;\delta+n\), la economía crece siempre a una tasa constante.</p>
+<div class="tablewrap"><table>
+<tr><th>#</th><th>Diferencia con Solow neoclásico</th></tr>
+<tr><td>1</td><td>Crecimiento per cápita positivo <strong>sin</strong> progreso técnico exógeno: es un modelo de <em>crecimiento endógeno</em>.</td></tr>
+<tr><td>2</td><td>La tasa de crecimiento depende de \(s, A, n, \delta\). <strong>Las políticas de ahorro sí afectan al crecimiento de largo plazo.</strong></td></tr>
+<tr><td>3</td><td>No hay transición: siempre se crece a \(sA-(\delta+n)\), sea cual sea \(k\).</td></tr>
+<tr><td>4</td><td>No predice convergencia, ni absoluta ni condicional.</td></tr>
+<tr><td>5</td><td>Las recesiones temporales tienen efectos <strong>permanentes</strong> sobre el nivel.</td></tr>
+<tr><td>6</td><td>No puede haber ineficiencia dinámica (Saint-Paul, 1992): \(r=A-\delta&gt;sA-\delta=\gamma_Y\) porque \(s&lt;1\).</td></tr>
+</table></div>
+
+<h3 id="romer86">12.4 Externalidades del capital (Romer, 1986)</h3>
+<p>Mediante el aprendizaje por la práctica (<em>learning by doing</em>) y los desbordamientos de conocimiento, la inversión de una empresa aumenta la productividad de las demás: \(Y=AK^{\alpha}L^{1-\alpha}\kappa^{\eta}\). Si la externalidad depende del capital por persona (\(\kappa=k\), como supone Lucas), \(y=Ak^{\alpha+\eta}\) y \(\gamma_k=sAk^{\alpha+\eta-1}-(\delta+n)\).</p>
+<ul>
+<li><strong>\(\alpha+\eta&lt;1\):</strong> funciona igual que el modelo neoclásico, con \(k^*=\big(\tfrac{sA}{\delta+n}\big)^{1/(1-\alpha-\eta)}\) estable.</li>
+<li><strong>\(\alpha+\eta=1\):</strong> es el modelo AK, con \(\gamma=sA-(\delta+n)\). Pero requiere que \(\eta=1-\alpha\), un caso muy especial.</li>
+<li><strong>\(\alpha+\eta&gt;1\):</strong> la CA es creciente; \(k^*\) existe pero es <strong>inestable</strong> (explosión o colapso).</li>
+<li>Si la externalidad depende del capital <em>agregado</em> (\(\kappa=K\), con \(L\) constante): \(\gamma=sAL^{\eta}-\delta\), un <strong>efecto escala</strong> (China e India deberían crecer más que Suiza), que es falso en los datos.</li>
+</ul>
+
+<h3 id="barro">12.5 Gasto público productivo (Barro, 1990)</h3>
+<div class="formula">\[Y=AK^{\alpha}G^{1-\alpha},\quad G=\tau Y\;\Rightarrow\;\gamma=s(1-\tau)A^{1/\alpha}\tau^{(1-\alpha)/\alpha}-(\delta+n),\qquad \tau^*=1-\alpha\]</div>
+<p>El impuesto tiene dos efectos: reduce la renta disponible y el ahorro (−), pero financia el bien público productivo (+). La relación entre \(\tau\) y \(\gamma\) tiene forma de U invertida. El máximo está en \(\tau^*=1-\alpha\), que equivale a la condición de eficiencia \(\partial Y/\partial G=1\): el gobierno “mete galletas en la máquina” hasta que cada galleta da una galleta. Al sustituir la restricción presupuestaria, el modelo se vuelve un AK camuflado.</p>
+
+<h3 id="inada">12.6 La clave es Inada: la función “Sobelow” (Jones y Manuelli, 1990) y la CES</h3>
+<div class="formula">\[Y=AK+BK^{\alpha}L^{1-\alpha}\;\Rightarrow\;\gamma_k=sA+sBk^{\alpha-1}-(\delta+n)\;\xrightarrow{k\to\infty}\;sA-(\delta+n)\]</div>
+<p>Es RCE, tiene rendimientos decrecientes y cumple Inada en 0, pero \(\lim_{k\to\infty}f'(k)=A\neq0\). Si \(sA&gt;\delta+n\), hay crecimiento positivo perpetuo, con una transición en la que la tasa cae hacia \(sA-(\delta+n)\). Si \(sA&lt;\delta+n\), hay un estado estacionario como en Solow. <strong>Lección: para el crecimiento endógeno no hace falta eliminar los rendimientos decrecientes; basta con que la PMgK no tienda a cero</strong> (que se viole la Inada en el infinito).</p>
+<p><strong>CES:</strong> \(Y=A\{a(bK)^{\psi}+(1-a)[(1-b)L]^{\psi}\}^{1/\psi}\), elasticidad de sustitución \(\varepsilon=1/(1-\psi)\). Si \(\psi\to-\infty\) es Leontief (\(\varepsilon=0\)); si \(\psi\to0\), Cobb-Douglas (\(\varepsilon=1\)); si \(\psi=1\), lineal (\(\varepsilon=\infty\)). Si \(0&lt;\psi&lt;1\) (\(\varepsilon&gt;1\)), \(f(k)/k\to Aba^{1/\psi}&gt;0\) y puede haber crecimiento perpetuo. Ver el <a href="#ej-ces">ejercicio del Taller</a>.</p>
+
+<h3 id="hd">12.7 Harrod-Domar (1939, 1946): el “filo de la navaja”</h3>
+<div class="formula">\[Y=\min(AK,BL)\;\Rightarrow\;y=\begin{cases}Ak,&amp;k&lt;B/A\\ B,&amp;k\ge B/A\end{cases}\qquad \gamma_k=\begin{cases}sA-(\delta+n),&amp;k&lt;B/A\\ sB/k-(\delta+n),&amp;k\ge B/A\end{cases}\]</div>
+<ul>
+<li><strong>\(sA&lt;\delta+n\):</strong> \(k\to0\) y el desempleo crece (la interpretación de la Gran Depresión).</li>
+<li><strong>\(sA&gt;\delta+n\):</strong> \(k^*=sB/(\delta+n)&gt;B/A\); hay máquinas ociosas en cantidad creciente.</li>
+<li><strong>\(sA=\delta+n\):</strong> el único caso sin recursos ociosos se da “por casualidad”, porque todos los parámetros son exógenos.</li>
+</ul>
+<p>Solow-Swan resolvieron esto haciendo endógeno el producto medio del capital (sustituibilidad entre \(K\) y \(L\)); la escuela de Cambridge (Kaldor, Pasinetti) lo resolvió endogeneizando \(s\) vía la distribución. Sala-i-Martin advierte que el modelo AK <strong>no es</strong> Harrod-Domar: en Harrod-Domar se sigue invirtiendo aunque la PMgK sea cero.</p>
+
+<h3 id="trampa">12.8 Trampas de pobreza</h3>
+<p>Una función de producción en forma de <strong>S</strong> (rendimientos decrecientes al principio; crecientes cuando se construye infraestructura; luego decrecientes o AK) hace que la CA \(sf(k)/k\) primero baje, luego suba y se estabilice. Si cruza la CD dos veces, hay un \(k^*\) bajo y estable (<strong>trampa de pobreza</strong>) y un \(k^{**}\) inestable. A la derecha de \(k^{**}\) el crecimiento es positivo para siempre. Aparecen “clubes” de países. Implicación de política: los cambios pequeños en \(s\), \(n\) o \(A\) no sirven, pero uno grande, aunque sea temporal (el “big push”), puede sacar al país de la trampa.</p>
+<figure><div id="fig-trampa"></div><figcaption>Gráfico 10 (Sala 2.9): trampa de pobreza con dos cruces de la CA con la CD.</figcaption></figure>
+
+<h3 id="paro">12.9 Paro y crecimiento (Daveri y Tabellini, 1997)</h3>
+<p>Con la externalidad de Romer en el capital por <em>persona</em> (\(\kappa=K/P\), donde \(P\) es la población activa) y \(\eta=1-\alpha\): \(y=Ak(1-u)^{1-\alpha}\), donde \(u=(P-L)/P\) es la tasa de paro. Entonces \(\gamma=sA(1-u)^{1-\alpha}-(\delta+n)\): <strong>el paro reduce el crecimiento</strong> (Europa en los 80–90). Sala-i-Martin critica que el resultado depende de supuestos frágiles: exige exactamente \(\eta=1-\alpha\) y que la externalidad sea en \(K/P\), y cuesta imaginar por qué añadir una persona que no trabaja reduce la producción.</p>
+</section>
+
+<!-- ============================================================ 13 -->
+<section id="simulador">
+<h2 class="sec"><span class="num">13</span>Simulador del modelo (Cobb-Douglas, \(A=1\))</h2>
+<p>Mueve los parámetros y observa cómo cambian el diagrama y los valores. En el panel inferior, la economía parte del estado estacionario de \(s_0\) y en \(t=10\) la tasa de ahorro cambia a \(s\) (como en el gráfico 1.5 de Romer). Las variables están por trabajador efectivo; si \(g=0\), son per cápita.</p>
+<div class="sim">
+  <div class="controls">
+    <label>Tasa de ahorro \(s\) <span class="v" id="v-s"></span><input type="range" id="p-s" min="0.02" max="0.9" step="0.01" value="0.20"></label>
+    <label>Participación del capital \(\alpha\) <span class="v" id="v-a"></span><input type="range" id="p-a" min="0.1" max="0.9" step="0.01" value="0.33"></label>
+    <label>Depreciación \(\delta\) <span class="v" id="v-d"></span><input type="range" id="p-d" min="0" max="0.15" step="0.005" value="0.05"></label>
+    <label>Crecimiento poblacional \(n\) <span class="v" id="v-n"></span><input type="range" id="p-n" min="0" max="0.05" step="0.0025" value="0.01"></label>
+    <label>Progreso técnico \(g\) <span class="v" id="v-g"></span><input type="range" id="p-g" min="0" max="0.05" step="0.0025" value="0.00"></label>
+    <label>Ahorro inicial \(s_0\) (panel inferior) <span class="v" id="v-s0"></span><input type="range" id="p-s0" min="0.02" max="0.9" step="0.01" value="0.15"></label>
+  </div>
+  <div class="stats" id="stats"></div>
+  <div class="flag" id="flag"></div>
+  <figure><div id="sim-plot"></div><figcaption>\(f(k)\) (arriba), \(sf(k)\) (ahorro), \((n+g+\delta)k\) (reposición); en línea punteada, \(k^*\) y \(k_{oro}\).</figcaption></figure>
+  <figure><div id="sim-path"></div><figcaption>Trayectoria de \(k(t)\) y \(c(t)\) (normalizados al estado estacionario inicial = 1) cuando \(s\) pasa de \(s_0\) a \(s\) en \(t=10\).</figcaption></figure>
+</div>
+</section>
+
+<!-- ============================================================ 14 -->
+<section id="ejercicios">
+<h2 class="sec"><span class="num">14</span>Ejercicios resueltos</h2>
+
+<details open><summary>Ejercicio 1 — Cobb-Douglas completo (Romer, Problema 1.5)</summary>
+<p><strong>Enunciado.</strong> Con \(f(k)=k^\alpha\), encuentre \(k^*, y^*, c^*\) en función de \(s,n,\delta,g,\alpha\); la regla de oro de \(k\); y la tasa de ahorro que la alcanza.</p>
+<p><strong>Solución.</strong> De \(sk^{*\alpha}=(n+g+\delta)k^*\): \(k^*=\big(\tfrac{s}{n+g+\delta}\big)^{\frac1{1-\alpha}}\), \(y^*=\big(\tfrac{s}{n+g+\delta}\big)^{\frac{\alpha}{1-\alpha}}\), \(c^*=(1-s)y^*\).</p>
+<p>Regla de oro: \(f'(k)=\alpha k^{\alpha-1}=n+g+\delta\Rightarrow k_{oro}=\big(\tfrac{\alpha}{n+g+\delta}\big)^{\frac1{1-\alpha}}\). Comparando con \(k^*\): \(s_{oro}=\alpha\).</p></details>
+
+<details><summary>Ejercicio 2 — Numérico: estado estacionario, regla de oro y velocidad</summary>
+<p><strong>Datos:</strong> \(y=k^{1/3}\), \(s=0{,}2\), \(\delta=0{,}05\), \(n=0{,}01\), \(g=0\).</p>
+<ul>
+<li>\(k^*=(0{,}2/0{,}06)^{3/2}=(3{,}33)^{1{,}5}\approx6{,}09\); \(y^*=k^{*1/3}\approx1{,}83\); \(c^*=0{,}8\times1{,}83\approx1{,}46\).</li>
+<li>\(s_{oro}=1/3\): \(k_{oro}=(0{,}333/0{,}06)^{1{,}5}\approx13{,}09\); \(y_{oro}\approx2{,}36\); \(c_{oro}=2{,}36-0{,}06\times13{,}09\approx1{,}57&gt;1{,}46\).</li>
+<li>Como \(s=0{,}2&lt;s_{oro}\), la economía está en la zona <em>eficiente</em> (le falta capital). Subir \(s\) aumentaría \(c\) a largo plazo, pero lo reduciría a corto. Comprobación: \(r^*=f'(k^*)-\delta=\tfrac13(6{,}09)^{-2/3}-0{,}05\approx0{,}117-0{,}05=0{,}067&gt;n=0{,}01\).</li>
+<li>Velocidad: \(\beta^*=(1-\tfrac13)(0{,}06)=0{,}04\); vida media \(=0{,}693/0{,}04\approx17{,}3\) años.</li>
+</ul></details>
+
+<details><summary>Ejercicio 3 — Elasticidad de \(y^*\) respecto a \(n\) (Romer, Problema 1.7)</summary>
+<p>\(\ln y^*=\frac{\alpha}{1-\alpha}\big[\ln s-\ln(n+g+\delta)\big]\Rightarrow\dfrac{\partial\ln y^*}{\partial\ln n}=-\dfrac{\alpha}{1-\alpha}\dfrac{n}{n+g+\delta}\).</p>
+<p>Con \(\alpha=1/3\), \(g=2\%\), \(\delta=3\%\), si \(n\) baja de 2% a 1%: \(\Delta\ln y^*=-\tfrac12\big[\ln0{,}06-\ln0{,}07\big]=\tfrac12\ln(7/6)\approx0{,}077\). Es decir, <strong>\(y^*\) sube ≈ 8%</strong> (exacto: \((7/6)^{1/2}=1{,}080\)).</p></details>
+
+<details><summary>Ejercicio 4 — Aumento de la inversión de 15% a 18% (Romer, Problema 1.8)</summary>
+<p>\(\alpha=1/3\); supongamos \(n+g+\delta=6\%\).</p>
+<ol type="a">
+<li>Producción a largo plazo: \(y^*_{nuevo}/y^*_{viejo}=(0{,}18/0{,}15)^{\alpha/(1-\alpha)}=1{,}2^{0{,}5}\approx1{,}095\), un <strong>+9,5%</strong>.</li>
+<li>Consumo a largo plazo: \(\tfrac{0{,}82}{0{,}85}\times1{,}095\approx1{,}057\), un <strong>+5,7%</strong> (sube porque \(0{,}18&lt;s_{oro}=1/3\)).</li>
+<li>Efecto inmediato: \(k\) no cambia, así que \(c\) cae en \(0{,}03/0{,}85\approx\) <strong>3,5%</strong>. Para recuperarse, \(\ln y\) tiene que subir \(\ln(0{,}85/0{,}82)\approx0{,}036\) de una brecha total de \(0{,}5\ln1{,}2\approx0{,}091\): \(1-e^{-\lambda t}=0{,}394\Rightarrow t=-\ln(0{,}606)/0{,}04\approx\) <strong>12,5 años</strong>.</li>
+</ol></details>
+
+<details id="ej-ces"><summary>Ejercicio 5 — Capital de estado estacionario con CES (Taller 1)</summary>
+<p><strong>Enunciado.</strong> \(y_t=A_t\big[\varepsilon+(1-\varepsilon)k_t^{\psi}\big]^{1/\psi}\). Encuentre \(k^*\).</p>
+<p><strong>Solución.</strong> Se impone \(\dot k=0\): \(sA\big[\varepsilon+(1-\varepsilon)k^{\psi}\big]^{1/\psi}=(\delta+n)k\). Se eleva a \(\psi\):</p>
+\[(sA)^{\psi}\varepsilon+(sA)^{\psi}(1-\varepsilon)k^{\psi}=(\delta+n)^{\psi}k^{\psi}\;\Rightarrow\;k^{\psi}\big[(\delta+n)^{\psi}-(sA)^{\psi}(1-\varepsilon)\big]=(sA)^{\psi}\varepsilon\]
+\[\boxed{k^*=\left(\frac{(sA)^{\psi}\,\varepsilon}{(\delta+n)^{\psi}-(sA)^{\psi}(1-\varepsilon)}\right)^{1/\psi}}\]
+<div class="box note"><span class="tag">Condición de existencia (lo que el Taller no dice)</span>
+<p>El denominador debe ser positivo. Si \(0&lt;\psi&lt;1\), esto exige \(\delta+n&gt;sA(1-\varepsilon)^{1/\psi}\). ¿Por qué? Porque \(f(k)/k=A\big[\varepsilon k^{-\psi}+(1-\varepsilon)\big]^{1/\psi}\to A(1-\varepsilon)^{1/\psi}\) cuando \(k\to\infty\): la PMgK <strong>no</strong> tiende a cero (se viola Inada). Si \(sA(1-\varepsilon)^{1/\psi}&gt;\delta+n\), <strong>no hay estado estacionario</strong> y la economía crece para siempre a una tasa que converge a \(sA(1-\varepsilon)^{1/\psi}-(\delta+n)\), como en la función Sobelow de <a href="#inada">§12.6</a>.</p></div></details>
+
+<details><summary>Ejercicio 6 — Contabilidad del crecimiento</summary>
+<p>Una economía crece 4% al año, el capital 5%, el trabajo 1% y la participación del capital es 0,3. Calcule el residuo y la contribución de cada factor.</p>
+<p>\(R=\gamma_Y-\alpha\gamma_K-(1-\alpha)\gamma_L=4-0{,}3(5)-0{,}7(1)=4-1{,}5-0{,}7=1{,}8\) pp. Por trabajador: \(\gamma_{Y/L}=3\%=0{,}3(5-1)+R=1{,}2+1{,}8\). El 40% del crecimiento por trabajador se atribuye a la intensificación del capital y el 60% al residuo.</p></details>
+
+<details><summary>Ejercicio 7 — Trayectoria exacta de \(k(t)\) (conecta Unidad 1 con Unidad 2)</summary>
+<p>Con \(y=Ak^\alpha\), encuentre \(k(t)\) dado \(k(0)\).</p>
+<p>Sea \(z=k^{1-\alpha}\). Entonces \(\dot z+(1-\alpha)(\delta+n)z=(1-\alpha)sA\), que es la EDO lineal \(\dot y+ay=b\). Por la fórmula de clase:</p>
+\[k(t)^{1-\alpha}=\Big[k(0)^{1-\alpha}-\frac{sA}{\delta+n}\Big]e^{-(1-\alpha)(\delta+n)t}+\frac{sA}{\delta+n}.\]
+<p>Cuando \(t\to\infty\), \(k\to\big(\tfrac{sA}{\delta+n}\big)^{1/(1-\alpha)}=k^*\). Es estable porque \(a=(1-\alpha)(\delta+n)&gt;0\).</p></details>
+
+<details><summary>Ejercicio 8 — Tiempo discreto</summary>
+<p>Resuelva \(y_{t+1}=0{,}5y_t+4\) con \(y_0=2\).</p>
+<p>\(\bar y=4/(1-0{,}5)=8\). \(y_t=(2-8)(0{,}5)^t+8=8-6(0{,}5)^t\). Converge de forma monótona a 8 porque \(|0{,}5|&lt;1\): \(y_1=5\), \(y_2=6{,}5\), \(y_3=7{,}25\)…</p></details>
+</section>
+
+<!-- ============================================================ 15 -->
+<section id="preguntas">
+<h2 class="sec"><span class="num">15</span>Preguntas tipo parcial (conceptuales)</h2>
+<details><summary>1. ¿Por qué \(\dot K/L\neq\dot k\)?</summary><p>Porque \(k=K/L\) y \(L\) también cambia: \(\dot k=\dot K/L-nk\). Si \(L\) crece, aunque \(K\) aumente, \(k\) puede caer. Ese término \(-nk\) es la dilución del capital.</p></details>
+<details><summary>2. Un aumento permanente de \(s\), ¿aumenta el crecimiento de largo plazo?</summary><p>No. Aumenta el <em>nivel</em> de \(k^*\) y \(y^*\) (efecto nivel), y el crecimiento solo de forma transitoria. En el nuevo estado estacionario el crecimiento per cápita vuelve a ser \(g\) (o 0 sin progreso técnico). La razón son los rendimientos decrecientes del capital y que \(s\le1\).</p></details>
+<details><summary>3. ¿Subir \(s\) siempre aumenta el bienestar?</summary><p>No. Si \(s&gt;s_{oro}\) (ineficiencia dinámica), subir \(s\) reduce el consumo de largo plazo, y bajarlo aumenta el consumo en <em>todo</em> momento. Si \(s&lt;s_{oro}\), subirlo aumenta el consumo de largo plazo pero exige sacrificar consumo hoy: sin preferencias no se puede decir si conviene.</p></details>
+<details><summary>4. ¿Qué es la ineficiencia dinámica y cómo se detecta?</summary><p>Es estar a la derecha de \(k_{oro}\) (\(s&gt;s_{oro}\)): se ahorra demasiado y todas las generaciones podrían consumir más. Se detecta con \(r^*=f'(k^*)-\delta&lt;n\) (o \(&lt;n+g\)): el tipo de interés real es menor que el crecimiento agregado.</p></details>
+<details><summary>5. ¿Por qué el progreso técnico debe ser exógeno en el modelo neoclásico?</summary><p>Por el teorema de Euler, con RCE en \(K,L\) y competencia perfecta, \(Y=RK+wL\): el producto se agota al pagar a los factores rivales y no queda nada para remunerar la creación de tecnología. Hay que suponer que \(A\) cae del cielo, o abandonar la función neoclásica o la competencia perfecta.</p></details>
+<details><summary>6. Distinga convergencia absoluta y condicional. ¿Cuál predice Solow?</summary><p>Absoluta: los pobres crecen más que los ricos, sin más. Condicional: cada economía crece más cuanto más lejos está de <em>su propio</em> estado estacionario. Solow predice la absoluta solo si los países comparten \(s,A,\delta,n\); en general predice la condicional, que es la que apoyan los datos (con \(\alpha\approx0{,}75\)).</p></details>
+<details><summary>7. ¿Qué críticas hizo DeLong a Baumol?</summary><p>(1) Sesgo de selección: la muestra son los países que <em>resultaron</em> ricos. (2) Error de medición en la renta inicial, que genera una correlación negativa espuria entre la renta inicial y el crecimiento. Corrigiendo ambos, la convergencia prácticamente desaparece.</p></details>
+<details><summary>8. ¿Qué mide el residuo de Solow y por qué es problemático?</summary><p>Mide el crecimiento del producto no explicado por la acumulación ponderada de factores. Se suele llamar progreso técnico o PTF, pero incluye todo lo demás (calidad de los factores, externalidades, errores). Es “la medida de nuestra ignorancia”: el modelo atribuye el crecimiento de largo plazo a algo que no explica.</p></details>
+<details><summary>9. ¿Por qué la tasa de crecimiento cae durante la transición? ¿Es por los incentivos a invertir?</summary><p>Por los rendimientos decrecientes del capital: el producto medio \(f(k)/k\) cae al crecer \(k\), y con \(s\) constante la inversión por unidad de capital cae. <strong>No</strong> es por incentivos: en Solow el ahorro no responde a la rentabilidad.</p></details>
+<details><summary>10. ¿Qué papel juegan las condiciones de Inada?</summary><p>Garantizan que \(sf(k)\) empiece por encima y termine por debajo de \((\delta+n)k\), y por tanto que exista un \(k^*&gt;0\) (la concavidad da la unicidad y la estabilidad). Si falla \(\lim_{k\to\infty}f'(k)=0\) (Sobelow, CES con \(\psi&gt;0\), AK), puede no haber estado estacionario y haber crecimiento endógeno.</p></details>
+<details><summary>11. ¿Por qué el capital físico no puede explicar las diferencias de renta entre países?</summary><p>Con \(\alpha\approx1/3\), una renta 10 veces mayor requiere 1.000 veces más capital por trabajador y haría la PMgK 100 veces mayor en el país pobre. No se observan ni esas diferencias de capital ni esos flujos de capital (paradoja de Lucas).</p></details>
+<details><summary>12. En el estado estacionario, ¿a qué tasa crecen \(K\), \(Y\), \(k\), \(y\), \(K/Y\)?</summary><p>\(K\) y \(Y\) crecen a \(n+g\); \(k\) e \(y\) a \(g\); \(\hat k\), \(\hat y\) y \(K/Y\) son constantes. Sin progreso técnico: \(K,Y\) a \(n\) y las variables per cápita constantes.</p></details>
+<details><summary>13. ¿Qué pasa con \(k^*\) si aumenta \(n\)? Grafique.</summary><p>La recta \((\delta+n)k\) se vuelve más empinada, corta a \(sf(k)\) en un \(k\) menor: \(k^*\) y \(y^*\) caen. La transición implica crecimiento negativo de \(k\) hasta el nuevo estado estacionario. Ver el Gráfico 4.</p></details>
+<details><summary>14. ¿Por qué el modelo AK no presenta convergencia ni transición?</summary><p>Porque el producto marginal del capital es constante (\(A\)): la CA es horizontal y la tasa de crecimiento \(sA-(\delta+n)\) no depende de \(k\). Ser pobre no implica crecer más.</p></details>
+</section>
+
+<!-- ============================================================ 16 -->
+<section id="formulario">
+<h2 class="sec"><span class="num">16</span>Formulario</h2>
+<div class="tablewrap"><table>
+<tr><th>Concepto</th><th>Fórmula</th></tr>
+<tr><td>EDO lineal</td><td>\(\dot y+ay=b\Rightarrow y(t)=[y(0)-b/a]e^{-at}+b/a\)</td></tr>
+<tr><td>Ecuación en diferencias</td><td>\(y_{t+1}=ay_t+b\Rightarrow y_t=(y_0-\bar y)a^t+\bar y,\ \bar y=b/(1-a)\)</td></tr>
+<tr><td>Identidad</td><td>\(Y=C+I,\ S=sY=I=\dot K+\delta K\)</td></tr>
+<tr><td>Forma intensiva</td><td>\(y=f(k)\); Cobb-Douglas \(y=Ak^\alpha\)</td></tr>
+<tr><td>Ecuación fundamental</td><td>\(\dot k=sf(k)-(\delta+n)k\); con tecnología \(\dot{\hat k}=sf(\hat k)-(n+g+\delta)\hat k\)</td></tr>
+<tr><td>Tasa de crecimiento</td><td>\(\gamma_k=sf(k)/k-(\delta+n)\); Cobb-Douglas \(\gamma_y=\alpha\gamma_k\)</td></tr>
+<tr><td>Estado estacionario (C-D)</td><td>\(k^*=\big(\tfrac{sA}{\delta+n}\big)^{\frac1{1-\alpha}},\ y^*=A^{\frac1{1-\alpha}}\big(\tfrac{s}{\delta+n}\big)^{\frac\alpha{1-\alpha}},\ c^*=(1-s)y^*\)</td></tr>
+<tr><td>Regla de oro</td><td>\(f'(k_{oro})=\delta+n\ (+g)\); C-D: \(s_{oro}=\alpha\), \(k_{oro}=\big(\tfrac{\alpha A}{\delta+n}\big)^{\frac1{1-\alpha}}\)</td></tr>
+<tr><td>Ineficiencia dinámica</td><td>\(s&gt;s_{oro}\iff r^*=f'(k^*)-\delta&lt;n\ (+g)\)</td></tr>
+<tr><td>Velocidad de convergencia</td><td>\(\beta^*=\lambda=(1-\alpha)(\delta+n+g)\); \(t_{1/2}=\ln2/\beta\)</td></tr>
+<tr><td>Log-linealización</td><td>\(\gamma_k\simeq-\beta^*(\ln k-\ln k^*)\); \(k(t)-k^*\simeq e^{-\lambda t}(k_0-k^*)\)</td></tr>
+<tr><td>Elasticidad \(y^*\) respecto a \(s\)</td><td>\(\alpha_K/(1-\alpha_K)\approx1/2\)</td></tr>
+<tr><td>Contabilidad del crecimiento</td><td>\(\gamma_{Y/L}=\alpha_K(\gamma_K-\gamma_L)+R\)</td></tr>
+<tr><td>Euler (RCE)</td><td>\(F=F_KK+F_LL=RK+wL\)</td></tr>
+<tr><td>AK</td><td>\(\gamma=sA-(\delta+n)\)</td></tr>
+<tr><td>Barro</td><td>\(\tau^*=1-\alpha\)</td></tr>
+<tr><td>Recursos naturales</td><td>Freno \(=\dfrac{\beta b+(\beta+\gamma)n}{1-\alpha}\)</td></tr>
+</table></div>
+</section>
+
+<!-- ============================================================ 17 -->
+<section id="errores">
+<h2 class="sec"><span class="num">17</span>Errores frecuentes en el parcial</h2>
+<ol>
+<li>Escribir \(\dot k=\dot K/L\) y olvidar el término \(-nk\).</li>
+<li>Calcular tasas de crecimiento de largo plazo como promedios aritméticos (el 5,82% de Colombia) en vez de tasas compuestas (1,7%).</li>
+<li>Decir que un aumento de \(s\) aumenta el crecimiento de largo plazo. Solo lo hace en el modelo AK.</li>
+<li>Confundir <em>rendimientos decrecientes del capital</em> con <em>rendimientos decrecientes a escala</em>. Solow tiene RCE y rendimientos decrecientes de cada factor.</li>
+<li>Confundir <em>estado estacionario</em> (\(\dot k=0\)) con <em>regla de oro</em> (el estado estacionario que maximiza \(c^*\)). Todo \(k_{oro}\) es un estado estacionario, pero no al revés.</li>
+<li>Decir que las economías con \(s&lt;s_{oro}\) son ineficientes. Solo la zona \(s&gt;s_{oro}\) es inequívocamente ineficiente.</li>
+<li>Olvidar \(g\) en la depreciación efectiva al usar variables por trabajador efectivo: es \(n+g+\delta\).</li>
+<li>Olvidar que en estado estacionario las variables per cápita crecen a \(g\), no a cero, cuando hay progreso técnico.</li>
+<li>Explicar la caída del crecimiento en la transición por menores incentivos a invertir. En Solow \(s\) es fija; los incentivos aparecen en Ramsey.</li>
+<li>Olvidar la condición de existencia en ejercicios con funciones no Cobb-Douglas (CES, Sobelow): el denominador debe ser positivo.</li>
+<li>Fecha del artículo: Solow (1956), no 1954.</li>
+</ol>
+</section>
+
+</main>
+</div>
+<footer>Guía elaborada a partir del material del curso: Sala-i-Martin (caps. 1–2), Romer (cap. 1), notas de tablero y Taller 1. Las fórmulas se muestran con KaTeX (requiere conexión a internet la primera vez).</footer>
+
+<script>
+(function(){
+  // ---- theme toggle
+  var root=document.documentElement, btn=document.getElementById('themeBtn');
+  try{var t=localStorage.getItem('solow-theme'); if(t) root.setAttribute('data-theme',t);}catch(e){}
+  btn.addEventListener('click',function(){
+    var cur=root.getAttribute('data-theme');
+    var dark=cur?cur==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;
+    var nt=dark?'light':'dark'; root.setAttribute('data-theme',nt);
+    try{localStorage.setItem('solow-theme',nt);}catch(e){}
+  });
+
+  // ---- tiny SVG plotter
+  var NS='http://www.w3.org/2000/svg';
+  function el(n,a,p){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e;}
+  function col(i){return 'var(--c'+i+')';}
+  function plot(target,o){
+    var W=o.w||560,H=o.h||330,m={l:46,r:18,t:16,b:38};
+    var host=typeof target==='string'?document.getElementById(target):target; if(!host)return;
+    host.innerHTML='';
+    var svg=el('svg',{viewBox:'0 0 '+W+' '+H,role:'img','aria-label':o.aria||'gráfico'},host);
+    var x0=o.xmin||0,x1=o.xmax,y0=(o.ymin===undefined?0:o.ymin),y1=o.ymax;
+    function X(x){return m.l+(x-x0)/(x1-x0)*(W-m.l-m.r);} function Y(y){return H-m.b-(y-y0)/(y1-y0)*(H-m.t-m.b);}
+    // axes
+    if(y0<0&&y1>0) el('line',{x1:m.l,y1:Y(0),x2:W-m.r,y2:Y(0),'class':'axis'},svg);
+    el('line',{x1:m.l,y1:H-m.b,x2:W-m.r,y2:H-m.b,'class':'axis'},svg);
+    el('line',{x1:m.l,y1:m.t,x2:m.l,y2:H-m.b,'class':'axis'},svg);
+    if(o.xlabel){var tx=el('text',{x:W-m.r,y:H-m.b+26,'text-anchor':'end'},svg);tx.textContent=o.xlabel;}
+    if(o.ylabel){var ty=el('text',{x:m.l+6,y:m.t+4,'dominant-baseline':'hanging'},svg);ty.textContent=o.ylabel;}
+    (o.vlines||[]).forEach(function(v){
+      el('line',{x1:X(v.x),y1:H-m.b,x2:X(v.x),y2:Y(v.y===undefined?y1:v.y),'class':'guide'},svg);
+      var t=el('text',{x:X(v.x),y:H-m.b+15,'text-anchor':'middle'},svg);t.textContent=v.label;
+    });
+    (o.hlines||[]).forEach(function(v){
+      el('line',{x1:m.l,y1:Y(v.y),x2:W-m.r,y2:Y(v.y),'class':'guide'},svg);
+      var t=el('text',{x:m.l-4,y:Y(v.y)+4,'text-anchor':'end'},svg);t.textContent=v.label;
+    });
+    (o.curves||[]).forEach(function(c){
+      var pts=[],N=260,a=c.from!==undefined?c.from:x0,b=c.to!==undefined?c.to:x1;
+      for(var i=0;i<=N;i++){var x=a+(b-a)*i/N,y=c.f(x);if(!isFinite(y))continue;y=Math.max(y0-(y1-y0),Math.min(y1+(y1-y0),y));pts.push(X(x).toFixed(1)+','+Y(y).toFixed(1));}
+      var g=el('g',{},svg);
+      var cp=el('clipPath',{id:'cp'+Math.random().toString(36).slice(2)},svg);
+      el('rect',{x:m.l,y:m.t-2,width:W-m.l-m.r+2,height:H-m.t-m.b+2},cp);
+      el('polyline',{points:pts.join(' '),fill:'none',stroke:col(c.c||1),'stroke-width':c.w||2.2,'stroke-dasharray':c.dash||'', 'clip-path':'url(#'+cp.id+')'},g);
+      if(c.label){var lx=c.lx!==undefined?c.lx:b*0.97,ly=c.f(lx);var t=el('text',{x:X(lx)+(c.dx||0),y:Y(ly)+(c.dy||-6),'text-anchor':c.anchor||'end',style:'fill:'+col(c.c||1)+';font-weight:600'},svg);t.textContent=c.label;}
+    });
+    (o.points||[]).forEach(function(p){el('circle',{cx:X(p.x),cy:Y(p.y),r:4,fill:col(p.c||1)},svg);});
+    (o.arrows||[]).forEach(function(a){
+      var x=X(a.x),y=Y(a.y),d=a.dir,s=8;
+      var pts=d>0?[[x+s,y],[x-s,y-5],[x-s,y+5]]:[[x-s,y],[x+s,y-5],[x+s,y+5]];
+      el('polygon',{points:pts.map(function(q){return q.join(',')}).join(' '),fill:col(a.c||2)},svg);
+    });
+    (o.texts||[]).forEach(function(t){var e=el('text',{x:X(t.x),y:Y(t.y),'text-anchor':t.anchor||'middle',style:t.c?'fill:'+col(t.c):''},svg);e.textContent=t.t;});
+    return {X:X,Y:Y,svg:svg};
+  }
+
+  // ---- static figures (Cobb-Douglas, alpha=0.35)
+  var a=0.35,s=0.3,dn=0.1, f=function(k){return Math.pow(k,a);};
+  var ks=Math.pow(s/dn,1/(1-a));
+  plot('fig-ee',{xmax:ks*1.8,ymax:f(ks*1.8)*1.08,xlabel:'k',ylabel:'Funciones de k',aria:'Diagrama de Solow',
+    curves:[{f:f,c:3,label:'f(k)'},{f:function(k){return s*f(k)},c:1,label:'s f(k)',dy:14},{f:function(k){return dn*k},c:2,label:'(δ+n)k',dy:-8}],
+    vlines:[{x:ks,label:'k*',y:f(ks)}],points:[{x:ks,y:s*f(ks),c:1}],
+    texts:[{x:ks+0.25,y:(f(ks)+s*f(ks))/2,t:'c*',anchor:'start',c:4}]});
+  plot('fig-fase',{xmax:ks*1.8,ymin:-0.35,ymax:0.35,xlabel:'k',ylabel:'k̇',aria:'Diagrama de fases',
+    curves:[{f:function(k){return s*f(k)-dn*k},c:1,label:'k̇ = s f(k) − (δ+n)k',lx:ks*0.35,anchor:'start',dy:-10}],
+    points:[{x:ks,y:0}],vlines:[{x:ks,label:'k*',y:0}],
+    arrows:[{x:ks*0.45,y:0,dir:1},{x:ks*0.8,y:0,dir:1},{x:ks*1.3,y:0,dir:-1},{x:ks*1.6,y:0,dir:-1}]});
+  var s2=0.42,ks2=Math.pow(s2/dn,1/(1-a));
+  plot('fig-subes',{xmax:ks2*1.4,ymax:f(ks2*1.4)*1.05,xlabel:'k',aria:'Aumento de s',w:420,h:300,
+    curves:[{f:f,c:3,label:'f(k)'},{f:function(k){return s2*f(k)},c:1,label:"s' f(k)",dy:-6},{f:function(k){return s*f(k)},c:1,dash:'5 4',label:'s f(k)',dy:14},{f:function(k){return dn*k},c:2,label:'(δ+n)k',lx:ks2*1.35,dy:16}],
+    vlines:[{x:ks,label:'k*',y:s*f(ks)},{x:ks2,label:'k**',y:s2*f(ks2)}]});
+  var dn2=0.16,ks3=Math.pow(s/dn2,1/(1-a));
+  plot('fig-suben',{xmax:ks*1.5,ymax:f(ks*1.5)*1.05,xlabel:'k',aria:'Aumento de n o delta',w:420,h:300,
+    curves:[{f:f,c:3,label:'f(k)'},{f:function(k){return s*f(k)},c:1,label:'s f(k)',dy:14},{f:function(k){return dn*k},c:2,dash:'5 4',label:'(δ+n)k',dy:16},{f:function(k){return dn2*k},c:2,label:"(δ'+n')k",lx:ks*1.1}],
+    vlines:[{x:ks3,label:'k**',y:s*f(ks3)},{x:ks,label:'k*',y:s*f(ks)}]});
+  plot('fig-gamma',{xmin:0,xmax:ks*2.2,ymin:0,ymax:0.5,xlabel:'k',ylabel:'Tasa de crecimiento',aria:'Curvas de ahorro y depreciación',
+    curves:[{f:function(k){return s*Math.pow(k,a-1)},from:ks*0.05,c:1,label:'CA: s f(k)/k',lx:ks*1.9,dy:-8},{f:function(){return dn},c:2,label:'CD: δ+n',lx:ks*2.1,dy:-8}],
+    vlines:[{x:ks*0.3,label:'k₀',y:s*Math.pow(ks*0.3,a-1)},{x:ks,label:'k*',y:dn}],
+    texts:[{x:ks*0.36,y:(s*Math.pow(ks*0.3,a-1)+dn)/2,t:'γₖ > 0',anchor:'start',c:3},{x:ks*1.6,y:dn-0.035,t:'γₖ < 0',c:2}]});
+  plot('fig-gamma-tec',{xmin:0,xmax:ks*2.2,ymin:0,ymax:0.5,xlabel:'k̂ = K/AL',ylabel:'Tasa de crecimiento de k̂',aria:'Solow con progreso técnico',w:560,h:280,
+    curves:[{f:function(k){return s*Math.pow(k,a-1)},from:ks*0.05,c:1,label:'CA',lx:ks*1.9,dy:-8},{f:function(){return dn+0.03},c:2,label:'CD = δ+n+g',lx:ks*2.1,dy:-8}],
+    vlines:[{x:Math.pow(s/(dn+0.03),1/(1-a)),label:'k̂*',y:dn+0.03}]});
+  // golden rule
+  var ko=Math.pow(a/dn,1/(1-a));
+  var gr=plot('fig-oro',{xmax:ko*1.9,ymax:f(ko*1.9)*1.1,xlabel:'k',aria:'Regla de oro',
+    curves:[{f:f,c:3,label:'f(k)'},{f:function(k){return dn*k},c:2,label:'(δ+n)k',lx:ko*1.8,dy:16},{f:function(k){return f(ko)+dn*(k-ko)},c:4,dash:'5 4',from:ko*0.4,to:ko*1.6,label:'pendiente = δ+n',lx:ko*0.45,anchor:'start',dy:-8}],
+    vlines:[{x:ko,label:'k_oro',y:f(ko)}],texts:[{x:ko*1.04,y:(f(ko)+dn*ko)/2,t:'c_oro (máx.)',anchor:'start',c:4}]});
+  if(gr) el('line',{x1:gr.X(ko),y1:gr.Y(f(ko)),x2:gr.X(ko),y2:gr.Y(dn*ko),stroke:'var(--c4)','stroke-width':3},gr.svg);
+  // conditional convergence
+  var sL=0.2,sH=0.45;
+  plot('fig-condicional',{xmin:0,xmax:40,ymin:0,ymax:0.45,xlabel:'k',ylabel:'Tasa de crecimiento',aria:'Convergencia condicional',
+    curves:[{f:function(k){return sH*Math.pow(k,a-1)},from:0.8,c:1,label:'CA con s alta',lx:38,dy:-8},{f:function(k){return sL*Math.pow(k,a-1)},from:0.5,c:3,label:'CA con s baja',lx:38,dy:14},{f:function(){return dn},c:2,label:'CD',lx:39,dy:-8}],
+    vlines:[{x:2.8,label:'k₀ pobre',y:sL*Math.pow(2.8,a-1)},{x:8,label:'k₀ rico',y:sH*Math.pow(8,a-1)}],
+    texts:[{x:3.3,y:0.07,t:'γ pobre ≈ 0',anchor:'start',c:3},{x:9,y:0.16,t:'γ rico > γ pobre',anchor:'start',c:1}]});
+  // poverty trap: stylized S-shaped average product
+  var ca=function(k){return 0.25+0.9*Math.exp(-k*1.2)+0.14*Math.tanh((k-4.5)*0.9)};
+  plot('fig-trampa',{xmin:0,xmax:9,ymin:0,ymax:0.8,xlabel:'k',ylabel:'Tasa de crecimiento',aria:'Trampa de pobreza',
+    curves:[{f:ca,from:0.05,c:1,label:'CA = s f(k)/k',lx:8.8,dy:-8},{f:function(){return 0.3},c:2,label:'CD = δ+n',lx:8.8,dy:16}],
+    vlines:[{x:1.3,label:'k* (trampa)',y:0.3},{x:4.89,label:'k** (umbral)',y:0.3}],
+    arrows:[{x:0.7,y:0.3,dir:1},{x:3.1,y:0.3,dir:-1},{x:6.5,y:0.3,dir:1}]});
+  // Romer panels
+  (function(){
+    var host=document.getElementById('fig-panels'); if(!host)return;
+    var t0=10,T=60,s0=0.2,s1=0.28,al=0.33,d=0.06,gg=0.02;
+    var k0=Math.pow(s0/d,1/(1-al)),k=k0,dt=0.05,path=[];
+    for(var t=0;t<=T;t+=dt){var ss=t<t0?s0:s1;var kd=ss*Math.pow(k,al)-d*k;path.push({t:t,s:ss,kd:kd,k:k,gy:gg+al*kd/k,lny:Math.log(Math.pow(k,al))+gg*t,c:(1-ss)*Math.pow(k,al)});k+=kd*dt;}
+    function get(key){return function(x){var i=Math.min(path.length-1,Math.max(0,Math.round(x/dt)));return path[i][key];};}
+    var panels=[['s','s'],['kd','k̇'],['k','k'],['gy','crec. de Y/L'],['lny','ln(Y/L)'],['c','c']];
+    panels.forEach(function(p){
+      var vals=path.map(function(q){return q[p[0]]}),mn=Math.min.apply(null,vals),mx=Math.max.apply(null,vals),pad=(mx-mn)*0.25||0.01;
+      var div=document.createElement('div');host.appendChild(div);
+      var curves=[{f:get(p[0]),c:1}];
+      if(p[0]==='lny') curves.push({f:function(x){return Math.log(Math.pow(k0,al))+gg*x},c:2,dash:'5 4'});
+      plot(div,{xmin:0,xmax:T,ymin:mn-pad,ymax:mx+pad,h:120,w:560,ylabel:p[1],curves:curves,vlines:[{x:t0,label:'t₀'}],aria:'Panel '+p[1]});
+    });
+  })();
+
+  // ---- simulator
+  var ids=['s','a','d','n','g','s0'],inp={},out={};
+  ids.forEach(function(i){inp[i]=document.getElementById('p-'+i);out[i]=document.getElementById('v-'+i);});
+  function fmt(x,d){return (Math.abs(x)>=1000?x.toExponential(2):x.toFixed(d===undefined?3:d)).replace('.',',');}
+  function upd(){
+    var S=+inp.s.value,A_=+inp.a.value,D=+inp.d.value,N=+inp.n.value,G=+inp.g.value,S0=+inp.s0.value;
+    out.s.textContent=fmt(S,2);out.a.textContent=fmt(A_,2);out.d.textContent=fmt(D,3);out.n.textContent=fmt(N,4);out.g.textContent=fmt(G,4);out.s0.textContent=fmt(S0,2);
+    var e=N+G+D; if(e<=0){e=1e-4;}
+    var F=function(k){return Math.pow(k,A_)};
+    var kS=Math.pow(S/e,1/(1-A_)),yS=F(kS),cS=(1-S)*yS,kO=Math.pow(A_/e,1/(1-A_)),cO=F(kO)-e*kO;
+    var r=A_*Math.pow(kS,A_-1)-D,lam=(1-A_)*e,hl=Math.log(2)/lam;
+    var st=[['k*',kS],['y*',yS],['c*',cS],['k oro',kO],['c oro (s=α)',cO],['r* = f\'(k*) − δ',r],['β* = (1−α)(n+g+δ)',lam],['Vida media (años)',hl]];
+    document.getElementById('stats').innerHTML=st.map(function(q){return '<div class="stat"><div class="l">'+q[0]+'</div><div class="n">'+fmt(q[1],q[0].indexOf('Vida')===0?1:3)+'</div></div>'}).join('');
+    var fl=document.getElementById('flag');
+    if(Math.abs(S-A_)<0.005){fl.textContent='s ≈ α: la economía está en la regla de oro.';fl.style.background='var(--ok-bg)';}
+    else if(S>A_){fl.textContent='s > s_oro = α → ineficiencia dinámica: r* = '+fmt(r,3)+' < n + g = '+fmt(N+G,3)+'. Bajar s aumentaría el consumo en todo momento.';fl.style.background='var(--warn-bg)';}
+    else {fl.textContent='s < s_oro = α → zona eficiente (falta capital): r* = '+fmt(r,3)+' > n + g = '+fmt(N+G,3)+'. Subir s aumenta c a largo plazo, pero lo reduce a corto plazo.';fl.style.background='var(--note-bg)';}
+    var xm=Math.max(kS,kO)*1.6;
+    plot('sim-plot',{xmax:xm,ymax:F(xm)*1.08,xlabel:'k',aria:'Diagrama de Solow interactivo',
+      curves:[{f:F,c:3,label:'f(k)'},{f:function(k){return S*F(k)},c:1,label:'s f(k)',dy:14},{f:function(k){return e*k},c:2,label:'(n+g+δ)k',lx:Math.min(xm*0.97,F(xm)*1.05/e)}],
+      vlines:[{x:kS,label:'k*',y:F(kS)},{x:kO,label:'k oro',y:F(kO)}],points:[{x:kS,y:S*F(kS),c:1}]});
+    // path
+    var k0=Math.pow(S0/e,1/(1-A_)),k=k0,c0=(1-S0)*F(k0),dt=0.05,T=100,pk=[],pc=[];
+    for(var t=0;t<=T+1e-9;t+=dt){var ss=t<10?S0:S;pk.push(k/k0);pc.push((1-ss)*F(k)/c0);k+=(ss*F(k)-e*k)*dt;}
+    var all=pk.concat(pc),mn=Math.min.apply(null,all),mx=Math.max.apply(null,all),pad=(mx-mn)*0.15||0.05;
+    var gk=function(x){return pk[Math.min(pk.length-1,Math.round(x/dt))]},gc=function(x){return pc[Math.min(pc.length-1,Math.round(x/dt))]};
+    plot('sim-path',{xmin:0,xmax:T,ymin:mn-pad,ymax:mx+pad,h:260,xlabel:'t (años)',aria:'Trayectoria temporal',
+      curves:[{f:gk,c:1,label:'k(t)',lx:95,dy:-8},{f:gc,c:4,label:'c(t)',lx:95,dy:16}],hlines:[{y:1,label:'1'}],vlines:[{x:10,label:'cambio de s'}]});
+  }
+  ids.forEach(function(i){inp[i].addEventListener('input',upd);});
+  upd();
+
+  // ---- KaTeX
+  function renderMath(){ if(window.renderMathInElement){ renderMathInElement(document.body,{delimiters:[{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false}); } }
+  if(document.readyState==='complete') renderMath(); else window.addEventListener('load',renderMath);
+})();
+</script>
+</body>
+</html>
